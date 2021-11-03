@@ -16,6 +16,11 @@ Self-practice project to improve my development skills.
 ## Authorisation & Authentication:
 - JWT Tokens
 
+## Other packages or libraries used:
+- dotenv
+- mongoose
+- nodemon
+
 ## Mongoose Schemas:
 - User: { username, email, password, profilePicture, coverPicture, followers, followings, isAdmin, timestamp}
 - Conversations: {members(which is array of users), timestamp}
