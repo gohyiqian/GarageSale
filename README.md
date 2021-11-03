@@ -13,6 +13,11 @@ Self-practice project to improve my development skills.
 - MongoDB
 - Stripe API
 
+## Styled primarily using:
+- Material UI
+- Styled-components
+- CSS Flexbox
+
 ## Authorisation & Authentication:
 - JWT Tokens
 
@@ -27,9 +32,6 @@ Self-practice project to improve my development skills.
 - Messages: {conversationId, sender, text, timestamp}
 - Posts: { userId, desc, img, likes, timestamp}
 
-## Styled using:
-- Material UI
-- Styled-components
 
 ## Credits:
 Lama Dev
