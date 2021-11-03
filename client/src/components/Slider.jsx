@@ -83,8 +83,10 @@ const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const handleClick = (direction) => {
     if (direction === "left") {
+      // if at first slide, go to 3rd slide (index2), else go to prev slide
       setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
     } else {
+      // if at 3rd slide(index2), go back to first slide, else go next slide
       setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
   };
@@ -100,6 +102,7 @@ const Slider = () => {
             <ImgContainer>
               <Image src={item.img} />
             </ImgContainer>
+
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
