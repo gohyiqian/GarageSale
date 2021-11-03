@@ -20,9 +20,11 @@ Self-practice project to improve my development skills.
 
 ## Authorisation & Authentication:
 - JWT Tokens
+- crypto-js
 
 ## Other packages or libraries used:
 - dotenv
+- cors
 - mongoose
 - nodemon
 
