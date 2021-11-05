@@ -20,9 +20,12 @@ Self-practice project to improve my development skills.
 
 ## Authorisation & Authentication:
 - JWT Tokens
+- CryptoJS (used Advanced Encryption Standard (AES) cipher algorithm for encryption)
+- Read more at https://cryptojs.gitbook.io/docs/"
 
 ## Other packages or libraries used:
 - dotenv
+- cors
 - mongoose
 - nodemon
 
