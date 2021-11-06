@@ -78,6 +78,7 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
           sales: "$amount",
         },
       },
+      // group them into 1 object
       {
         $group: {
           _id: "$month",
