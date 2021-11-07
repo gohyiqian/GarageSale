@@ -3,7 +3,6 @@ import Home from "./pages/Home";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Pay from "./pages/Pay";
 import React from "react";
 import Cart from "./pages/Cart";
 import {
@@ -13,12 +12,11 @@ import {
   Redirect,
 } from "react-router-dom";
 import Success from "./pages/Success";
-import Products from "./components/Products";
-// import { useSelector } from "react-redux";
+
+import { useSelector } from "react-redux";
 
 const App = () => {
-  // const user = useSelector((state) => state.user.currentUser);
-  const user = true;
+  const user = useSelector((state) => state.user.currentUser);
   return (
     <Router>
       <Switch>
