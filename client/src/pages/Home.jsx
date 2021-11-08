@@ -5,15 +5,17 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
-import Slider from "../components/Slider";
+import SearchBar from "../components/SearchBar";
+import Carousel from "../components/Carousel";
 
 const Home = () => {
   return (
     <div>
-      <Announcement />
       <Navbar />
-      <Slider />
+      <Announcement />
+      <SearchBar />
       <Categories />
+      <Carousel />
       <Products />
       <Newsletter />
       <Footer />

@@ -24,10 +24,14 @@ const ImgContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
-  height: 90vh;
+  width: 80%;
+  height: 100%;
+  margin-left: 50px;
   object-fit: cover;
   ${mobile({ height: "40vh" })}
+  &:hover {
+    object-fit: none;
+  }
 `;
 
 const InfoContainer = styled.div`
@@ -158,6 +162,7 @@ const Product = () => {
         <ImgContainer>
           <Image src={product.img} />
         </ImgContainer>
+
         <InfoContainer>
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
@@ -171,13 +176,6 @@ const Product = () => {
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              {/* <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
-              </FilterSize> */}
               <FilterSize onChange={(e) => setSize(e.target.value)}>
                 {product.size?.map((s) => (
                   <FilterSizeOption key={s}>{s}</FilterSizeOption>

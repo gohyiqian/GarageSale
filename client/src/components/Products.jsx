@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Container = styled.div`
-  padding: 20px;
   display: flex;
+  padding: 20px;
   flex-wrap: wrap;
   justify-content: space-between;
 `;

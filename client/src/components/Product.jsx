@@ -7,15 +7,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Info = styled.div`
-  opacity: 0;
-  width: 100%;
-  height: 100%;
+  display: flex;
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 3;
-  display: flex;
+
   align-items: center;
   justify-content: center;
   transition: all 0.5s ease;
@@ -24,16 +25,16 @@ const Info = styled.div`
 
 const Container = styled.div`
   flex: 1;
+  display: flex;
   margin: 5px;
   min-width: 280px;
   height: 350px;
-  display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f5fbfd;
+  background-color: #fcf5f5;
   position: relative;
 
-  // use the Info delement defined above
+  // use the Info element defined above
   &:hover ${Info} {
     opacity: 1;
   }
