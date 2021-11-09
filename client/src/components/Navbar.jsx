@@ -3,7 +3,8 @@ import {
   ShoppingCartOutlined,
   Instagram,
   Facebook,
-  LinkedIn,
+  Twitter,
+  Pinterest,
 } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
@@ -64,9 +65,21 @@ const NavItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-const IconItem = styled.div`
+const SocialContainer = styled.div`
+  display: flex;
+`;
+
+const SocialIcon = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  background-color: #${(props) => props.color};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
   cursor: pointer;
-  margin-left: 5px;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
@@ -83,11 +96,20 @@ const Navbar = () => {
       <Wrapper>
         <Left>
           <NavItem>FOLLOW US ON:</NavItem>
-          <IconItem>
-            <Instagram />
-            <Facebook />
-            <LinkedIn />
-          </IconItem>
+          <SocialContainer>
+            <SocialIcon color="3B5999">
+              <Facebook />
+            </SocialIcon>
+            <SocialIcon color="E4405F">
+              <Instagram />
+            </SocialIcon>
+            <SocialIcon color="55ACEE">
+              <Twitter />
+            </SocialIcon>
+            <SocialIcon color="E60023">
+              <Pinterest />
+            </SocialIcon>
+          </SocialContainer>
         </Left>
         <Center>
           <Link to="/" style={linkStyle}>
@@ -95,7 +117,9 @@ const Navbar = () => {
           </Link>
         </Center>
         <Right>
-          <NavItem>REGISTER</NavItem>
+          <Link to="/register" style={linkStyle}>
+            <NavItem>REGISTER</NavItem>
+          </Link>
           <Link to="/login" style={linkStyle}>
             <NavItem>SIGN IN</NavItem>
           </Link>

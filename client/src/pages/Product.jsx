@@ -114,12 +114,14 @@ const Amount = styled.span`
 
 const Button = styled.button`
   padding: 15px;
-  border: 2px solid teal;
+  border: 2px solid #945047;
   background-color: white;
+  border-radius: 15px;
   cursor: pointer;
   font-weight: 500;
   &:hover {
     background-color: #f8f4f4;
+    font-weight: bold;
   }
 `;
 
@@ -131,6 +133,7 @@ const Product = () => {
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  console.log(location);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -158,6 +161,7 @@ const Product = () => {
     <Container>
       <Navbar />
       <Announcement />
+
       <Wrapper>
         <ImgContainer>
           <Image src={product.img} />
@@ -167,6 +171,7 @@ const Product = () => {
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
           <Price>$ {product.price}</Price>
+
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
@@ -183,16 +188,24 @@ const Product = () => {
               </FilterSize>
             </Filter>
           </FilterContainer>
+
           <AddContainer>
             <AmountContainer>
-              <Remove onClick={() => handleQuantity("dec")} />
+              <Remove
+                style={{ cursor: "pointer" }}
+                onClick={() => handleQuantity("dec")}
+              />
               <Amount>{quantity}</Amount>
-              <Add onClick={() => handleQuantity("inc")} />
+              <Add
+                style={{ cursor: "pointer" }}
+                onClick={() => handleQuantity("inc")}
+              />
             </AmountContainer>
             <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>
+
       <Newsletter />
       <Footer />
     </Container>

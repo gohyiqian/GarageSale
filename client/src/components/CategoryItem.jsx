@@ -18,6 +18,10 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  // border-top-left-radius: 20px;
+  // border-bottom-right-radius: 20px;
+  // border-top-right-radius: 80px;
+  // border-bottom-left-radius: 80px;
   ${mobile({ height: "20vh" })}
 `;
 
@@ -33,6 +37,7 @@ const Button = styled.button`
   color: gray;
   cursor: pointer;
   font-weight: 600;
+  border-radius: 10px;
 `;
 
 const Container = styled.div`

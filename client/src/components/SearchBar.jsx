@@ -1,6 +1,5 @@
-import SearchIcon from "@material-ui/icons/Search";
 import styled from "styled-components";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
+import { Search } from "@material-ui/icons";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
@@ -14,6 +13,7 @@ const Container = styled.div`
 
 const SearchContainer = styled.div`
   border: 0.5px solid lightgray;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   margin-left: 25px;
@@ -22,6 +22,7 @@ const SearchContainer = styled.div`
 
 const Input = styled.input`
   border: none;
+  border-radius: 10px;
   height: 30px;
   width: 600px;
   font-s9xe
