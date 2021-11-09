@@ -47,10 +47,11 @@ const Button = styled.button`
   width: 40%;
   border: none;
   padding: 15px 20px;
-  background-color: teal;
+  background-color: #945047;
   color: white;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
 `;
 
 const Link = styled.a`
@@ -89,10 +90,11 @@ const Login = () => {
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
+          {error && <Error>Something went wrong...</Error>}
           <Button onClick={handleClick} disabled={isFetching}>
             LOGIN
           </Button>
-          {error && <Error>Something went wrong...</Error>}
+
           <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
           <Link>CREATE A NEW ACCOUNT</Link>
         </Form>
