@@ -1,5 +1,5 @@
 import React from "react";
-import Announcement from "../components/Announcement";
+import Banner from "../components/Banner";
 import Categories from "../components/Categories";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      <Announcement />
+      <Banner />
       <SearchBar />
       <Categories />
       <Carousel />

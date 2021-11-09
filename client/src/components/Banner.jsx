@@ -30,7 +30,7 @@ const Announcement = () => {
   return (
     <Container>
       <MoveLinear>
-        Super Deal! Use Promo Code X12HYQ for 5% off all first-time purchases!
+        Use Promo Code X12HYQ for 5% off all first-time purchases!
       </MoveLinear>
     </Container>
   );
