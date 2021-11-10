@@ -8,8 +8,8 @@ import {
 } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
-import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
+import { mobile } from "../responsiveMobile";
+// import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
@@ -42,12 +42,6 @@ const Left = styled.div`
   align-items: center;
   margin-right: 25px;
   justify-content: flex-start;
-`;
-
-const Logo = styled.h1`
-  font-weight: bold;
-  text-decoration: none;
-  ${mobile({ fontSize: "24px" })}
 `;
 
 const Right = styled.div`
@@ -89,7 +83,7 @@ const linkStyle = {
 };
 
 const Navbar = () => {
-  const quantity = useSelector((state) => state.cart.quantity);
+  // const quantity = useSelector((state) => state.cart.quantity);
 
   return (
     <Container>
@@ -111,11 +105,13 @@ const Navbar = () => {
             </SocialIcon>
           </SocialContainer>
         </Left>
+
         <Center>
           <Link to="/" style={linkStyle}>
-            <Logo>GARAGESALE</Logo>
+            <h1>GARAGESALE</h1>
           </Link>
         </Center>
+
         <Right>
           <Link to="/register" style={linkStyle}>
             <NavItem>REGISTER</NavItem>
@@ -125,7 +121,7 @@ const Navbar = () => {
           </Link>
           <Link to="/cart" style={linkStyle}>
             <NavItem>
-              <Badge badgeContent={quantity} color="primary">
+              <Badge badgeContent={1} color="primary">
                 <ShoppingCartOutlined />
               </Badge>
             </NavItem>

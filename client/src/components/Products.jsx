@@ -1,5 +1,5 @@
 import styled from "styled-components";
-// import { popularProducts } from "../data";
+// import { popularProducts } from "../dummyData";
 import Product from "./Product";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -12,41 +12,52 @@ const Container = styled.div`
 `;
 
 const Products = ({ cat, filters, sort }) => {
-  // console.log(cat, filters, sort);
-
+  // (cat, filters, sort) props passed from ProductCategoryPage
+  // console.log(filters);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
+  // getProducts by category
+  // useEffect activated when [cat] changes
   useEffect(() => {
     const getProducts = async () => {
       try {
         const res = await axios.get(
           cat
-            ? `http://localhost:5000/api/products?category=${cat}`
+            ? `${process.env.REACT_APP_BASE_URL}products?category=${cat}`
             : // if no cat, just fetch from this
-              "http://localhost:5000/api/products"
+              `${process.env.REACT_APP_BASE_URL}products`
         );
         setProducts(res.data);
-        console.log(res.data);
-      } catch (err) {}
+        // console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
     getProducts();
   }, [cat]);
 
   // filter products to find those that matches the category
+  // useEffect activated when [products,cat,filters] changes
   useEffect(() => {
-    cat &&
-      setFilteredProducts(
-        products.filter((item) =>
+    if (cat) {
+      if (filters.color === "All" || filters.size === "All") {
+        setFilteredProducts(products);
+      } else {
+        const filterOption = products.filter((item) =>
           Object.entries(filters).every(([key, value]) =>
             item[key].includes(value)
           )
-        )
-      );
+        );
+        console.log(filterOption);
+        setFilteredProducts(filterOption);
+      }
+    }
   }, [products, cat, filters]);
 
+  // Sorting by Prices & CreatedDate
   useEffect(() => {
-    if (sort === "newest") {
+    if (sort === "latest") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => a.createdAt - b.createdAt)
       );
@@ -66,7 +77,7 @@ const Products = ({ cat, filters, sort }) => {
       {cat
         ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
         : products
-            .slice(0, 8)
+            .slice(0, 10)
             .map((item) => <Product item={item} key={item.id} />)}
     </Container>
   );

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Search } from "@material-ui/icons";
-import { mobile } from "../responsive";
+import { mobile } from "../responsiveMobile";
 
 const Container = styled.div`
   height: 20vh;

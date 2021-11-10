@@ -7,13 +7,13 @@ import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
 import SearchBar from "../components/SearchBar";
 import Carousel from "../components/Carousel";
-import PopChat from "../components/PopChat";
+// import PopChat from "../components/PopChat";
 
 const Home = () => {
-  const msgs = ["hey whatsup!"];
-  const getMessage = (msg) => {
-    console.log(msg);
-  };
+  // const msgs = ["hey whatsup!"];
+  // const getMessage = (msg) => {
+  //   console.log(msg);
+  // };
   return (
     <div>
       <Navbar />
@@ -24,7 +24,7 @@ const Home = () => {
       <Products />
       <Newsletter />
       <Footer />
-      <PopChat messages={msgs} getMessage={getMessage} />
+      {/* <PopChat messages={msgs} getMessage={getMessage} /> */}
     </div>
   );
 };

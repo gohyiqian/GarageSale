@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../responsiveMobile";
 import { Link } from "react-router-dom";
 
 const Info = styled.div`
@@ -18,10 +18,6 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  // border-top-left-radius: 20px;
-  // border-bottom-right-radius: 20px;
-  // border-top-right-radius: 80px;
-  // border-bottom-left-radius: 80px;
   ${mobile({ height: "20vh" })}
 `;
 
@@ -54,6 +50,8 @@ const Container = styled.div`
   &:hover ${Button} {
     background-color: #a94c4c;
     color: white;
+    transition: all 0.5s ease;
+    transform: scale(1.1);
   }
 `;
 

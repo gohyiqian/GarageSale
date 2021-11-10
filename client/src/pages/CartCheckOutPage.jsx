@@ -1,17 +1,18 @@
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
+import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { mobile } from "../responsiveMobile";
+import { mobile } from "../responsiveMobile.js";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { userRequest } from "../requestMethods";
+import { userRequest } from "../axiosRequestMethods";
 import { useHistory } from "react-router";
 import StripeCheckout from "react-stripe-checkout";
 import { Link } from "react-router-dom";
 
 const KEY = process.env.REACT_APP_STRIPE;
+
 const Container = styled.div`
   background-color: #fcf5f5;
 `;
@@ -88,18 +89,12 @@ const Details = styled.div`
   justify-content: space-around;
 `;
 
-const ProductName = styled.span``;
-
-const ProductId = styled.span``;
-
 const ProductColor = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
   background-color: ${(props) => props.color};
 `;
-
-const ProductSize = styled.span``;
 
 const PriceDetail = styled.div`
   flex: 1;
@@ -142,10 +137,6 @@ const Summary = styled.div`
   background-color: white;
 `;
 
-const SummaryTitle = styled.h1`
-  font-weight: 200;
-`;
-
 const SummaryItem = styled.div`
   margin: 30px 0px;
   display: flex;
@@ -153,10 +144,6 @@ const SummaryItem = styled.div`
   font-weight: ${(props) => props.type === "total" && "500"};
   font-size: ${(props) => props.type === "total" && "24px"};
 `;
-
-const SummaryItemText = styled.span``;
-
-const SummaryItemPrice = styled.span``;
 
 const Button = styled.button`
   width: 100%;
@@ -175,11 +162,12 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const history = useHistory();
-  // const navigate = useNavigate();
+
   const onToken = (token) => {
     setStripeToken(token);
   };
 
+  // STRIPE CHECKOUT
   useEffect(() => {
     const makeRequest = async () => {
       try {
@@ -199,7 +187,7 @@ const Cart = () => {
   return (
     <>
       <Navbar />
-      <Announcement />
+      <Banner />
       <Container>
         <Wrapper>
           <Title>YOUR SHOPPING CART</Title>
@@ -216,16 +204,16 @@ const Cart = () => {
                   <ProductDetail>
                     <Image src={product.img} />
                     <Details>
-                      <ProductName>
+                      <span>
                         <b>Product:</b> {product.title}
-                      </ProductName>
-                      <ProductId>
+                      </span>
+                      <span>
                         <b>ID:</b> {product._id}
-                      </ProductId>
+                      </span>
                       <ProductColor color={product.color} />
-                      <ProductSize>
+                      <span>
                         <b>Size:</b> {product.size}
-                      </ProductSize>
+                      </span>
                     </Details>
                   </ProductDetail>
 
@@ -244,23 +232,24 @@ const Cart = () => {
             </Info>
 
             <Summary>
-              <SummaryTitle>ORDER SUMMARY</SummaryTitle>
+              <h1>ORDER SUMMARY</h1>
               <SummaryItem>
-                <SummaryItemText>Subtotal:</SummaryItemText>
-                <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+                <span>Subtotal:</span>
+                <span>$ {cart.total}</span>
               </SummaryItem>
               <SummaryItem>
-                <SummaryItemText>Estimated Shipping:</SummaryItemText>
-                <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+                <span>Estimated Shipping:</span>
+                <span>$ 5.90</span>
               </SummaryItem>
               <SummaryItem>
-                <SummaryItemText>Shipping Discount:</SummaryItemText>
-                <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+                <span>Shipping Discount:</span>
+                <span>$ -5.90</span>
               </SummaryItem>
               <SummaryItem type="total">
-                <SummaryItemText>Total:</SummaryItemText>
-                <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+                <span>Total:</span>
+                <span>$ {cart.total}</span>
               </SummaryItem>
+
               <StripeCheckout
                 name="Garage Shop"
                 image="https://avatars.githubusercontent.com/u/8252901?v=4"

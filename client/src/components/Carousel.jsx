@@ -2,7 +2,8 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@material-ui/icons";
 import { useState } from "react";
 import styled from "styled-components";
 import { sliderItems } from "../dummyData";
-import { mobile } from "../responsive";
+import { mobile } from "../responsiveMobile";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -87,12 +88,14 @@ const Button = styled.button`
 
 const Carousel = () => {
   const [slideIndex, setSlideIndex] = useState(0);
+
+  // carousel logics
   const handleClick = (direction) => {
     if (direction === "left") {
-      // if at first slide, go to 3rd slide (index2), else go to prev slide
+      // if click left at first slide, go to 3rd slide (index2), else go to prev slide
       setSlideIndex(slideIndex > 0 ? slideIndex - 1 : 2);
     } else {
-      // if at 3rd slide(index2), go back to first slide, else go next slide
+      // if click right at 3rd slide(index2), go back to first slide, else go next slide
       setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
   };
@@ -102,6 +105,8 @@ const Carousel = () => {
       <Arrow direction="left" onClick={() => handleClick("left")}>
         <ArrowLeftOutlined />
       </Arrow>
+
+      {/* Using dummyData */}
       <Wrapper slideIndex={slideIndex}>
         {sliderItems.map((item) => (
           <Slide bg={item.bg} key={item.id}>
@@ -112,11 +117,14 @@ const Carousel = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button>SHOP NOW</Button>
+              <Link to={`/products/tshirt`}>
+                <Button>SHOP NOW</Button>
+              </Link>
             </InfoContainer>
           </Slide>
         ))}
       </Wrapper>
+
       <Arrow direction="right" onClick={() => handleClick("right")}>
         <ArrowRightOutlined />
       </Arrow>

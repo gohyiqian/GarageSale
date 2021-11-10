@@ -26,7 +26,7 @@ const Container = styled.div`
   font-weight: 500;
 `;
 
-const Announcement = () => {
+const Banner = () => {
   return (
     <Container>
       <MoveLinear>
@@ -36,4 +36,4 @@ const Announcement = () => {
   );
 };
 
-export default Announcement;
+export default Banner;

@@ -1,14 +1,6 @@
-import {
-  Facebook,
-  Instagram,
-  MailOutline,
-  Phone,
-  Pinterest,
-  Room,
-  Twitter,
-} from "@material-ui/icons";
+import { MailOutline, Phone, Room } from "@material-ui/icons";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../responsiveMobile";
 
 const Container = styled.div`
   display: flex;
@@ -22,36 +14,10 @@ const Left = styled.div`
   padding: 20px;
 `;
 
-const Logo = styled.h1``;
-
-const Desc = styled.p`
-  margin: 20px 0px;
-`;
-
-const SocialContainer = styled.div`
-  display: flex;
-`;
-
-const SocialIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  color: white;
-  background-color: #${(props) => props.color};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20px;
-`;
-
 const Center = styled.div`
   flex: 1;
   padding: 20px;
   ${mobile({ display: "none" })}
-`;
-
-const Title = styled.h3`
-  margin-bottom: 30px;
 `;
 
 const List = styled.ul`
@@ -79,37 +45,19 @@ const ContactItem = styled.div`
   align-items: center;
 `;
 
-const Payment = styled.img`
-  width: 50%;
-`;
-
 const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo>GARAGESALE</Logo>
-        <Desc>
+        <h1>GARAGESALE</h1>
+        <p className="mt-3">
           There are many variations of passages of Lorem Ipsum available, but
           the majority have suffered alteration in some form, by injected
           humour, or randomised words which don’t look even slightly believable.
-        </Desc>
-        <SocialContainer>
-          <SocialIcon color="3B5999">
-            <Facebook />
-          </SocialIcon>
-          <SocialIcon color="E4405F">
-            <Instagram />
-          </SocialIcon>
-          <SocialIcon color="55ACEE">
-            <Twitter />
-          </SocialIcon>
-          <SocialIcon color="E60023">
-            <Pinterest />
-          </SocialIcon>
-        </SocialContainer>
+        </p>
       </Left>
       <Center>
-        <Title>Useful Links</Title>
+        <h3 className="mb-4">Useful Links</h3>
         <List>
           <ListItem>Home</ListItem>
           <ListItem>Cart</ListItem>
@@ -124,18 +72,18 @@ const Footer = () => {
         </List>
       </Center>
       <Right>
-        <Title>Contact</Title>
+        <h3 className="mb-4">Contact</h3>
         <ContactItem>
-          <Room style={{ marginRight: "10px" }} /> 622 Dixie Path , South
-          Tobinchester 98336
+          <Room style={{ marginRight: "10px" }} /> 79 Anson Rd, Level 20,
+          Singapore 079906
         </ContactItem>
         <ContactItem>
-          <Phone style={{ marginRight: "10px" }} /> +1 234 56 78
+          <Phone style={{ marginRight: "10px" }} /> +65 1234 5678
         </ContactItem>
         <ContactItem>
-          <MailOutline style={{ marginRight: "10px" }} /> contact@garagesale.dev
+          <MailOutline style={{ marginRight: "10px" }} /> contact@garagesale.com
         </ContactItem>
-        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+        <img src="https://i.ibb.co/Qfvn4z6/payment.png" alt="" />
       </Right>
     </Container>
   );

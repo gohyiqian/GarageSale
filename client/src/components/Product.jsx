@@ -1,9 +1,9 @@
-import { FavoriteBorderOutlined, SearchOutlined } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Info = styled.div`
   display: flex;
+  flex-direction: column;
   position: absolute;
   top: 0;
   left: 0;
@@ -12,28 +12,20 @@ const Info = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 3;
-
   align-items: center;
   justify-content: center;
   transition: all 0.5s ease;
   cursor: pointer;
 `;
 
-const Container = styled.div`
-  flex: 1;
-  display: flex;
-  margin: 5px;
-  min-width: 280px;
-  height: 350px;
-  align-items: center;
-  justify-content: center;
-  background-color: #fcf5f5;
-  position: relative;
-
-  // use the Info element defined above
-  &:hover ${Info} {
-    opacity: 1;
-  }
+const Button = styled.button`
+  border: none;
+  padding: 10px;
+  background-color: #a94c4c;
+  color: gray;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 10px;
 `;
 
 const Circle = styled.div`
@@ -49,18 +41,44 @@ const Image = styled.img`
   z-index: 2;
 `;
 
-const Icon = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+const PriceInfo = styled.h1`
+  border-radius: 20%;
   background-color: white;
+  position: absolute;
+  padding: 10px;
+  color: #945047;
+  z-index: 3;
+  font-size: 25px;
+`;
+
+const Title = styled.p`
+  background-color: white;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 10px;
+`;
+
+const Container = styled.div`
+  flex: 1;
   display: flex;
+  margin: 5px;
+  min-width: 280px;
+  height: 350px;
   align-items: center;
   justify-content: center;
-  margin: 10px;
-  transition: all 0.5s ease;
-  &:hover {
-    background-color: #e9f5f5;
+  background-color: #fcf5f5;
+  position: relative;
+
+  &:hover ${PriceInfo} {
+    opacity: 0;
+  }
+
+  &:hover ${Info} {
+    opacity: 1;
+  }
+  &:hover ${Button} {
+    color: white;
+    transition: all 1s ease;
     transform: scale(1.1);
   }
 `;
@@ -69,16 +87,13 @@ const Product = ({ item }) => {
   return (
     <Container>
       <Circle />
+      <PriceInfo>${item.price}</PriceInfo>
       <Image src={item.img} />
       <Info>
-        <Icon>
-          <Link to={`/product/${item._id}`}>
-            <SearchOutlined />
-          </Link>
-        </Icon>
-        <Icon>
-          <FavoriteBorderOutlined />
-        </Icon>
+        <Title>{item.title}</Title>
+        <Link to={`/product/${item._id}`}>
+          <Button>BUY NOW</Button>
+        </Link>
       </Info>
     </Container>
   );

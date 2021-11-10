@@ -1,15 +1,15 @@
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
+import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
-import { mobile } from "../responsiveMobile";
+import { mobile } from "../responsiveMobile.js";
 import { useLocation } from "react-router";
 import { useState, useEffect } from "react";
-import { publicRequest } from "../requestMethods";
-import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
+// import { publicRequest } from "../requestMethods";
+// import { addProduct } from "../redux/cartRedux";
+// import { useDispatch } from "react-redux";
 
 const Container = styled.div``;
 
@@ -126,24 +126,29 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  // use path location
   const location = useLocation();
   const id = location.pathname.split("/")[2];
+  console.log(location);
+
+  // useState
   const [product, setProduct] = useState({});
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const dispatch = useDispatch();
-  console.log(location);
 
-  useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await publicRequest.get("/products/find/" + id);
-        setProduct(res.data);
-      } catch {}
-    };
-    getProduct();
-  }, [id]);
+  // useReducer
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const getProduct = async () => {
+  //     try {
+  //       const res = await publicRequest.get("/products/find/" + id);
+  //       setProduct(res.data);
+  //     } catch {}
+  //   };
+  //   getProduct();
+  // }, [id]);
 
   const handleQuantity = (type) => {
     if (type === "dec") {
@@ -154,13 +159,14 @@ const Product = () => {
   };
 
   const handleClick = () => {
-    dispatch(addProduct({ ...product, quantity, color, size }));
+    // dispatch(addProduct({ ...product, quantity, color, size }));
+    console.log("add to cart");
   };
 
   return (
     <Container>
       <Navbar />
-      <Announcement />
+      <Banner />
 
       <Wrapper>
         <ImgContainer>
@@ -179,6 +185,7 @@ const Product = () => {
                 <FilterColor color={c} key={c} onClick={() => setColor(c)} />
               ))}
             </Filter>
+
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize onChange={(e) => setSize(e.target.value)}>

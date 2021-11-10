@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config();
-const userRoute = require("./routes/user");
-const authRoute = require("./routes/auth");
-const productRoute = require("./routes/product");
-const cartRoute = require("./routes/cart");
-const orderRoute = require("./routes/order");
-const stripeRoute = require("./routes/stripe");
+require("dotenv").config();
+
+const userRoute = require("./controllers/userController");
+const authRoute = require("./controllers/authController");
+const productRoute = require("./controllers/productController");
+const cartRoute = require("./controllers/cartController");
+const orderRoute = require("./controllers/orderController");
+const stripeRoute = require("./controllers/stripeController");
 const cors = require("cors");
 
 mongoose
@@ -18,8 +18,11 @@ mongoose
     console.log(err);
   });
 
+// MIDDLEWARES
 app.use(cors());
 app.use(express.json());
+
+//  ROUTES
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);

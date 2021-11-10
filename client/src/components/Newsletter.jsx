@@ -1,6 +1,6 @@
 import { Send } from "@material-ui/icons";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../responsiveMobile";
 
 const Container = styled.div`
   height: 30vh;
@@ -44,7 +44,7 @@ const Button = styled.button`
 const Newsletter = () => {
   return (
     <Container>
-      <Desc>Get daily updates on your favorite products.</Desc>
+      <Desc className="mb-5">Get daily updates on your favorite products.</Desc>
       <InputContainer>
         <Input placeholder="Your email here" />
         <Button>

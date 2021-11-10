@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 
+// verify JWT Token
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.token;
+  console.log(authHeader);
   if (authHeader) {
     const token = authHeader.split(" ")[1];
     jwt.verify(token, process.env.JWT_SEC, (err, user) => {
@@ -14,9 +16,8 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-// AUTHORIZATION
+// check if is user own token or is admin token
 const verifyTokenAndAuthorization = (req, res, next) => {
-  // check if is user own token or is admin token
   verifyToken(req, res, () => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
       next();
@@ -26,8 +27,8 @@ const verifyTokenAndAuthorization = (req, res, next) => {
   });
 };
 
+// check  for admin token
 const verifyTokenAndAdmin = (req, res, next) => {
-  // check only for admin token
   verifyToken(req, res, () => {
     if (req.user.isAdmin) {
       next();

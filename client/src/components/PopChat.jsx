@@ -23,29 +23,29 @@ export const PopChat = (props) => {
 
   return (
     <div id="chatCon">
-      <div class="chat-box" style={chatopen ? show : hide}>
-        <div class="header">Chat with me</div>
-        <div class="msg-area">
+      <div className="chat-box" style={chatopen ? show : hide}>
+        <div className="header">Chat with me</div>
+        <div className="msg-area">
           {messages.map((msg, i) =>
             i % 2 ? (
-              <p class="right">
+              <p className="right">
                 <span>{msg}</span>
               </p>
             ) : (
-              <p class="left">
+              <p className="left">
                 <span>{msg}</span>
               </p>
             )
           )}
         </div>
-        <div class="footer">
+        <div className="footer">
           <input type="text" ref={textRef} />
           <button onClick={handleSend}>
-            <i class="fa fa-paper-plane"></i>
+            <i className="fa fa-paper-plane"></i>
           </button>
         </div>
       </div>
-      <div class="pop">
+      <div className="pop">
         <p>
           <img
             onClick={toggle}

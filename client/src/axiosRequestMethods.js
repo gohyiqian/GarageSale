@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/";
-const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxODJiM2VjODE0ZWI1MjMxM2Q4NGE0ZSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTYzNjEyNTU3MSwiZXhwIjoxNjM2Mzg0NzcxfQ.jlkyzoDco2YsaF1FipbwtOqohPUvKICDCPKkITvpo_Y";
+// add heroku as baseURL
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000/api/";
+
+const TOKEN = process.env.REACT_APP_TOKEN;
 // JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser
 //   .accessToken || "";
 
