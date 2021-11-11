@@ -15,8 +15,9 @@ Self-practice project to improve my development skills.
 - NodeJS
 - ExpressJS
 - MongoDB
-- Stripe API
-- Socket io
+- Stripe API (Payment CheckOut)
+- Unsplash API (For querying Photos)
+- Socket io (Live Chat)
 
 ## Styled using (ordered in degree of usage) :
 
@@ -28,6 +29,7 @@ Self-practice project to improve my development skills.
 ## Authorisation & Authentication:
 
 - JWT Tokens
+- Cookier-Parser
 - CryptoJS (used Advanced Encryption Standard (AES) cipher algorithm for encryption)
 - Read more at https://cryptojs.gitbook.io/docs/"
 
@@ -49,25 +51,29 @@ Self-practice project to improve my development skills.
 
 ## Pending MVP:
 
-- Add Navbar and Footer
-- Layout using CSS Flexbox with styled-components
-- Display all Categories on HomePage
-- Display 8 Products on HomePage
-- Add Caurosel
-- Fix the login credentials
-- store JWTs inside an httpOnly cookie (avoid XSS attack)
-- Add to Cart Features
-- Delete From Cart Features
-- Update stripe from legacy version to new version
-- Add Admin Dashboard to Post (Upload Imgs, desc etc)
-- Add Create Shop Function
-- Add Follow Favorite Product
-- Add Follow Favorite Shop
-- Add Chat icon fixed on Bottom right
-- Add Chat with socket.io features
+- [x] Add Navbar and Footer
+- [x] Layout using CSS Flexbox with styled-components
+- [x] Display all Categories on HomePage
+- [x] Display 8 Products on HomePage
+- [x] Add Caurosel
+- [x] Fix the login credentials
+- [x] store JWTs inside an httpOnly cookie (avoid XSS attack)
+- [ ] Add to Cart Features
+- [ ] Delete From Cart Features
+- [ ] Add Stripe CheckOut
+- [ ] Add Order Success Page
+- [ ] Add Admin Dashboard to see Sales Data
+- [ ] Add Create Shop
+- [ ] Add Follow Favorite Product
+- [ ] Add Follow Favorite Shop
+- [ ] Add Chat icon fixed on Bottom right
+- [ ] Add Chat with socket.io features
 
 ## Pending Bonus:
 
-- Metamask Login Options
-- Login via Google Options
-- OpenSea API to convert into an fake NFTs ecommerce instead
+- [ ] Metamask Login Options for user to remain anonymous
+- [ ] Login via Google Options/ Passport JS
+- [ ] Email notification upon Registering
+- [ ] WhatsApp or Telegram notification upon Order Completion
+- [ ] Add product/shop location and user location
+- [ ] Map distance to show Product Delivery time upon Order Completion
