@@ -90,7 +90,7 @@ const Product = ({ item }) => {
       <PriceInfo>${item.price}</PriceInfo>
       <Image src={item.img} />
       <Info>
-        <Title>{item.title}</Title>
+        <Title>{item.name}</Title>
         <Link to={`/product/${item._id}`}>
           <Button>BUY NOW</Button>
         </Link>

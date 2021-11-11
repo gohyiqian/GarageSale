@@ -37,7 +37,7 @@ const Categories = () => {
       if (res.ok) {
         const payload = await res.json();
         setCat(payload);
-        console.log(payload);
+        // console.log(payload);
       } else {
         console.error("Server Error");
       }
@@ -51,7 +51,7 @@ const Categories = () => {
       <Container className="p-4">
         {/* using dummyData */}
         {categories.map((item) => (
-          <CategoryItem item={item} key={item.id} />
+          <CategoryItem item={item} key={item.id} cat={cat} />
         ))}
       </Container>
     </>

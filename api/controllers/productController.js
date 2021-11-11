@@ -1,14 +1,11 @@
 const Product = require("../models/Product");
-const {
-  verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
-} = require("./verifyToken");
+const { verifyAdmin } = require("./verifyToken");
 
 const router = require("express").Router();
 
-//CREATE PRODUCT
-router.post("/", verifyTokenAndAdmin, async (req, res) => {
+// CREATE PRODUCT
+// by Admin
+router.post("/", verifyAdmin, async (req, res) => {
   const newProduct = new Product(req.body);
 
   try {
@@ -19,8 +16,9 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-//UPDATE PRODUCT
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+// UPDATE PRODUCT
+// by Admin
+router.put("/:id", verifyAdmin, async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -35,8 +33,9 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-//DELETE PRODUCT
-router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+// DELETE PRODUCT
+// by Admin
+router.delete("/:id", verifyAdmin, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json("Product has been deleted...");
@@ -65,8 +64,9 @@ router.get("/categories", async (req, res) => {
   }
 });
 
-//GET ALL PRODUCTS
-//ABLE TO FILTER BY CATEGORY USING req.query
+// GET ALL PRODUCTS
+// FOR ADMIN DASHBOARD
+// ABLE TO FILTER BY CATEGORY USING req.query
 router.get("/", async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;

@@ -15,6 +15,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -124,31 +125,35 @@ const Register = () => {
         </p>
         <Form>
           <Form.Group>
+            <span>Username:</span>
             <Form.Control
               type="username"
               className="mb-3"
-              placeholder="username"
+              placeholder="Minimum 3 characters"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+            <span>Email</span>
             <Form.Control
               type="email"
               className="mb-3"
-              placeholder="email"
+              placeholder="Please key valid email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <span>Password:</span>
             <Form.Control
               type="password"
               className="mb-3"
-              placeholder="password"
+              placeholder="Minimum 8 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+
             <Form.Control
               type="password"
-              className="mb-3"
-              placeholder="confirm password"
+              className="mb-4"
+              placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />

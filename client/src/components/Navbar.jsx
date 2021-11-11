@@ -3,7 +3,6 @@ import {
   ShoppingCartOutlined,
   Instagram,
   Facebook,
-  Twitter,
   Pinterest,
   Search,
 } from "@material-ui/icons";
@@ -49,7 +48,7 @@ const Left = styled.div`
 const Logo = styled.h1`
   display: flex;
   margin-top: 3px;
-  margin-left: 10px;
+  margin-left: 5px;
   align-items: center;
 `;
 
@@ -62,7 +61,7 @@ const Right = styled.div`
 `;
 
 const NavItem = styled.div`
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   margin-left: 25px;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
@@ -130,9 +129,6 @@ const Navbar = () => {
             </SocialIcon>
             <SocialIcon color="E4405F">
               <Instagram />
-            </SocialIcon>
-            <SocialIcon color="55ACEE">
-              <Twitter />
             </SocialIcon>
             <SocialIcon color="E60023">
               <Pinterest />

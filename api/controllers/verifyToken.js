@@ -12,34 +12,38 @@ const verifyToken = (req, res, next) => {
       next();
     });
   } else {
-    return res.status(401).json("You are not authenticated!");
+    return res
+      .status(401)
+      .json({ errors: "You are not the authenticated user!" });
   }
 };
 
-// check if is user own token or is admin token
-const verifyTokenAndAuthorization = (req, res, next) => {
+// verify if is user own token or is admin token
+// use for Cart and Order
+const verifyUser = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
       next();
     } else {
-      res.status(403).json("You are not alowed to do that!");
+      res.status(403).json({ errors: "You are not authorised!" });
     }
   });
 };
 
-// check  for admin token
-const verifyTokenAndAdmin = (req, res, next) => {
+// verify if is admin token
+// use for creating new products or delete products
+const verifyAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.isAdmin) {
       next();
     } else {
-      res.status(403).json("You are not alowed to do that!");
+      res.status(403).json({ errors: "You are not authorised!" });
     }
   });
 };
 
 module.exports = {
   verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
+  verifyUser,
+  verifyAdmin,
 };

@@ -1,12 +1,9 @@
 const Order = require("../models/Order");
-const {
-  verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
-} = require("./verifyToken");
+const { verifyToken, verifyUser, verifyAdmin } = require("./verifyToken");
 const router = require("express").Router();
 
 // CREATE ORDER
+// by user
 router.post("/", verifyToken, async (req, res) => {
   const newOrder = new Order(req.body);
   try {
@@ -18,7 +15,8 @@ router.post("/", verifyToken, async (req, res) => {
 });
 
 // UPDATE ORDER
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+// by admin only
+router.put("/:id", verifyAdmin, async (req, res) => {
   try {
     const updateOrder = await Order.findByIdAndUpdate(
       req.params.id,
@@ -34,7 +32,8 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //  DELETE ORDER
-router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+//  by admin only
+router.delete("/:id", verifyAdmin, async (req, res) => {
   try {
     await Order.findByIdAndDelete(req.params.id);
     res.status(200).json("Order has been deleted");
@@ -44,7 +43,8 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 // GET USER ORDERS
-router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
+// by user and admin
+router.get("/find/:userId", verifyUser, async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.params.userId });
     res.status(200, json(orders));
@@ -53,8 +53,10 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-// GET ALL
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+// GET ALL ORDERS
+// FOR ADMIN DASHBOARD
+// by admin only
+router.get("/", verifyAdmin, async (req, res) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
@@ -64,7 +66,9 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 });
 
 // GET MONTHLY INCOME
-router.get("/income", verifyTokenAndAdmin, async (req, res) => {
+// FOR ADMIN DASHBOARD
+// by admin only
+router.get("/income", verifyAdmin, async (req, res) => {
   const date = new Date();
   const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
   const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));

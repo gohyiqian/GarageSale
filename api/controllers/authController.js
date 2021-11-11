@@ -64,7 +64,7 @@ router.post(
   }
 );
 
-// LOGIN
+// USER LOGIN
 router.post(
   "/login",
   [
@@ -112,14 +112,15 @@ router.post(
       );
 
       // destructure user obj
-      // omit and to not show password
+      // omit and to not show password to client
       const { password, ...others } = user._doc;
 
       res
         .status(200)
         .cookie("jwt", accessToken, {
-          expires: new Date(Date.now() + 900000),
-        })
+          expires: new Date(Date.now() + 3600000),
+          httpOnly: true,
+        }) //cookie expires in 1hr after userloggedIn
         .json({ ...others, accessToken });
     } catch (err) {
       res.status(500).json(err);

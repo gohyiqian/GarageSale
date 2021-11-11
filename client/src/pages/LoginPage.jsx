@@ -92,7 +92,7 @@ const Login = () => {
           <Form.Group className="mb-3">
             <Form.Control
               type="username"
-              placeholder="username"
+              placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -100,7 +100,7 @@ const Login = () => {
 
           <Form.Group className="mb-3">
             <Form.Control
-              placeholder="password"
+              placeholder="Password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -116,6 +116,7 @@ const Login = () => {
         <Link to="/register" style={linkStyle}>
           <p>No Account? Go Create!</p>
         </Link>
+        <span>By joining, you agree to the Terms and Privacy Policy</span>
       </Wrapper>
     </Container>
   );

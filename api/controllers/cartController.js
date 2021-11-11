@@ -1,13 +1,10 @@
 const Cart = require("../models/Cart");
-const {
-  verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
-} = require("./verifyToken");
+const { verifyToken, verifyUser, verifyAdmin } = require("./verifyToken");
 
 const router = require("express").Router();
 
-//CREATE CART
+// CREATE CART
+// any registered user
 router.post("/", verifyToken, async (req, res) => {
   const newCart = new Cart(req.body);
 
@@ -19,8 +16,9 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
-//UPDATE CART
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+// UPDATE CART
+// user or admin
+router.put("/:id", verifyUser, async (req, res) => {
   try {
     const updatedCart = await Cart.findByIdAndUpdate(
       req.params.id,
@@ -35,8 +33,9 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//DELETE CART
-router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
+// DELETE CART
+// user or admin
+router.delete("/:id", verifyUser, async (req, res) => {
   try {
     await Cart.findByIdAndDelete(req.params.id);
     res.status(200).json("Cart has been deleted...");
@@ -45,8 +44,9 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//GET USER CART
-router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
+// GET USER CART
+// user or admin
+router.get("/find/:userId", verifyUser, async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.params.userId });
     res.status(200).json(cart);
@@ -55,8 +55,10 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//GET ALL CARTS
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+// FOR ADMIN DASHBOARD
+// GET ALL CARTS
+// by admin only
+router.get("/", verifyAdmin, async (req, res) => {
   try {
     const carts = await Cart.find();
     res.status(200).json(carts);
