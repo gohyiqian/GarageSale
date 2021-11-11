@@ -13,9 +13,20 @@ import {
 } from "react-router-dom";
 
 // import { useSelector } from "react-redux";
+import { createContext, useEffect, useReducer } from "react";
+
+const INITIAL_STATE = {
+  user: localStorage.getItem("accessToken") || null,
+  isFetching: false,
+  error: false,
+};
+
+export const AuthContext = createContext(INITIAL_STATE);
+
+console.log(INITIAL_STATE);
 
 const App = () => {
-  const user = false;
+  const user = INITIAL_STATE.user;
   // const user = useSelector((state) => state.user.currentUser);
   return (
     <Router>

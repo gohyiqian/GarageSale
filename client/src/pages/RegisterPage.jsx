@@ -3,7 +3,7 @@ import { mobile } from "../responsiveMobile.js";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
 const Container = styled.div`
   width: 100vw;
@@ -58,13 +58,15 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  // Ensure there is entry
-  const validateForm = () => {
-    return username.length > 0 && password.length > 0;
-  };
-
+  // Fetch() Method
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (username.length && email && password && confirmPassword === 0) {
+      return setMessage("Please enter username");
+    }
+    if (confirmPassword !== password) {
+      return setMessage("Please key same password");
+    }
     const response = await fetch("api/auth/register", {
       method: "POST",
       headers: {
@@ -85,6 +87,33 @@ const Register = () => {
       setMessage(result.errors[0].msg);
     }
   };
+
+  // Axios Method
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (username.length && email && password && confirmPassword === 0) {
+  //     return setMessage("Please enter username");
+  //   }
+  //   if (confirmPassword !== password) {
+  //     return setMessage("Please key same password");
+  //   } else {
+  //     const user = {
+  //       username: username,
+  //       email: email,
+  //       password: password,
+  //     };
+  //     try {
+  //       await axios
+  //         .post(`${process.env.REACT_APP_BASE_URL}auth/register`, user)
+  //         .then((response) => {
+  //           console.log(response);
+  //         });
+  //       window.location.assign("/login");
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
 
   return (
     <Container>
@@ -127,18 +156,13 @@ const Register = () => {
 
           {message && <Error className="mb-3">{message}</Error>}
 
-          <Button
-            type="submit"
-            className="mb-3"
-            onClick={handleSubmit}
-            disabled={!validateForm() || password !== confirmPassword}
-          >
+          <Button type="submit" className="mb-3" onClick={handleSubmit}>
             CREATE
           </Button>
         </Form>
 
         <Link to="/login" style={linkStyle}>
-          <p>Already have Account? Go Login</p>
+          <p>Already have Account? Go Login!</p>
         </Link>
       </Wrapper>
     </Container>

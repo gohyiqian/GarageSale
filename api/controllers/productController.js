@@ -58,7 +58,7 @@ router.get("/find/:id", async (req, res) => {
 // GET PRODUCTS BY CATEGORY
 router.get("/categories", async (req, res) => {
   try {
-    const result = await Product.distinct("category");
+    const result = await Product.distinct("categories");
     res.status(201).json(result);
   } catch (err) {
     res.status(500).json(err);

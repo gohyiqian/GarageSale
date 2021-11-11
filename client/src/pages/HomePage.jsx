@@ -7,6 +7,7 @@ import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
 import SearchBar from "../components/SearchBar";
 import Carousel from "../components/Carousel";
+
 // import PopChat from "../components/PopChat";
 
 const Home = () => {

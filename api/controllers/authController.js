@@ -8,8 +8,9 @@ const { check, validationResult } = require("express-validator");
 router.post(
   "/register",
   [
-    check("username", "username is required").not().isEmpty(),
+    check("username", "Username is required").not().isEmpty(),
     check("email", "Please enter valid email").isEmail(),
+    check("password", "Please enter password").not().isEmpty(),
     check("password", "Need 8 characters for password").isLength({ min: 8 }),
   ],
   async (req, res) => {
@@ -22,11 +23,23 @@ router.post(
 
     try {
       // CHECK IF USERNAME ALREADY EXIST
-      let user = await User.findOne({ username: req.body.username });
+      let user = await User.findOne({
+        username: req.body.username,
+      });
       if (user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "User already exists" }] });
+          .json({ errors: [{ msg: "Username already exists" }] });
+      }
+
+      // CHECK IF EMAIL ALREADY EXIST
+      let checkEmail = await User.findOne({
+        email: req.body.email,
+      });
+      if (checkEmail) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: "Email already exists" }] });
       }
 
       // DEFINE NEW USER
@@ -43,11 +56,8 @@ router.post(
       // SAVING NEW USER
       const savedUser = await newUser.save();
 
-      // destructure user obj
-      // omit and to not show password
-      const { password, ...others } = savedUser._doc;
       // 201 = successfully added
-      res.status(201).json({ ...others });
+      res.status(201).json({ savedUser });
     } catch (err) {
       res.status(500).json(err);
     }
