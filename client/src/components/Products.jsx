@@ -11,6 +11,16 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
+const Title = styled.span`
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: #fcf5f5;
+`;
+
 const Products = ({ cat, filters, sort }) => {
   // (cat, filters, sort) props passed from ProductCategoryPage
   // console.log(filters);
@@ -73,13 +83,18 @@ const Products = ({ cat, filters, sort }) => {
   }, [sort]);
 
   return (
-    <Container>
-      {cat
-        ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
-        : products
-            .slice(0, 10)
-            .map((item) => <Product item={item} key={item.id} />)}
-    </Container>
+    <>
+      <Title>SHOP PRODUCTS</Title>
+      <Container>
+        {cat
+          ? filteredProducts.map((item) => (
+              <Product item={item} key={item.id} />
+            ))
+          : products
+              .slice(0, 10)
+              .map((item) => <Product item={item} key={item.id} />)}
+      </Container>
+    </>
   );
 };
 

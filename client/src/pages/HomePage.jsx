@@ -5,7 +5,6 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
-import SearchBar from "../components/SearchBar";
 import Carousel from "../components/Carousel";
 // import OpenSeaAPI from "../components/OpenSeaAPI";
 // import PopChat from "../components/PopChat";
@@ -20,9 +19,8 @@ const Home = () => {
       {/* <OpenSeaAPI /> */}
       <Navbar />
       <Banner />
-      <SearchBar />
-      <Categories />
       <Carousel />
+      <Categories />
       <Products />
       <Newsletter />
       <Footer />

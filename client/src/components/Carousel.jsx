@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
-  height: 80vh;
+  height: 30vh;
   display: flex;
   position: relative;
   overflow: hidden;
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 
 const Slide = styled.div`
   width: 100vw;
-  height: 80vh;
+  height: 30vh;
   display: flex;
   align-items: center;
   background-color: #${(props) => props.bg};
@@ -53,7 +53,10 @@ const Slide = styled.div`
 
 const ImgContainer = styled.div`
   height: 100%;
+  display: flex;
   flex: 1;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Image = styled.img`
@@ -61,23 +64,31 @@ const Image = styled.img`
 `;
 
 const InfoContainer = styled.div`
-  flex: 1.5;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `;
 
 const Title = styled.h1`
-  font-size: 50px;
+  font-size: 40px;
 `;
 
 const Desc = styled.p`
-  margin: 50px 0px;
-  font-size: 18px;
+  margin: 15px 0px;
+  font-size: 13px;
   font-weight: 500;
   letter-spacing: 3px;
 `;
 
 const Button = styled.button`
   padding: 10px;
-  font-size: 20px;
+  margin-top: 10px;
+  font-size: 15px;
+  border: 2px grey solid;
+  border-radius: 15px;
   background-color: transparent;
   cursor: pointer;
   &:hover {
@@ -121,6 +132,10 @@ const Carousel = () => {
                 <Button>SHOP NOW</Button>
               </Link>
             </InfoContainer>
+
+            <ImgContainer>
+              <Image src={item.img} />
+            </ImgContainer>
           </Slide>
         ))}
       </Wrapper>

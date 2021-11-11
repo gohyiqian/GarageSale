@@ -4,6 +4,7 @@ import { mobile } from "../responsiveMobile";
 
 const Container = styled.div`
   display: flex;
+  padding: 20px;
   ${mobile({ flexDirection: "column" })}
 `;
 
@@ -11,18 +12,19 @@ const Left = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 30px;
 `;
 
 const Center = styled.div`
   flex: 1;
-  padding: 20px;
+  padding: 30px;
   ${mobile({ display: "none" })}
 `;
 
 const List = styled.ul`
   margin: 0;
   padding: 0;
+  font-size: 12px;
   list-style: none;
   display: flex;
   flex-wrap: wrap;
@@ -35,26 +37,33 @@ const ListItem = styled.li`
 
 const Right = styled.div`
   flex: 1;
-  padding: 20px;
+  padding: 30px;
   ${mobile({ backgroundColor: "#fff8f8" })}
 `;
-
+const Desc = styled.span`
+  font-size: 13px;
+  text-align: justify;
+`;
 const ContactItem = styled.div`
   margin-bottom: 20px;
   display: flex;
   align-items: center;
+  font-size: 13px;
 `;
 
 const Footer = () => {
   return (
     <Container>
       <Left>
-        <h1>GARAGESALE</h1>
-        <p className="mt-3">
+        <h2>GARAGESALE</h2>
+        <Desc className="mt-3 ">
           There are many variations of passages of Lorem Ipsum available, but
           the majority have suffered alteration in some form, by injected
           humour, or randomised words which don’t look even slightly believable.
-        </p>
+          There are many variations of passages of Lorem Ipsum available, but
+          the majority have suffered alteration in some form, by injected
+          humour, or randomised words which don’t look even slightly believable.
+        </Desc>
       </Left>
       <Center>
         <h3 className="mb-4">Useful Links</h3>

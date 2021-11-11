@@ -55,6 +55,7 @@ Self-practice project to improve my development skills.
 - Display 8 Products on HomePage
 - Add Caurosel
 - Fix the login credentials
+- store JWTs inside an httpOnly cookie (avoid XSS attack)
 - Add to Cart Features
 - Delete From Cart Features
 - Update stripe from legacy version to new version

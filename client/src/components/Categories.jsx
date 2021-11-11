@@ -12,6 +12,17 @@ const Container = styled.div`
   ${mobile({ padding: "0px", flexDirection: "column" })}
 `;
 
+const Title = styled.span`
+  display: flex;
+  font-size: 18px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #fcf5f5;
+`;
+
 const Categories = () => {
   const [cat, setCat] = useState();
   useEffect(() => {
@@ -35,12 +46,15 @@ const Categories = () => {
   }, []);
 
   return (
-    <Container className="p-4">
-      {/* using dummyData */}
-      {categories.map((item) => (
-        <CategoryItem item={item} key={item.id} />
-      ))}
-    </Container>
+    <>
+      <Title>SHOP BY CATEGORIES</Title>
+      <Container className="p-4">
+        {/* using dummyData */}
+        {categories.map((item) => (
+          <CategoryItem item={item} key={item.id} />
+        ))}
+      </Container>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import {
   Facebook,
   Twitter,
   Pinterest,
+  Search,
 } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
@@ -13,35 +14,43 @@ import { mobile } from "../responsiveMobile";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-  height: 60px;
+  height: 65px;
   position: sticky;
   top: 0;
   z-index: 999;
   background-color: #945047;
   color: white;
-  ${mobile({ height: "50px" })}
+  ${mobile({ height: "150px", flexDirection: "column" })}
 `;
 
 const Wrapper = styled.div`
-  padding: 10px 20px;
+  padding: 5px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ${mobile({ padding: "10px 0px" })}
+  ${mobile({ padding: "10px 0px", flexDirection: "column" })}
 `;
 
 const Center = styled.div`
   flex: 2;
   display: flex;
   justify-content: center;
+  align-items: center;
+  ${mobile({ flexDirection: "column", margin: "5px" })}
 `;
 
 const Left = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  margin-right: 25px;
   justify-content: flex-start;
+`;
+
+const Logo = styled.h1`
+  display: flex;
+  margin-top: 3px;
+  margin-left: 10px;
+  align-items: center;
 `;
 
 const Right = styled.div`
@@ -53,7 +62,7 @@ const Right = styled.div`
 `;
 
 const NavItem = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   cursor: pointer;
   margin-left: 25px;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
@@ -61,6 +70,7 @@ const NavItem = styled.div`
 
 const SocialContainer = styled.div`
   display: flex;
+  ${mobile({ display: "none" })}
 `;
 
 const SocialIcon = styled.div`
@@ -77,6 +87,25 @@ const SocialIcon = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+const SearchContainer = styled.div`
+  border: 0.5px solid lightgray;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  padding: 5px;
+`;
+
+const Input = styled.input`
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  width: 500px;
+  font-s9xe
+  margin-right: 15px;
+  ${mobile({ width: "300px" })};
+`;
+
 const linkStyle = {
   textDecoration: "none",
   color: "white",
@@ -89,7 +118,12 @@ const Navbar = () => {
     <Container>
       <Wrapper>
         <Left>
-          <NavItem>FOLLOW US ON:</NavItem>
+          <Link to="/" style={linkStyle}>
+            <Logo>GARAGESALE</Logo>
+          </Link>
+        </Left>
+
+        <Center>
           <SocialContainer>
             <SocialIcon color="3B5999">
               <Facebook />
@@ -104,12 +138,10 @@ const Navbar = () => {
               <Pinterest />
             </SocialIcon>
           </SocialContainer>
-        </Left>
-
-        <Center>
-          <Link to="/" style={linkStyle}>
-            <h1>GARAGESALE</h1>
-          </Link>
+          <SearchContainer>
+            <Input placeholder="Search all you want ..." />
+            <Search style={{ color: "gray", fontSize: 25 }} />
+          </SearchContainer>
         </Center>
 
         <Right>

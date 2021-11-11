@@ -18,7 +18,7 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  ${mobile({ height: "20vh" })}
+  ${mobile({ width: "40vh" })}
 `;
 
 const Title = styled.h1`
