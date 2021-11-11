@@ -2,9 +2,10 @@
 
 A full-stack responsive ecommerce web application with the following features:
 
-1. Customised caurosel on homepage
-2. Product Filtering function on Product List Page
-3. Stripe check out payment capability
+1. Customised caurosel on Homepage
+2. Product Filtering function on ProductCategoryPage
+3. Product Sort according to Price on ProductCategoryPage
+4. Stripe check out payment capability
 
 Self-practice project to improve my development skills.
 
@@ -15,12 +16,14 @@ Self-practice project to improve my development skills.
 - ExpressJS
 - MongoDB
 - Stripe API
+- Socket io
 
-## Styled primarily using:
+## Styled using (ordered in degree of usage) :
 
-- Material UI
 - Styled-components
 - CSS Flexbox
+- Material UI (for Icons)
+- TailWind CSS (some classNames)
 
 ## Authorisation & Authentication:
 
@@ -34,6 +37,8 @@ Self-practice project to improve my development skills.
 - cors
 - mongoose
 - nodemon
+- multer
+- express-validator
 
 ## Mongoose Schemas:
 
@@ -42,12 +47,26 @@ Self-practice project to improve my development skills.
 - Messages: {conversationId, sender, text, timestamp}
 - Posts: { userId, desc, img, likes, timestamp}
 
-## Pending:
+## Pending MVP:
 
+- Add Navbar and Footer
+- Layout using CSS Flexbox with styled-components
+- Display all Categories on HomePage
+- Display 8 Products on HomePage
+- Add Caurosel
 - Fix the login credentials
+- Add to Cart Features
+- Delete From Cart Features
 - Update stripe from legacy version to new version
-- Add Chat button and socket.io features
+- Add Admin Dashboard to Post (Upload Imgs, desc etc)
+- Add Create Shop Function
+- Add Follow Favorite Product
+- Add Follow Favorite Shop
+- Add Chat icon fixed on Bottom right
+- Add Chat with socket.io features
 
-## Credits:
+## Pending Bonus:
 
-Lama Dev
+- Metamask Login Options
+- Login via Google Options
+- OpenSea API to convert into an fake NFTs ecommerce instead

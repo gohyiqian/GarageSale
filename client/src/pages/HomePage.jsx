@@ -7,7 +7,7 @@ import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
 import SearchBar from "../components/SearchBar";
 import Carousel from "../components/Carousel";
-
+// import OpenSeaAPI from "../components/OpenSeaAPI";
 // import PopChat from "../components/PopChat";
 
 const Home = () => {
@@ -17,6 +17,7 @@ const Home = () => {
   // };
   return (
     <div>
+      {/* <OpenSeaAPI /> */}
       <Navbar />
       <Banner />
       <SearchBar />
