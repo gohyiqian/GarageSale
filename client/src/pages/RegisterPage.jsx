@@ -3,11 +3,12 @@ import { mobile } from "../responsiveMobile.js";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 import axios from "axios";
 
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 90vh;
   background: #fce1e1;
   display: flex;
   align-items: center;
@@ -20,12 +21,12 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: white;
-  border-radius: 30px;
+  border-radius: 20px;
   ${mobile({ width: "75%" })}
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 100%;
   border: none;
   padding: 10px 20px;
   background-color: #945047;
@@ -40,6 +41,12 @@ const Button = styled.button`
     background-color: #fce1e1;
     color: black;
   }
+`;
+
+const Hr = styled.hr`
+  color: red;
+  border: solid grey 1px;
+  width: 300px;
 `;
 
 const linkStyle = {
@@ -117,60 +124,67 @@ const Register = () => {
   // };
 
   return (
-    <Container>
-      <Wrapper className="p-5">
-        <h1 className="mb-2">GARAGESALE</h1>
-        <p className="mb-4">
-          <i>Create an Account Now!</i>
-        </p>
-        <Form>
-          <Form.Group>
-            <span>Username:</span>
-            <Form.Control
-              type="username"
-              className="mb-3"
-              placeholder="Minimum 3 characters"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <span>Email</span>
-            <Form.Control
-              type="email"
-              className="mb-3"
-              placeholder="Please key valid email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <span>Password:</span>
-            <Form.Control
-              type="password"
-              className="mb-3"
-              placeholder="Minimum 8 characters"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+    <>
+      <Navbar />
+      <Container>
+        <Wrapper className="p-5">
+          <Link to="/" style={linkStyle}>
+            <h1 className="mb-2" style={{ color: "#945047" }}>
+              GARAGESALE
+            </h1>
+          </Link>
+          <p className="mb-4">
+            <i>Create an Account Now!</i>
+          </p>
+          <Form>
+            <Form.Group>
+              <Form.Control
+                type="username"
+                className="mb-3"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <Form.Control
+                type="email"
+                className="mb-3"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-            <Form.Control
-              type="password"
-              className="mb-4"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </Form.Group>
+              <Form.Control
+                type="password"
+                className="mb-2"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
 
-          {message && <Error className="mb-3">{message}</Error>}
+              <Form.Control
+                type="password"
+                className="mb-4"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </Form.Group>
 
-          <Button type="submit" className="mb-3" onClick={handleSubmit}>
-            CREATE
-          </Button>
-        </Form>
+            {message && <Error className="mb-3">{message}</Error>}
 
-        <Link to="/login" style={linkStyle}>
-          <p>Already have Account? Go Login!</p>
-        </Link>
-      </Wrapper>
-    </Container>
+            <Button type="submit" className="mb-3" onClick={handleSubmit}>
+              CREATE
+            </Button>
+          </Form>
+
+          <Link to="/login" style={linkStyle}>
+            <p>Already have Account? Go Login!</p>
+          </Link>
+          <Hr />
+          <span>By joining, you agree to the Terms and Privacy Policy</span>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
 

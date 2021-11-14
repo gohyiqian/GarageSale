@@ -13,7 +13,7 @@ const productRoute = require("./controllers/productController");
 const cartRoute = require("./controllers/cartController");
 const orderRoute = require("./controllers/orderController");
 const stripeRoute = require("./controllers/stripeController");
-const cors = require("cors");
+const cors = require("cors"); // still unclear on CORS
 
 mongoose
   .connect(process.env.MONGO_URL)
