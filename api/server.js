@@ -2,10 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const multer = require("multer");
 require("dotenv").config();
-const path = require("path");
-// console.log(path.join(__dirname, "/public/images"));
 
 const userRoute = require("./controllers/userController");
 const authRoute = require("./controllers/authController");
@@ -13,6 +10,7 @@ const productRoute = require("./controllers/productController");
 const cartRoute = require("./controllers/cartController");
 const orderRoute = require("./controllers/orderController");
 const stripeRoute = require("./controllers/stripeController");
+const postRoute = require("./controllers/postController");
 const cors = require("cors"); // still unclear on CORS
 
 mongoose
@@ -27,31 +25,6 @@ mongoose
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-
-// MULTER DiskStorage
-// upload to public/images folder first
-// to refactor and upload to external databases
-// app.use("/images", express.static(path.join(__dirname, "/public/images")));
-
-// storage destination
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images");
-  },
-  // determine the of uploaded file in the folder
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now() + ".jpeg");
-  },
-});
-
-const upload = multer({ storage: storage });
-app.post("/api/upload", upload.single("file"), (req, res) => {
-  try {
-    return res.status(200).json("File uploaded successfully");
-  } catch (error) {
-    console.error(error);
-  }
-});
 
 // test send cookie to client
 // app.get("/send", (req, res) => {
@@ -69,6 +42,7 @@ app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
+app.use("/api/upload", postRoute);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Backend server is running!");

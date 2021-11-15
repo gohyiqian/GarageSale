@@ -6,15 +6,17 @@ A full-stack responsive ecommerce web application with the following features:
 2. Product Filtering function on ProductCategoryPage
 3. Product Sort according to Price on ProductCategoryPage
 4. Stripe check out payment capability
+5. The Unique Selling Point(USP) of this application is the drag-and-drop features whereby user can drag the desired products directly into the shopping cart instead of button click.
 
 Self-practice project to improve my development skills.
 
 ## Ecommerce App built with:
 
 - ReactJS
+- Redux
 - NodeJS
 - ExpressJS
-- MongoDB
+- MongoDB/ SQLite
 - Stripe API (Payment CheckOut)
 - Unsplash API (For querying Photos)
 - Socket io (Live Chat)
@@ -51,13 +53,26 @@ Self-practice project to improve my development skills.
 
 ## Pending MVP:
 
+The MVP will have the essential features of an ecommerce applications such as:
+
+1. Browsing Products by categories
+2. Filter Products by colors, sizes
+3. Sort Products by prices and createdDates
+4. Add to Cart Feature
+5. Check out Feature
+6. USP Features: Able to Drag Products to Cart
+
+### To-do Checklist:
+
 - [x] Add Navbar and Footer
-- [x] Layout using CSS Flexbox with styled-components
+- [x] Design Layout using CSS Flexbox with styled-components
 - [x] Display all Categories on HomePage
 - [x] Display 8 Products on HomePage
 - [x] Add Caurosel
 - [x] Fix the login credentials
 - [x] store JWTs inside an httpOnly cookie (avoid XSS attack)
+- [ ] Create Redux store, slice and actions
+- [ ] useSelector and useDispatch to connect components to store
 - [ ] Add to Cart Features
 - [ ] Delete From Cart Features
 - [ ] Add Stripe CheckOut
@@ -66,14 +81,14 @@ Self-practice project to improve my development skills.
 - [ ] Add Create Shop
 - [ ] Add Follow Favorite Product
 - [ ] Add Follow Favorite Shop
-- [ ] Add Chat icon fixed on Bottom right
-- [ ] Add Chat with socket.io features
 
 ## Pending Bonus:
 
 - [ ] Metamask Login Options for user to remain anonymous
-- [ ] Login via Google Options/ Passport JS
-- [ ] Email notification upon Registering
+- [ ] Login via Google OAuth Options/ Passport JS
+- [ ] Email notification upon Account registration
 - [ ] WhatsApp or Telegram notification upon Order Completion
 - [ ] Add product/shop location and user location
 - [ ] Map distance to show Product Delivery time upon Order Completion
+- [ ] Add Chat icon fixed on Bottom right
+- [ ] Add Chat with socket.io features
