@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import CartCheckOutPage from "./pages/CartCheckOutPage";
 import PaymentSuccessPage from "./pages/PaymentSuccessPage";
+import PostProductPage from "./pages/PostProductPage";
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +14,10 @@ import {
 } from "react-router-dom";
 
 // import { useSelector } from "react-redux";
-import { createContext, useEffect, useReducer } from "react";
+import { createContext } from "react";
+import AllUserPage from "./pages/AllUserPage";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 const INITIAL_STATE = {
   user: localStorage.getItem("accessToken") || null,
@@ -49,6 +53,16 @@ const App = () => {
 
         <Route path="/success">
           <PaymentSuccessPage />
+        </Route>
+
+        <DndProvider backend={HTML5Backend}>
+          <Route path="/posts/product">
+            <PostProductPage />
+          </Route>
+        </DndProvider>
+
+        <Route path="/allusers">
+          <AllUserPage />
         </Route>
 
         <Route path="/login">
