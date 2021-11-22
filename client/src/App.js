@@ -31,18 +31,11 @@ console.log(INITIAL_STATE);
 
 const App = () => {
   const user = INITIAL_STATE.user;
+  // const user = false;
   // const user = useSelector((state) => state.user.currentUser);
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-
-        <Route path="/products/:category">
-          <ProductCategoryPage />
-        </Route>
-
         <Route path="/product/:id">
           <ProductShowPage />
         </Route>
@@ -55,23 +48,31 @@ const App = () => {
           <PaymentSuccessPage />
         </Route>
 
-        <DndProvider backend={HTML5Backend}>
-          <Route path="/posts/product">
-            <PostProductPage />
-          </Route>
-        </DndProvider>
-
         <Route path="/allusers">
           <AllUserPage />
         </Route>
 
-        <Route path="/login">
+        <Route exact path="/login">
           {user ? <Redirect to="/" /> : <LoginPage />}
         </Route>
 
         <Route path="/register">
           {user ? <Redirect to="/" /> : <RegisterPage />}
         </Route>
+
+        <DndProvider backend={HTML5Backend}>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+
+          <Route path="/posts/product">
+            <PostProductPage />
+          </Route>
+
+          <Route path="/products/:category">
+            <ProductCategoryPage />
+          </Route>
+        </DndProvider>
       </Switch>
     </Router>
   );

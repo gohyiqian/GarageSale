@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
-import Products from "../components/Products";
-import Newsletter from "../components/Newsletter";
+import ProductsList from "../components/ProductsList";
 import Footer from "../components/Footer";
 import { mobile } from "../responsiveMobile.js";
 import { useLocation } from "react-router";
 import { useState } from "react";
+import CartDndSection from "../components/CartDndSection";
 
 const Container = styled.div``;
 
@@ -33,23 +33,24 @@ const Select = styled.select`
   margin-right: 20px;
   ${mobile({ margin: "10px 0px" })}
 `;
-const Option = styled.option``;
 
-const ProductList = () => {
+const ProductCategoryPage = () => {
   // USING PATH LOCATION TO CHANGE FILTER STATE
   const location = useLocation();
   // console.log(location);
   // console.log(location.pathname.split("/")[2]);
+
+  // get selected product category from path
   const cat = location.pathname.split("/")[2];
 
-  //  useState
+  // sort & filter state
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");
 
   // handle filters onChange
   const handleFilters = (e) => {
     const value = e.target.value;
-    // use spread to capture all selected filters
+    // use spread to capture all prev selected filters
     setFilters({
       ...filters,
       [e.target.name]: value,
@@ -59,7 +60,7 @@ const ProductList = () => {
   console.log(filters);
   return (
     <>
-      <Navbar />
+      <NavBar />
       <Banner />
 
       <Container className="p-4">
@@ -68,40 +69,41 @@ const ProductList = () => {
           <Filter>
             <FilterText>Color:</FilterText>
             <Select name="color" onChange={handleFilters}>
-              <Option selected="true">All</Option>
-              <Option>white</Option>
-              <Option>black</Option>
-              <Option>red</Option>
-              <Option>blue</Option>
-              <Option>yellow</Option>
-              <Option>green</Option>
+              <option selected="true">All</option>
+              <option>white</option>
+              <option>black</option>
+              <option>red</option>
+              <option>blue</option>
+              <option>yellow</option>
+              <option>green</option>
             </Select>
+
             <FilterText>Size:</FilterText>
             <Select name="size" onChange={handleFilters}>
-              <Option selected="true">All</Option>
-              <Option>XS</Option>
-              <Option>S</Option>
-              <Option>M</Option>
-              <Option>L</Option>
-              <Option>XL</Option>
+              <option selected="true">All</option>
+              <option>XS</option>
+              <option>S</option>
+              <option>M</option>
+              <option>L</option>
+              <option>XL</option>
             </Select>
           </Filter>
           <Filter>
-            <FilterText>Sort Options:</FilterText>
+            <FilterText>Sort options:</FilterText>
             <Select onChange={(e) => setSort(e.target.value)}>
-              <Option value="latest">Latest</Option>
-              <Option value="asc">Prices (low to high)</Option>
-              <Option value="desc">Prices (high to low)</Option>
+              <option value="latest">Latest</option>
+              <option value="asc">Prices (low to high)</option>
+              <option value="desc">Prices (high to low)</option>
             </Select>
           </Filter>
         </FilterContainer>
-        <Products cat={cat} filters={filters} sort={sort} />
+        {/* pass filtering props to products component */}
+        <ProductsList cat={cat} filters={filters} sort={sort} />
       </Container>
-
-      <Newsletter />
+      <CartDndSection />
       <Footer />
     </>
   );
 };
 
-export default ProductList;
+export default ProductCategoryPage;

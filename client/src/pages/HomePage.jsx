@@ -2,14 +2,14 @@ import React from "react";
 import Banner from "../components/Banner";
 import Categories from "../components/Categories";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 import Newsletter from "../components/Newsletter";
-import Products from "../components/Products";
+import ProductsList from "../components/ProductsList";
 import Carousel from "../components/Carousel";
 // import OpenSeaAPI from "../components/OpenSeaAPI";
 // import PopChat from "../components/PopChat";
 
-const Home = () => {
+const HomePage = () => {
   // const msgs = ["hey whatsup!"];
   // const getMessage = (msg) => {
   //   console.log(msg);
@@ -17,11 +17,11 @@ const Home = () => {
   return (
     <div>
       {/* <OpenSeaAPI /> */}
-      <Navbar />
+      <NavBar />
       <Banner />
       <Carousel />
       <Categories />
-      <Products />
+      <ProductsList />
       <Newsletter />
       <Footer />
       {/* <PopChat messages={msgs} getMessage={getMessage} /> */}
@@ -29,4 +29,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

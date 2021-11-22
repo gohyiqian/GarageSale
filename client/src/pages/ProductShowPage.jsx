@@ -2,7 +2,7 @@ import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsiveMobile.js";
 import { useLocation } from "react-router";
@@ -165,7 +165,7 @@ const Product = () => {
 
   return (
     <Container>
-      <Navbar />
+      <NavBar />
       <Banner />
 
       <Wrapper>

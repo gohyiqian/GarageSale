@@ -5,12 +5,15 @@ import {
   Facebook,
   Pinterest,
   Search,
+  Person,
 } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsiveMobile";
 // import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 
 const Container = styled.div`
   height: 65px;
@@ -19,6 +22,7 @@ const Container = styled.div`
   z-index: 999;
   background-color: #945047;
   color: white;
+  padding: 0 20px;
   ${mobile({ height: "150px", flexDirection: "column" })}
 `;
 
@@ -64,6 +68,7 @@ const NavItem = styled.div`
   font-size: 13px;
   cursor: pointer;
   margin-left: 25px;
+  display: flex;
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
@@ -110,9 +115,23 @@ const linkStyle = {
   color: "white",
 };
 
-const Navbar = () => {
-  // const quantity = useSelector((state) => state.cart.quantity);
+const DropdownContent = styled.div`
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  &:hover {
+    background-color: #ddd;
+  }
+`;
 
+const DropdownLink = styled.a``;
+
+const NavBar = () => {
+  // const quantity = useSelector((state) => state.cart.quantity);
+  const user = false;
   return (
     <Container>
       <Wrapper>
@@ -141,12 +160,15 @@ const Navbar = () => {
         </Center>
 
         <Right>
-          <Link to="/register" style={linkStyle}>
-            <NavItem>REGISTER</NavItem>
-          </Link>
-          <Link to="/login" style={linkStyle}>
-            <NavItem>SIGN IN</NavItem>
-          </Link>
+          {user ? (
+            <Link to="/login" style={linkStyle}>
+              <NavItem>LOGIN | REGISTER</NavItem>
+            </Link>
+          ) : (
+            <Link to="/register" style={linkStyle}>
+              <NavItem>LOGIN | REGISTER</NavItem>
+            </Link>
+          )}
           <Link to="/cart" style={linkStyle}>
             <NavItem>
               <Badge badgeContent={1} color="primary">
@@ -154,10 +176,13 @@ const Navbar = () => {
               </Badge>
             </NavItem>
           </Link>
+          <NavItem>
+            <Person />
+          </NavItem>
         </Right>
       </Wrapper>
     </Container>
   );
 };
 
-export default Navbar;
+export default NavBar;

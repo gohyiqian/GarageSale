@@ -1,8 +1,8 @@
-import { Add, Remove } from "@material-ui/icons";
+import NavBar from "../components/NavBar";
 import styled from "styled-components";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+import { Add, Remove } from "@material-ui/icons";
 import { mobile } from "../responsiveMobile.js";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -186,7 +186,7 @@ const Cart = () => {
 
   return (
     <>
-      <Navbar />
+      <NavBar />
       <Banner />
       <Container>
         <Wrapper>

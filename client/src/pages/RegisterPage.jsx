@@ -3,7 +3,7 @@ import { mobile } from "../responsiveMobile.js";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 import axios from "axios";
 
 const Container = styled.div`
@@ -59,7 +59,7 @@ const Error = styled.span`
   color: red;
 `;
 
-const Register = () => {
+const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -125,7 +125,7 @@ const Register = () => {
 
   return (
     <>
-      <Navbar />
+      <NavBar />
       <Container>
         <Wrapper className="p-5">
           <Link to="/" style={linkStyle}>
@@ -188,4 +188,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterPage;

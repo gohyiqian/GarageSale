@@ -21,7 +21,7 @@ const Title = styled.span`
   background-color: #fcf5f5;
 `;
 
-const Products = ({ cat, filters, sort }) => {
+const ProductsList = ({ cat, filters, sort }) => {
   // (cat, filters, sort) props passed from ProductCategoryPage
   // console.log(filters);
   const [products, setProducts] = useState([]);
@@ -98,4 +98,4 @@ const Products = ({ cat, filters, sort }) => {
   );
 };
 
-export default Products;
+export default ProductsList;

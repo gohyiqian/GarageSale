@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { ItemTypes } from "../Utilities/itemTypes";
+import { useDrag } from "react-dnd";
 
 const Info = styled.div`
   display: flex;
@@ -15,7 +17,6 @@ const Info = styled.div`
   align-items: center;
   justify-content: center;
   transition: all 0.5s ease;
-  cursor: pointer;
 `;
 
 const Button = styled.button`
@@ -26,14 +27,6 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: 600;
   border-radius: 10px;
-`;
-
-const Circle = styled.div`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-color: white;
-  position: absolute;
 `;
 
 const Image = styled.img`
@@ -84,13 +77,25 @@ const Container = styled.div`
 `;
 
 const Product = ({ item }) => {
+  const [{ isDragging }, drag] = useDrag({
+    type: ItemTypes.CARD,
+    id: item.id,
+    item: item,
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
   return (
-    <Container>
-      <Circle />
+    <Container
+      ref={drag}
+      style={{
+        cursor: isDragging ? "grabbing" : "grab",
+      }}
+    >
       <PriceInfo>${item.price}</PriceInfo>
       <Image src={item.img} />
       <Info>
-        <Title>{item.name}</Title>
+        <Title>{item.title}</Title>
         <Link to={`/product/${item._id}`}>
           <Button>BUY NOW</Button>
         </Link>

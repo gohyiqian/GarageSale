@@ -128,7 +128,7 @@ const Carousel = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Link to={`/products/tshirt`}>
+              <Link to={`/posts/product`}>
                 <Button>SHOP NOW</Button>
               </Link>
             </InfoContainer>

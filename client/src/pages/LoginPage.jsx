@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Form } from "react-bootstrap";
 // import { login } from "../redux/apiCalls";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 
 const Container = styled.div`
   width: 100vw;
@@ -58,7 +58,7 @@ const linkStyle = {
   color: "#945047",
 };
 
-const Login = () => {
+const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -89,7 +89,7 @@ const Login = () => {
 
   return (
     <>
-      <Navbar />
+      <NavBar />
       <Container>
         <Wrapper className="p-5">
           <Link to="/" style={linkStyle}>
@@ -137,4 +137,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
