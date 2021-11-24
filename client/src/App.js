@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import ShoppingCartPage from "./pages/ShoppingCartPage";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
+import AllUserPage from "./pages/AllUserPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import HomePage from "./pages/HomePage";
 
-function App() {
+const App = () => {
+  const user = false;
+  const cart = true;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/login">
+          {user ? <Redirect to="/" /> : <LoginPage />}
+        </Route>
+
+        <Route path="/register">
+          {user ? <Redirect to="/" /> : <RegisterPage />}
+        </Route>
+
+        <Route path="/profile" exact component={AllUserPage} />
+
+        <DndProvider backend={HTML5Backend}>
+          <Route exact path="/" exact component={HomePage} />
+          <Route path="/cart" exact component={ShoppingCartPage} />
+        </DndProvider>
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
