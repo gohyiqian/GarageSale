@@ -12,7 +12,7 @@ export const getPosts = createAsyncThunk(
   // action payload creator callback function
   async () => {
     try {
-      const res = await fetch("https://fakestoreapi.com/products?limit=6");
+      const res = await fetch("https://fakestoreapi.com/products?limit=9");
       //   console.log(res);
       let data = await res.json();
       // console.log(data);
@@ -54,7 +54,7 @@ export const productSlice = createSlice({
       .addCase(getPosts.fulfilled, (state, action) => {
         state.products = action.payload;
         // state.loading = false;
-        state.status = "succeeded";
+        state.status = "success";
       })
       .addCase(getPosts.rejected, (state, action) => {
         state.status = "failed";

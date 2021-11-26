@@ -31,7 +31,7 @@ const Desc = styled.span`
   align-items: center;
 `;
 
-const Product = ({ item }) => {
+const ProductCard = ({ item }) => {
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.CARD,
     item: item,
@@ -51,4 +51,4 @@ const Product = ({ item }) => {
   );
 };
 
-export default Product;
+export default ProductCard;

@@ -94,6 +94,7 @@ const Footer = () => {
         </ContactItem>
         <img src="https://i.ibb.co/Qfvn4z6/payment.png" alt="" />
       </Right>
+      © 2021 KenjiGoh
     </Container>
   );
 };

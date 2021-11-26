@@ -1,6 +1,6 @@
 import styled from "styled-components";
 // import { popularProducts } from "../dummyData";
-import Product from "./Product";
+import ProductCard from "./ProductCard";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -88,11 +88,11 @@ const ProductsList = ({ cat, filters, sort }) => {
       <Container>
         {cat
           ? filteredProducts.map((item) => (
-              <Product item={item} key={item.id} />
+              <ProductCard item={item} key={item.id} />
             ))
           : products
               .slice(0, 10)
-              .map((item) => <Product item={item} key={item.id} />)}
+              .map((item) => <ProductCard item={item} key={item.id} />)}
       </Container>
     </>
   );

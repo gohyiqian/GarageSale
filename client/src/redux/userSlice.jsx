@@ -50,10 +50,24 @@ const usersAdapter = createEntityAdapter();
 const userSlice = createSlice({
   name: "users",
   initialState: usersAdapter.getInitialState({
-    users: [],
+    user: null,
+    isAuth: null,
+    token: localStorage.getItem("token"),
     status: "idle",
   }),
   reducers: {
+    loginStart: (state) => {
+      state.status = "loading";
+    },
+    loginSuccess: (state, action) => {
+      state.status = "success";
+      state.user = action.payload;
+    },
+    loginFailure: (state) => {
+      state.status = "failed";
+    },
+    register: (state) => {},
+    logOut: (state) => {},
     usersSetAll: usersAdapter.setAll,
     usersAddOne: usersAdapter.addOne,
     usersAddMany: usersAdapter.addMany,
@@ -77,11 +91,12 @@ const userSlice = createSlice({
 
 export const { actions } = userSlice;
 // memoized selectors
+export const userSelectors = usersAdapter.getSelectors((state) => state.users);
 // the getSelectors method will return 5 selectors:
 // selectAll - maps over state.ids array and return an array of entities
 // selectIds - returns state.ids array
 // selectTotal - returns total # of entities stored in this state
 // selectById - given the state & entity ID, return the entity with that ID or undefined
 // selectEntities - returns state.entities lookup table
-export const userSelectors = usersAdapter.getSelectors((state) => state.users);
+
 export const userReducer = userSlice.reducer;
