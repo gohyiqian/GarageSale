@@ -8,6 +8,8 @@ const cartSlice = createSlice({
     // products: [],
     // quantity: 0,
     // total: 0,
+    cartItems: [],
+    shippingAddress: {},
     status: "idle",
   }),
   reducers: {
@@ -15,28 +17,34 @@ const cartSlice = createSlice({
     // state.quantity += 1;
     // state.total += action.payload.price * action.payload.quantity;
     addToCart: (state, action) => {
-      const itemExists = state.find((item) => item.id === action.payload.id);
+      const itemExists = state.cartItems.find(
+        (item) => item.id === action.payload.id
+      );
       if (itemExists) {
         itemExists.quantity++;
       } else {
-        state.push({ ...action.payload, quantity: 1 });
+        state.cartItems.push({ ...action.payload, quantity: 1 });
       }
     },
     incrementQty: (state, action) => {
-      const item = state.find((item) => item.id === action.payload);
+      const item = state.cartItems.find((item) => item.id === action.payload);
       item.quantity++;
     },
     decrementQty: (state, action) => {
       const item = state.find((item) => item.id === action.payload);
       if (item.quantity === 1) {
-        const index = state.findIndex((item) => item.id === action.payload);
+        const index = state.cartItems.findIndex(
+          (item) => item.id === action.payload
+        );
         state.splice(index, 1);
       } else {
         item.quantity--;
       }
     },
     removeFromCart: (state, action) => {
-      const index = state.findIndex((item) => item.id === action.payload);
+      const index = state.cartItems.findIndex(
+        (item) => item.id === action.payload
+      );
       state.splice(index, 1);
     },
     cartAddOne: cartAdapter.addOne,

@@ -4,7 +4,9 @@ import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
-// import axios from "axios";
+import { register } from "../redux/apiCalls";
+// import Loader from "../components/Loader";
+import { useDispatch, useSelector } from "react-redux";
 
 const Hr = styled.hr`
   color: red;
@@ -23,36 +25,46 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
 
-  // Fetch() Method
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (username.length && email && password && confirmPassword === 0) {
-      return setMessage("Please enter username");
-    }
-    if (confirmPassword !== password) {
-      return setMessage("Please key same password");
-    }
-    const response = await fetch("api/auth/register", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        email: email,
-        password: password,
-      }),
-    });
-    const result = await response.json();
-    console.log(result);
-
-    if (result.savedUser) {
-      window.location.assign("/login");
-    } else if (result.errors) {
-      setMessage(result.errors[0].msg);
+    if (password !== confirmPassword) {
+      return setMessage("Passwords do not match");
+    } else {
+      dispatch(register(username, email, password));
     }
   };
+
+  // Fetch() Method
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (username.length && email && password && confirmPassword === 0) {
+  //     return setMessage("Please enter username");
+  //   }
+  //   if (confirmPassword !== password) {
+  //     return setMessage("Please key same password");
+  //   }
+  //   const response = await fetch("api/auth/register", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       username: username,
+  //       email: email,
+  //       password: password,
+  //     }),
+  //   });
+  //   const result = await response.json();
+  //   console.log(result);
+
+  //   if (result.savedUser) {
+  //     window.location.assign("/login");
+  //   } else if (result.errors) {
+  //     setMessage(result.errors[0].msg);
+  //   }
+  // };
 
   // Axios Method
   // const handleSubmit = async (e) => {

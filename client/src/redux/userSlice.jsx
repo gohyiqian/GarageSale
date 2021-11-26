@@ -50,9 +50,11 @@ const usersAdapter = createEntityAdapter();
 const userSlice = createSlice({
   name: "users",
   initialState: usersAdapter.getInitialState({
-    user: null,
-    isAuth: null,
-    token: localStorage.getItem("token"),
+    userInfo: null,
+    error: null,
+    // isAuth: null,
+    // isAdmin: null,
+    // token: localStorage.getItem("token"),
     status: "idle",
   }),
   reducers: {
@@ -61,13 +63,28 @@ const userSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.status = "success";
-      state.user = action.payload;
+      state.userInfo = action.payload;
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
-    loginFailure: (state) => {
+    loginFailure: (state, action) => {
       state.status = "failed";
+      state.error = action.payload;
     },
-    register: (state) => {},
-    logOut: (state) => {},
+    registerStart: (state) => {
+      state.status = "loading";
+    },
+    registerSuccess: (state, action) => {
+      state.status = "success";
+      state.userInfo = action.payload;
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
+    },
+    registerFailure: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    },
+    logOut: () => {
+      localStorage.removeItem("userInfo");
+    },
     usersSetAll: usersAdapter.setAll,
     usersAddOne: usersAdapter.addOne,
     usersAddMany: usersAdapter.addMany,

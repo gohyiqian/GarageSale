@@ -2,9 +2,11 @@ import styled from "styled-components";
 import styles from "../App.module.css";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
-// import { login } from "../redux/apiCalls";
+// import Loader from "../components/Loader";
+import { login } from "../redux/apiCalls";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { useDispatch, useSelector } from "react-redux";
 
 const Hr = styled.hr`
   color: red;
@@ -21,30 +23,35 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-
-  const handleSubmit = async (e) => {
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const response = await fetch("api/auth/login", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    });
-    const result = await response.json();
-    console.log(result);
-
-    if (result.accessToken) {
-      console.log(result.accessToken);
-      localStorage.setItem("accessToken", result.accessToken);
-      window.location.assign("/");
-    } else if (result.errors) {
-      setMessage(result.errors[0].msg);
-    }
+    dispatch(login(username, password));
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const response = await fetch("api/auth/login", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       username: username,
+  //       password: password,
+  //     }),
+  //   });
+  //   const result = await response.json();
+  //   console.log(result);
+
+  //   if (result.accessToken) {
+  //     console.log(result.accessToken);
+  //     localStorage.setItem("accessToken", result.accessToken);
+  //     window.location.assign("/");
+  //   } else if (result.errors) {
+  //     setMessage(result.errors[0].msg);
+  //   }
+  // };
 
   return (
     <>

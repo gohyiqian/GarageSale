@@ -1,38 +1,26 @@
 import { Badge } from "@material-ui/core";
+import SearchBar from "../components/SearchBar";
 import {
   ShoppingCartOutlined,
   Instagram,
   Facebook,
   Pinterest,
-  Search,
   Person,
 } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsiveMobile";
-// import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-// import { LinkContainer } from "react-router-bootstrap";
-// import { Nav, Navbar } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { LinkContainer } from "react-router-bootstrap";
+import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
 
-const Container = styled.div`
-  height: 65px;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background-color: #945047;
-  color: white;
-  padding: 0 20px;
-  ${mobile({ height: "150px", flexDirection: "column" })}
-`;
-
-const Wrapper = styled.div`
-  padding: 5px 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  ${mobile({ padding: "10px 0px", flexDirection: "column" })}
-`;
+const NavBarStyle = {
+  position: "sticky",
+  top: "0",
+  zIndex: "999",
+  backgroundColor: "#945047",
+  color: "white",
+};
 
 const Center = styled.div`
   flex: 2;
@@ -64,14 +52,6 @@ const Right = styled.div`
   ${mobile({ flex: 2, justifyContent: "center" })}
 `;
 
-const NavItem = styled.div`
-  font-size: 13px;
-  cursor: pointer;
-  margin-left: 25px;
-  display: flex;
-  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
-`;
-
 const SocialContainer = styled.div`
   display: flex;
   ${mobile({ display: "none" })}
@@ -91,57 +71,29 @@ const SocialIcon = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
-  padding: 5px;
-`;
-
-const Input = styled.input`
-  border: none;
-  border-radius: 5px;
-  height: 30px;
-  width: 500px;
-  font-s9xe
-  margin-right: 15px;
-  ${mobile({ width: "300px" })};
-`;
-
-const linkStyle = {
-  textDecoration: "none",
-  color: "white",
-};
-
-const DropdownContent = styled.div`
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  &:hover {
-    background-color: #ddd;
-  }
-`;
-
-const DropdownLink = styled.a``;
-
 const NavBar = () => {
   // const quantity = useSelector((state) => state.cart.quantity);
-  const user = false;
+  const user = true;
+  const userInfo = {
+    isAdmin: true,
+  };
+  const logoutHandler = () => {
+    // dispatch(logout())
+  };
   return (
-    <Container>
-      <Wrapper>
+    <Navbar
+      style={NavBarStyle}
+      // bg="light"
+      variant="light"
+      expand="lg"
+      collapseOnSelect
+    >
+      <Container>
+        {/* <Wrapper> */}
         <Left>
-          <Link to="/" style={linkStyle}>
+          <LinkContainer to="/">
             <Logo>GARAGESALE</Logo>
-          </Link>
-        </Left>
-
-        <Center>
+          </LinkContainer>
           <SocialContainer>
             <SocialIcon color="3B5999">
               <Facebook />
@@ -153,38 +105,64 @@ const NavBar = () => {
               <Pinterest />
             </SocialIcon>
           </SocialContainer>
-          <SearchContainer>
-            <Input placeholder="Search all you want ..." />
-            <Search style={{ color: "gray", fontSize: 25 }} />
-          </SearchContainer>
-        </Center>
+        </Left>
 
-        <Right>
-          {user ? (
-            <Link to="/login" style={linkStyle}>
-              <NavItem>LOGIN | REGISTER</NavItem>
-            </Link>
-          ) : (
-            <Link to="/register" style={linkStyle}>
-              <NavItem>LOGIN | REGISTER</NavItem>
-            </Link>
-          )}
-          <Link to="/cart" style={linkStyle}>
-            <NavItem>
-              <Badge badgeContent={1} color="primary" max={100}>
-                <ShoppingCartOutlined />
-              </Badge>
-            </NavItem>
-          </Link>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Center>
+            <SearchBar />
+          </Center>
 
-          <Link to="/profile" style={linkStyle}>
-            <NavItem>
-              <Person />
-            </NavItem>
-          </Link>
-        </Right>
-      </Wrapper>
-    </Container>
+          <Nav className="ml-auto">
+            <LinkContainer to="/cart">
+              <Nav.Link>
+                <Badge badgeContent={1} color="primary" max={100}>
+                  <ShoppingCartOutlined />
+                </Badge>
+              </Nav.Link>
+            </LinkContainer>
+
+            <Right>
+              {user ? (
+                <>
+                  <Person />
+                  <NavDropdown title="Dummy" id="username">
+                    <LinkContainer to="/profile">
+                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Item onClick={logoutHandler}>
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link>
+                    <i className="fas fa-user"></i>Login
+                  </Nav.Link>
+                </LinkContainer>
+              )}
+
+              {user && userInfo.isAdmin && (
+                <NavDropdown title="Admin" id="adminmenue">
+                  <LinkContainer to="/admin/userlist">
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <LinkContainer to="/admin/productlist">
+                    <NavDropdown.Item>Products</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <LinkContainer to="/admin/orderlist">
+                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
+            </Right>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 

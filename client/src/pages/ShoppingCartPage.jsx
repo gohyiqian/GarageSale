@@ -6,7 +6,7 @@ import styled from "styled-components";
 import styles from "../App.module.css";
 // import NavBar from "../components/NavBar";
 import CartDndSection from "../components/CartDndSection";
-import Product from "../components/Product";
+import ProductCard from "../components/ProductCard";
 
 const Container = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ const AllProductsPage = () => {
       <h2 className={styles.title}>My Shopping Cart</h2>
       <Container>
         {products.map((item) => (
-          <Product item={item} />
+          <ProductCard item={item} />
         ))}
       </Container>
       <CartDndSection />

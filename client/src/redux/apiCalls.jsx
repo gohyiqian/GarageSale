@@ -1,12 +1,50 @@
 import { actions } from "./userSlice";
-import { publicRequest } from "../requestMethods";
+import axios from "axios";
 
-export const login = async (dispatch, user) => {
-  dispatch(actions.loginStart());
+// USER LOGIN
+export const login = (username, password) => async (dispatch) => {
   try {
-    const res = await publicRequest.post("/auth/login", user);
-    dispatch(actions.loginSuccess(res.data));
+    dispatch(actions.loginStart());
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post(
+      "/api/users/login/",
+      { username: username, password: password },
+      config
+    );
+
+    dispatch(actions.loginSuccess(data));
   } catch (err) {
-    dispatch(actions.loginFailure());
+    dispatch(actions.loginFailure(err));
+  }
+};
+
+// USER REGISTER
+export const register = (username, email, password) => async (dispatch) => {
+  try {
+    dispatch(actions.registerStart());
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post(
+      "/api/users/register/",
+      {
+        username: username,
+        email: email,
+        password: password,
+      },
+      config
+    );
+
+    dispatch(actions.registerSuccess(data));
+  } catch (err) {
+    dispatch(actions.registerFailure(err));
   }
 };
