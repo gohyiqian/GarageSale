@@ -10,13 +10,11 @@ export const login = (username, password) => async (dispatch) => {
         "Content-type": "application/json",
       },
     };
-
     const { data } = await axios.post(
       "/api/users/login/",
       { username: username, password: password },
       config
     );
-
     dispatch(actions.loginSuccess(data));
   } catch (err) {
     dispatch(actions.loginFailure(err));
@@ -27,6 +25,7 @@ export const login = (username, password) => async (dispatch) => {
 export const register = (username, email, password) => async (dispatch) => {
   try {
     dispatch(actions.registerStart());
+
     const config = {
       headers: {
         "Content-type": "application/json",

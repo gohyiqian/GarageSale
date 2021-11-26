@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <div>
       <NavBar />
-      <Banner />
+      {/* <Banner /> */}
       <Carousel />
       <Categories />
       {/* <ProductsList /> */}

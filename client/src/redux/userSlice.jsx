@@ -51,11 +51,11 @@ const userSlice = createSlice({
   name: "users",
   initialState: usersAdapter.getInitialState({
     userInfo: null,
+    status: "idle",
     error: null,
     // isAuth: null,
     // isAdmin: null,
     // token: localStorage.getItem("token"),
-    status: "idle",
   }),
   reducers: {
     loginStart: (state) => {

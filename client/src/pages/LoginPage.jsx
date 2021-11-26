@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import styles from "../App.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-// import Loader from "../components/Loader";
+import Loader from "../components/Loader";
 import { login } from "../redux/apiCalls";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
@@ -23,11 +23,48 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user); // get user info from store
+  const { error, status, userInfo } = user;
+
+  // const redirect = location.search ? location.search.split("=")[1] : "/";
+
+  // useEffect(() => {
+  //   if (user) {
+  //     history.push(redirect);
+  //   }
+  // }, [history, user, redirect]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(username, password));
+    // window.location.assign("/");
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const response = await fetch("api/users/login/", {
+  //     method: "POST",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       username: username,
+  //       password: password,
+  //     }),
+  //   });
+  //   const result = await response.json();
+  //   console.log(result);
+
+  // if (result.accessToken) {
+  //   console.log(result.accessToken);
+  //   localStorage.setItem("accessToken", result.accessToken);
+  //   window.location.assign("/");
+  // } else if (result.errors) {
+  //   setMessage(result.errors[0].msg);
+  // }
+  // };
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();

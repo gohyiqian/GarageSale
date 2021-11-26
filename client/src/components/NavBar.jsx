@@ -73,23 +73,25 @@ const SocialIcon = styled.div`
 
 const NavBar = () => {
   // const quantity = useSelector((state) => state.cart.quantity);
-  const user = true;
+
+  // get user info from store
+  // const userLogin = useSelector(state => state.userLogin)
+  // const { userInfo } = userLogin
+
+  // dummy
+  const user = false;
   const userInfo = {
     isAdmin: true,
   };
+
+  const dispatch = useDispatch();
+
   const logoutHandler = () => {
     // dispatch(logout())
   };
   return (
-    <Navbar
-      style={NavBarStyle}
-      // bg="light"
-      variant="light"
-      expand="lg"
-      collapseOnSelect
-    >
+    <Navbar style={NavBarStyle} variant="light" expand="lg" collapseOnSelect>
       <Container>
-        {/* <Wrapper> */}
         <Left>
           <LinkContainer to="/">
             <Logo>GARAGESALE</Logo>
@@ -114,15 +116,14 @@ const NavBar = () => {
           </Center>
 
           <Nav className="ml-auto">
-            <LinkContainer to="/cart">
-              <Nav.Link>
-                <Badge badgeContent={1} color="primary" max={100}>
-                  <ShoppingCartOutlined />
-                </Badge>
-              </Nav.Link>
-            </LinkContainer>
-
             <Right>
+              <LinkContainer to="/cart">
+                <Nav.Link>
+                  <Badge badgeContent={1} color="primary" max={100}>
+                    <ShoppingCartOutlined style={{ color: "white" }} />
+                  </Badge>
+                </Nav.Link>
+              </LinkContainer>
               {user ? (
                 <>
                   <Person />
@@ -138,7 +139,7 @@ const NavBar = () => {
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <i className="fas fa-user"></i>Login
+                    <i className="fas fa-user">Login</i>
                   </Nav.Link>
                 </LinkContainer>
               )}

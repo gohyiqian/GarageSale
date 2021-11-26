@@ -7,10 +7,11 @@ import { userReducer } from "./redux/userSlice";
 const store = configureStore({
   reducer: {
     products: productReducer,
-    users: userReducer,
+    user: userReducer,
     cart: cartReducer,
     // order: orderReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export default store;
