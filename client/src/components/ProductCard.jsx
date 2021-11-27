@@ -26,7 +26,7 @@ const ProductCard = ({ item }) => {
             <RatingStar
               value={item.rating}
               text={`${item.numReviews} reviews`}
-              color={"#945047"}
+              color={"#f8e825"}
             />
           </div>
           <Card.Text as="h3">${item.price}</Card.Text>

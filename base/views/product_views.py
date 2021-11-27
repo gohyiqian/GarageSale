@@ -35,6 +35,7 @@ def getProducts(request):
     serializer = ProductSerializer(instance=products, many=True)
     return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
 
+
 # GET 1 Product for ProductShowPage
 @api_view(['GET'])
 def getProduct(request, pk):
@@ -60,10 +61,52 @@ def createProduct(request):
         name='Sample Name',
         price=0,
         brand='Sample Brand',
-        countInStock=0,
+        stockCount=0,
         category='Sample Category',
         description=''
     )
 
-    serializer = ProductSerializer(product, many=False)
+    serializer = ProductSerializer(isntance=product, many=False)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# Admin POST Product Image
+@api_view(['POST'])
+def uploadImage(request):
+    data = request.data
+
+    product_id = data['product_id']
+    product = Product.objects.get(id=product_id)
+
+    product.image = request.FILES.get('image')
+    product.save()
+
+    return Response('Image was uploaded', status=status.HTTP_201_CREATED)
+
+
+# Admin EDIT product
+@api_view(['PATCH'])
+@permission_classes([IsAdminUser])
+def updateProduct(request, pk):
+    data = request.data
+    product = Product.objects.get(id=pk)
+
+    product.name = data['name']
+    product.price = data['price']
+    product.brand = data['brand']
+    product.stockCount = data['countInStock']
+    product.category = data['category']
+    product.description = data['description']
+
+    product.save()
+
+    serializer = ProductSerializer(product, many=False)
+    return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+# Admin DELETE Product
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteProduct(request, pk):
+    product = Product.objects.get(id=pk)
+    product.delete()
+    return Response('Producted Deleted', status=status.HTTP_204_NO_CONTENT)

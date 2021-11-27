@@ -31,7 +31,7 @@ export const dummyProducts = [
     name: "Cool Shirts",
     image:
       "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "SHIRT",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "tshirt",
@@ -45,7 +45,7 @@ export const dummyProducts = [
     name: "Winter Coats",
     image:
       "https://images.pexels.com/photos/10131651/pexels-photo-10131651.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    title: "COAT",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "coat",
@@ -59,7 +59,7 @@ export const dummyProducts = [
     name: "Skinny Jeans",
     image:
       "https://images.pexels.com/photos/7206287/pexels-photo-7206287.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    title: "JEANS",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "jeans",
@@ -73,7 +73,7 @@ export const dummyProducts = [
     name: "High Hats",
     image:
       "https://images.pexels.com/photos/9428650/pexels-photo-9428650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    title: "HATS",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "hats",
@@ -87,7 +87,7 @@ export const dummyProducts = [
     name: "Dark Sunglasses",
     image:
       "https://images.pexels.com/photos/5333043/pexels-photo-5333043.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    title: "SUNGLASSES",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "sunglasses",
@@ -101,7 +101,7 @@ export const dummyProducts = [
     name: "Smelly Shoes",
     image:
       "https://images.pexels.com/photos/2731977/pexels-photo-2731977.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    title: "SHOES",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "shoes",
@@ -115,7 +115,7 @@ export const dummyProducts = [
     name: "Dreamy Dress",
     image:
       "https://images.pexels.com/photos/9261270/pexels-photo-9261270.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    title: "DRESSES",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "dresses",
@@ -129,7 +129,7 @@ export const dummyProducts = [
     name: "Sexy Skirts",
     image:
       "https://images.pexels.com/photos/10110761/pexels-photo-10110761.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    title: "SKIRTS",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "skirts",
@@ -143,7 +143,7 @@ export const dummyProducts = [
     name: "Flowery Blouse",
     image:
       "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    title: "BLOUSES",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "blouses",
@@ -157,7 +157,7 @@ export const dummyProducts = [
     name: "Fake Fossil Wallet",
     image:
       "https://images.pexels.com/photos/4452635/pexels-photo-4452635.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-    title: "WALLETS",
+
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
     category: "wallets",

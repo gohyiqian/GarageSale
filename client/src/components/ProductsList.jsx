@@ -8,14 +8,15 @@ import { dummyProducts } from "../dummyData";
 const Container = styled.div`
   display: flex;
   padding: 20px;
+  margin: 15px;
   flex-wrap: wrap;
   justify-content: space-between;
   background-color: #fcf5f5;
 `;
 
-const Title = styled.span`
+const Title = styled.h1`
   display: flex;
-  font-size: 18px;
+  font-size: 22px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -87,10 +88,10 @@ const ProductsList = ({ cat, filters, sort }) => {
 
   return (
     <>
-      <Title>SHOP PRODUCTS</Title>
+      <Title>TOP PRODUCTS</Title>
       <Container>
-        {dummyProducts.map((item) => (
-          <ProductCard item={item} />
+        {dummyProducts.map((product) => (
+          <ProductCard product={product} />
         ))}
         {/* {cat
           ? filteredProducts.map((item) => (

@@ -61,7 +61,7 @@ const CategoryItem = ({ item }) => {
       <Link to={`/products/${item.category}`}>
         <Image src={item.image} />
         <Info>
-          <Title>{item.title}</Title>
+          <Title>{item.category.toUpperCase()}</Title>
           <Button>SHOP NOW</Button>
         </Info>
       </Link>
