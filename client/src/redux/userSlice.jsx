@@ -51,11 +51,10 @@ const userSlice = createSlice({
   name: "users",
   initialState: usersAdapter.getInitialState({
     userInfo: null,
+    details: {},
+    users: [],
     status: "idle",
     error: null,
-    // isAuth: null,
-    // isAdmin: null,
-    // token: localStorage.getItem("token"),
   }),
   reducers: {
     loginStart: (state) => {
@@ -84,6 +83,60 @@ const userSlice = createSlice({
     },
     logOut: () => {
       localStorage.removeItem("userInfo");
+    },
+    allUsersStart: (state) => {
+      state.status = "loading";
+    },
+    allUsersSuccess: (state, action) => {
+      state.status = "success";
+      state.users = action.payload;
+    },
+    allUsersFailure: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    },
+    allUsersReset: (state) => {
+      state.status = "failed";
+      state.users = [];
+    },
+    userDetailsByIdStart: (state) => {
+      state.status = "loading";
+    },
+    userDetailsByIdSuccess: (state, action) => {
+      state.status = "success";
+      state.details = action.payload;
+    },
+    userDetailsByIdFailure: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    },
+    userDetailsByIdReset: (state) => {
+      state.status = "failed";
+      state.details = {};
+    },
+    userUpdateStart: (state) => {
+      state.status = "loading";
+    },
+    userUpdateSuccess: (state) => {
+      state.status = "success";
+    },
+    userUpdateFailure: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    },
+    userUpdateReset: (state) => {
+      state.status = "failed";
+      state.details = {};
+    },
+    userDeleteStart: (state) => {
+      state.status = "loading";
+    },
+    userDeleteSuccess: (state) => {
+      state.status = "success";
+    },
+    userDeleteFailure: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
     },
     usersSetAll: usersAdapter.setAll,
     usersAddOne: usersAdapter.addOne,

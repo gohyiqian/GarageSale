@@ -64,6 +64,7 @@ const Footer = () => {
           the majority have suffered alteration in some form, by injected
           humour, or randomised words which don’t look even slightly believable.
         </Desc>
+        {/* <p>© 2021 yiqiangoh_kenji</p> */}
       </Left>
       <Center>
         <h3 className="mb-4">Useful Links</h3>
@@ -94,7 +95,6 @@ const Footer = () => {
         </ContactItem>
         <img src="https://i.ibb.co/Qfvn4z6/payment.png" alt="" />
       </Right>
-      © 2021 KenjiGoh
     </Container>
   );
 };

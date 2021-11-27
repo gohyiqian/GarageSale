@@ -21,10 +21,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         return data
 
-
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
+
+# User Register
 @api_view(['POST'])
 def registerUser(request):
     data = request.data
@@ -35,16 +36,77 @@ def registerUser(request):
             email=data['email'],
             password=make_password(data['password'])
         )
-        serializer = UserSerializerWithToken(user, many=False)
+        serializer = UserSerializerWithToken(instance=user, many=False)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
         message = {'detail': 'User with this email already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
-
+# Admin GET all users
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
-def getUsers(request):
+def getAllUsers(request):
     users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
+    serializer = UserSerializer(instance=users, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+# Admin GET userById
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def getUserById(request, pk):
+    user = User.objects.get(id=pk)
+    serializer = UserSerializer(instance=user, many=False)
     return Response(serializer.data)
+
+# User can EDIT/UPDATE themselves
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def updateUser(request, pk):
+    user = User.objects.get(id=pk)
+    data = request.data
+
+    user.first_name = data['username']
+    user.username = data['username']
+    user.email = data['email']
+    user.is_staff = data['isAdmin'] #check for is_staff = true
+    user.save()
+
+    serializer = UserSerializer(instance=user, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Admin DELETE userById
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteUser(request, pk):
+    userForDeletion = User.objects.get(id=pk)
+    userForDeletion.delete()
+    return Response('User was deleted', status=status.HTTP_204_NO_CONTENT)
+
+# User GET profile at CheckOut
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getUserProfile(request):
+    user = request.user
+    serializer = UserSerializer(instance=user, many=False)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+# User EDIT profile
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def updateUserProfile(request):
+    user = request.user
+    serializer = UserSerializerWithToken(instance=user, many=False)
+
+    data = request.data
+    user.first_name = data['username']
+    user.username = data['username']
+    user.email = data['email']
+
+    if data['password'] != '':
+        user.password = make_password(data['password'])
+
+    user.save()
+    return Response(serializer.data, status=status.HTTP_200_OK)

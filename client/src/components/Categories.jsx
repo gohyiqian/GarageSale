@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { categories } from "../dummyData";
+import { dummyProducts } from "../dummyData";
 import { mobile } from "../responsiveMobile";
 import CategoryItem from "./CategoryItem";
 import { useState, useEffect } from "react";
@@ -51,7 +51,7 @@ const Categories = () => {
       <Title>SHOP BY CATEGORIES</Title>
       <Container className="p-4">
         {/* using dummyData */}
-        {categories.map((item) => (
+        {dummyProducts.map((item) => (
           <CategoryItem item={item} key={item.id} cat={cat} />
         ))}
       </Container>

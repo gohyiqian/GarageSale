@@ -39,8 +39,8 @@ const Left = styled.div`
 
 const Logo = styled.h1`
   display: flex;
-  margin-top: 3px;
-  margin-left: 5px;
+  margin: 3px 20px;
+  cursor: pointer;
   align-items: center;
 `;
 
@@ -48,6 +48,7 @@ const Right = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
+  padding: 0 100px;
   justify-content: flex-end;
   ${mobile({ flex: 2, justifyContent: "center" })}
 `;
@@ -139,7 +140,7 @@ const NavBar = () => {
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <i className="fas fa-user">Login</i>
+                    <span>Login</span>
                   </Nav.Link>
                 </LinkContainer>
               )}

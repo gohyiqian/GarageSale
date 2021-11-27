@@ -1,35 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import { ItemTypes } from "../utilities/itemTypes";
 import { useDrag } from "react-dnd";
-
-const ItemsBox = styled.div`
-  display: flex;
-  flex-grow: 1;
-  height: 300px;
-  width: 300px;
-  flex-direction: column;
-  margin: 15px;
-  padding: 10px;
-  background-color: white;
-  justify-content: center;
-  align-items: center;
-  &:hover {
-    box-shadow: 0 0 20px rgba(33, 33, 33, 0.2);
-    transform: scale(1.1);
-  }
-`;
-
-const Image = styled.img`
-  max-height: 150px;
-  object-fit: cover;
-`;
-
-const Desc = styled.span`
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-`;
+import RatingStar from "./RatingStar";
+import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ item }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -40,13 +14,24 @@ const ProductCard = ({ item }) => {
     }),
   });
 
-  // console.log(item);
   return (
     <div ref={drag}>
-      <ItemsBox key={item.id}>
-        <Image src={item.image} alt="" />
-        <Desc>{item.title}</Desc>
-      </ItemsBox>
+      <Card className="my-3 p-3 rounded">
+        <Card.Body key={item.id}>
+          <Link to={`/product/${item.id}`}>
+            <Card.Img className="mb-3" src={item.image} alt="" height="250px" />
+          </Link>
+          <Card.Title>{item.name}</Card.Title>
+          <div className="my-2">
+            <RatingStar
+              value={item.rating}
+              text={`${item.numReviews} reviews`}
+              color={"#945047"}
+            />
+          </div>
+          <Card.Text as="h3">${item.price}</Card.Text>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

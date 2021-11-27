@@ -122,19 +122,19 @@ const Carousel = () => {
         {sliderItems.map((item) => (
           <Slide bg={item.bg} key={item.id}>
             <ImgContainer>
-              <Image src={item.img} />
+              <Image src={item.image} />
             </ImgContainer>
 
             <InfoContainer>
               <Title>{item.title}</Title>
-              <Desc>{item.desc}</Desc>
+              <Desc>{item.description}</Desc>
               <Link to={`/posts/product`}>
                 <Button>SHOP NOW</Button>
               </Link>
             </InfoContainer>
 
             <ImgContainer>
-              <Image src={item.img} />
+              <Image src={item.image} />
             </ImgContainer>
           </Slide>
         ))}

@@ -58,8 +58,8 @@ const Container = styled.div`
 const CategoryItem = ({ item }) => {
   return (
     <Container>
-      <Link to={`/products/${item.cat}`}>
-        <Image src={item.img} />
+      <Link to={`/products/${item.category}`}>
+        <Image src={item.image} />
         <Info>
           <Title>{item.title}</Title>
           <Button>SHOP NOW</Button>

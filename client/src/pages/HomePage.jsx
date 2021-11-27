@@ -3,7 +3,7 @@ import Categories from "../components/Categories";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import Newsletter from "../components/Newsletter";
-// import ProductsList from "../components/ProductsList";
+import ProductsList from "../components/ProductsList";
 import Carousel from "../components/Carousel";
 
 const HomePage = () => {
@@ -13,7 +13,7 @@ const HomePage = () => {
       {/* <Banner /> */}
       <Carousel />
       <Categories />
-      {/* <ProductsList /> */}
+      <ProductsList />
       <Newsletter />
       <Footer />
     </div>

@@ -11,6 +11,7 @@ import AllUserPage from "./pages/AllUserPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
+import ShowProductPage from "./pages/ShowProductPage";
 
 const App = () => {
   const user = false;
@@ -27,7 +28,7 @@ const App = () => {
         </Route>
 
         <Route path="/profile" exact component={AllUserPage} />
-
+        <Route path="/product/:id" exact component={ShowProductPage} />
         <DndProvider backend={HTML5Backend}>
           <Route exact path="/" exact component={HomePage} />
           <Route path="/cart" exact component={ShoppingCartPage} />

@@ -16,8 +16,8 @@ Self-practice project to improve my development skills.
 - Redux
 - NodeJS
 - ExpressJS
-- MongoDB/ SQLite
-- Stripe API (Payment CheckOut)
+- MongoDB/ PostsgreSQL
+- Stripe API/ Paypal (Payment CheckOut)
 - Unsplash API (For querying Photos)
 - Socket io (Live Chat)
 
@@ -86,7 +86,7 @@ The MVP will have the essential features of an ecommerce applications such as:
 
 - [ ] Metamask Login Options for user to remain anonymous
 - [ ] Login via Google OAuth Options/ Passport JS
-- [ ] Email notification upon Account registration
+- [ ] Email notification/verification upon Account registration
 - [ ] WhatsApp or Telegram notification upon Order Completion
 - [ ] Add product/shop location and user location
 - [ ] Map distance to show Product Delivery time upon Order Completion
