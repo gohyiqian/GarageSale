@@ -1,9 +1,13 @@
-import React from "react";
-import { Star, StarHalf, StarBorder } from "@material-ui/icons";
+// import { Star, StarHalf, StarBorder } from "@material-ui/icons";
+import styled from "styled-components";
+
+const Reviews = styled.div`
+  display: flex;
+`;
 
 const RatingStar = ({ value, text, color }) => {
   return (
-    <div>
+    <Reviews>
       <span>
         <i
           style={{ color }}
@@ -69,8 +73,8 @@ const RatingStar = ({ value, text, color }) => {
         ></i>
       </span>
       {/* if text exists, include text */}
-      <p>{text && text}</p>
-    </div>
+      <p className="px-2">{text && text}</p>
+    </Reviews>
   );
 };
 

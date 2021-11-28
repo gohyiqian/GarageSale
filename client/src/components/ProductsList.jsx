@@ -8,9 +8,8 @@ import { dummyProducts } from "../dummyData";
 const Container = styled.div`
   display: flex;
   padding: 20px;
-  margin: 15px;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   background-color: #fcf5f5;
 `;
 

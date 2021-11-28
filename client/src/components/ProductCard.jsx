@@ -4,32 +4,40 @@ import { useDrag } from "react-dnd";
 import RatingStar from "./RatingStar";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import styles from "../App.module.css";
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ product }) => {
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.CARD,
-    item: item,
+    product: product,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   });
 
   return (
-    <div ref={drag}>
-      <Card className="my-3 p-3 rounded">
-        <Card.Body key={item.id}>
-          <Link to={`/product/${item.id}`}>
-            <Card.Img className="mb-3" src={item.image} alt="" height="250px" />
-          </Link>
-          <Card.Title>{item.name}</Card.Title>
-          <div className="my-2">
-            <RatingStar
-              value={item.rating}
-              text={`${item.numReviews} reviews`}
-              color={"#f8e825"}
-            />
-          </div>
-          <Card.Text as="h3">${item.price}</Card.Text>
+    <div ref={drag} className="m-2 py-3">
+      <Card style={{ width: "18rem" }}>
+        <Link to={`/product/${product.id}`}>
+          <Card.Img
+            className={styles.card_img_top}
+            variant="top"
+            src={product.image}
+            alt=""
+            height="250px"
+          />
+        </Link>
+        <Card.Body key={product.id}>
+          <Card.Title>{product.name}</Card.Title>
+          <Card.Text>Short description here...</Card.Text>
+          <RatingStar
+            value={product.rating}
+            text={`${product.numReviews} reviews`}
+            color={"#f8e825"}
+          />{" "}
+          <button className={styles.loginBtn} variant="primary">
+            ${product.price} | SHOP NOW
+          </button>
         </Card.Body>
       </Card>
     </div>
