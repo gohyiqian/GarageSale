@@ -3,20 +3,22 @@ import {
   createAsyncThunk,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
-// import axios from "axios";
+import axios from "axios";
 
 const productsAdapter = createEntityAdapter();
 
-export const getPosts = createAsyncThunk(
-  "posts/getPosts", //action type string
+export const getNFTs = createAsyncThunk(
+  "products/getNFTs", //action type string
   // action payload creator callback function
   async () => {
     try {
-      const res = await fetch("https://fakestoreapi.com/products?limit=9");
+      const res = await fetch(
+        "https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20"
+      );
       //   console.log(res);
       let data = await res.json();
       // console.log(data);
-      return data;
+      return data["assets"];
     } catch (err) {
       console.log(err);
     }
@@ -24,19 +26,21 @@ export const getPosts = createAsyncThunk(
 );
 
 // AXIOS
-// export const getPosts = createAsyncThunk("posts/getPosts", async () => {
-//   try {
-//     const res = await axios.get("https://fakestoreapi.com/products");
-//     return res.data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
+export const getProduct = createAsyncThunk("posts/getPosts", async () => {
+  try {
+    const res = await axios.get("http://127.0.0.1:8000/api/products");
+    console.log(res.data);
+    return res.data["products"];
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 export const productSlice = createSlice({
   name: "posts",
   initialState: {
     products: [],
+    nfts: [],
     status: "idle",
   },
   reducers: {
@@ -47,16 +51,28 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getPosts.pending, (state, action) => {
+      .addCase(getProduct.pending, (state) => {
         // state.loading = true;
         state.status = "loading";
       })
-      .addCase(getPosts.fulfilled, (state, action) => {
+      .addCase(getProduct.fulfilled, (state, action) => {
         state.products = action.payload;
         // state.loading = false;
         state.status = "success";
       })
-      .addCase(getPosts.rejected, (state, action) => {
+      .addCase(getProduct.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(getNFTs.pending, (state) => {
+        // state.loading = true;
+        state.status = "loading";
+      })
+      .addCase(getNFTs.fulfilled, (state, action) => {
+        state.nfts = action.payload;
+        // state.loading = false;
+        state.status = "success";
+      })
+      .addCase(getNFTs.rejected, (state) => {
         state.status = "failed";
       });
   },

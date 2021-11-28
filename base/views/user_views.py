@@ -44,7 +44,7 @@ def registerUser(request):
 
 # Admin GET all users
 @api_view(['GET'])
-@permission_classes([IsAdminUser])
+# @permission_classes([IsAdminUser])
 def getAllUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(instance=users, many=True)

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { dummyProducts } from "../dummyData";
+import { getProduct } from "../redux/productSlice";
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +31,11 @@ const ProductsList = ({ cat, filters, sort }) => {
   // const [filteredProducts, setFilteredProducts] = useState([]);
   const dispatch = useDispatch();
   const { products, status } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    dispatch(getProduct());
+  }, [dispatch]);
+
   // getProducts by category
   // useEffect activated when [cat] changes
   // useEffect(() => {
@@ -89,7 +95,7 @@ const ProductsList = ({ cat, filters, sort }) => {
     <>
       <Title>TOP PRODUCTS</Title>
       <Container>
-        {dummyProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard product={product} />
         ))}
         {/* {cat

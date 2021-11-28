@@ -11,7 +11,7 @@ const store = configureStore({
     cart: cartReducer,
     // order: orderReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export default store;

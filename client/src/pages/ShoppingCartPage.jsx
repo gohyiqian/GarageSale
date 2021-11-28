@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import { actions, productSelectors } from "../redux/productSlice";
-import { getPosts } from "../redux/productSlice";
+import { getNFTs } from "../redux/productSlice";
 import styled from "styled-components";
 import styles from "../App.module.css";
 // import NavBar from "../components/NavBar";
 import CartDndSection from "../components/CartDndSection";
-import ProductCard from "../components/ProductCard";
+import ProductCardTest from "../components/ProductCardTest";
+import NavBar from "../components/NavBar";
 
 const Container = styled.div`
   display: flex;
@@ -20,13 +21,13 @@ const Container = styled.div`
 
 const AllProductsPage = () => {
   const dispatch = useDispatch();
-  const { products, status } = useSelector((state) => state.products);
-  // console.log(products);
+  const { nfts, status } = useSelector((state) => state.products);
+  console.log(nfts);
   // console.log(status);
 
   useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+    dispatch(getNFTs());
+  }, []);
 
   if (status === "loading") {
     return (
@@ -38,11 +39,11 @@ const AllProductsPage = () => {
 
   return (
     <>
-      {/* <NavBar /> */}
-      <h2 className={styles.title}>My Shopping Cart</h2>
+      <NavBar />
+      <h2 className={styles.title}>OpenSea NFTs</h2>
       <Container>
-        {products.map((item) => (
-          <ProductCard item={item} />
+        {nfts.map((product) => (
+          <ProductCardTest product={product} />
         ))}
       </Container>
       <CartDndSection />

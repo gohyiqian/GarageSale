@@ -22,21 +22,20 @@ const ProductCard = ({ product }) => {
           <Card.Img
             className={styles.card_img_top}
             variant="top"
-            src={product.image}
+            src={product.image_url}
             alt=""
             height="250px"
           />
         </Link>
         <Card.Body key={product.id}>
           <Card.Title>{product.name}</Card.Title>
-          <Card.Text>Short description here...</Card.Text>
           <RatingStar
             value={product.rating}
             text={`${product.numReviews} reviews`}
             color={"#f8e825"}
           />{" "}
           <button className={styles.loginBtn} variant="primary">
-            <strong>${product.price} | SHOP NOW </strong>
+            <strong>${product.seller_fee_basis_points} | SHOP NOW </strong>
           </button>
         </Card.Body>
       </Card>
