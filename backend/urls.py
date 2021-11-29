@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from backend import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('', views.home),
@@ -24,3 +26,6 @@ urlpatterns = [
     path('api/products/', include('base.urls.product_urls')),
     # path('api/orders/', include('base.urls.order_urls')),
 ]
+
+# configure path to uploaded images
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

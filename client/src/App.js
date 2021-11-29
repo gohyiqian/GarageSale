@@ -12,6 +12,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import ShowProductPage from "./pages/ShowProductPage";
+import CartPage from "./pages/CartPage";
+import CategoryPage from "./pages/CategoryPage";
 
 const App = () => {
   const user = false;
@@ -27,11 +29,13 @@ const App = () => {
           {user ? <Redirect to="/" /> : <RegisterPage />}
         </Route>
 
+        <Route path="/cart" exact component={CartPage} />
         <Route path="/profile" exact component={AllUserPage} />
         <Route path="/product/:id" exact component={ShowProductPage} />
         <DndProvider backend={HTML5Backend}>
           <Route exact path="/" exact component={HomePage} />
-          <Route path="/cart" exact component={ShoppingCartPage} />
+          <Route path="/nftcart" exact component={ShoppingCartPage} />
+          <Route path="/products/:category" exact component={CategoryPage} />
         </DndProvider>
       </Switch>
     </Router>

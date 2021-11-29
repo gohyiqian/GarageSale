@@ -16,7 +16,7 @@ const SearchBar = () => {
   };
 
   return (
-    <Form onSubmit={submitHandler} inline style={{ display: "flex" }}>
+    <Form onSubmit={submitHandler} inline="true" style={{ display: "flex" }}>
       <Form.Control
         type="text"
         name="q"

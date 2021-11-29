@@ -155,6 +155,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/images/' #point to the media folder within the static folder
+
+STATICFILES_DIRS = [BASE_DIR/ 'backend/static'] #let django know of this folder
+
+MEDIA_ROOT =  'backend/static/images' #set the dir for uploaded images
 
 CORS_ALLOW_ALL_ORIGINS = True
 

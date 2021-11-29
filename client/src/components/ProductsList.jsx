@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import ProductCard from "./ProductCard";
 import { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { dummyProducts } from "../dummyData";
-import { getProduct } from "../redux/productSlice";
+// import { dummyProducts } from "../dummyData";
+import { getProducts } from "../redux/productSlice";
 
 const Container = styled.div`
   display: flex;
@@ -28,12 +29,12 @@ const ProductsList = ({ cat, filters, sort }) => {
   // (cat, filters, sort) props passed from ProductCategoryPage
   // console.log(filters);
   // const [products, setProducts] = useState([]);
-  // const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const dispatch = useDispatch();
-  const { products, status } = useSelector((state) => state.products);
+  const { products, status, error } = useSelector((state) => state.products);
 
   useEffect(() => {
-    dispatch(getProduct());
+    dispatch(getProducts());
   }, [dispatch]);
 
   // getProducts by category
@@ -58,54 +59,66 @@ const ProductsList = ({ cat, filters, sort }) => {
 
   // filter products to find those that matches the category
   // useEffect activated when [products,cat,filters] changes
-  // useEffect(() => {
-  //   if (cat) {
-  //     if (filters.color === "All" || filters.size === "All") {
-  //       setFilteredProducts(products);
-  //     } else {
-  //       const filterOption = products.filter((item) =>
-  //         Object.entries(filters).every(([key, value]) =>
-  //           item[key].includes(value)
-  //         )
-  //       );
-  //       console.log(filterOption);
-  //       setFilteredProducts(filterOption);
-  //     }
-  //   }
-  // }, [products, cat, filters]);
+  useEffect(() => {
+    if (cat) {
+      if (filters.color === "All" || filters.size === "All") {
+        setFilteredProducts(products);
+      } else {
+        const filterOption = products.filter((item) =>
+          Object.entries(filters).every(([key, value]) =>
+            item[key].includes(value)
+          )
+        );
+        console.log(filterOption);
+        setFilteredProducts(filterOption);
+      }
+    }
+  }, [products, cat, filters]);
 
   // Sorting by Prices & CreatedDate
-  // useEffect(() => {
-  //   if (sort === "latest") {
-  //     setFilteredProducts((prev) =>
-  //       [...prev].sort((a, b) => a.createdAt - b.createdAt)
-  //     );
-  //   } else if (sort === "asc") {
-  //     setFilteredProducts((prev) =>
-  //       [...prev].sort((a, b) => a.price - b.price)
-  //     );
-  //   } else {
-  //     setFilteredProducts((prev) =>
-  //       [...prev].sort((a, b) => b.price - a.price)
-  //     );
-  //   }
-  // }, [sort]);
+  useEffect(() => {
+    if (sort === "latest") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.createdAt - b.createdAt)
+      );
+    } else if (sort === "asc") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.price - b.price)
+      );
+    } else {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => b.price - a.price)
+      );
+    }
+  }, [sort]);
+
+  // if (status === "loading") {
+  //   return (
+  //     <div>
+  //       <div className={styles.loader} />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
       <Title>TOP PRODUCTS</Title>
-      <Container>
-        {products.map((product) => (
-          <ProductCard product={product} />
-        ))}
-        {/* {cat
-          ? filteredProducts.map((item) => (
-              <ProductCard item={item} key={item.id} />
-            ))
-          : products
-              .slice(0, 10)
-              .map((item) => <ProductCard item={item} key={item.id} />)} */}
-      </Container>
+      {status === "loading" ? (
+        <Loader />
+      ) : (
+        <Container>
+          {products.map((product) => (
+            <ProductCard product={product} />
+          ))}
+          {/* {cat
+            ? filteredProducts.map((item) => (
+                <ProductCard item={item} key={item.id} />
+              ))
+            : products
+                .slice(0, 10)
+                .map((item) => <ProductCard item={item} key={item.id} />)} */}
+        </Container>
+      )}
     </>
   );
 };

@@ -73,7 +73,7 @@ const SocialIcon = styled.div`
 `;
 
 const NavBar = () => {
-  // const quantity = useSelector((state) => state.cart.quantity);
+  const { cartItems } = useSelector((state) => state.cart);
 
   // get user info from store
   // const userLogin = useSelector(state => state.userLogin)
@@ -120,7 +120,14 @@ const NavBar = () => {
             <Right>
               <LinkContainer to="/cart">
                 <Nav.Link>
-                  <Badge badgeContent={1} color="primary" max={100}>
+                  <Badge
+                    badgeContent={cartItems.reduce(
+                      (acc, item) => acc + item.qty,
+                      0
+                    )}
+                    color="primary"
+                    max={100}
+                  >
                     <ShoppingCartOutlined style={{ color: "white" }} />
                   </Badge>
                 </Nav.Link>
@@ -138,11 +145,18 @@ const NavBar = () => {
                   </NavDropdown>
                 </>
               ) : (
-                <LinkContainer to="/login">
-                  <Nav.Link>
-                    <span>Login</span>
-                  </Nav.Link>
-                </LinkContainer>
+                <>
+                  <LinkContainer to="/login">
+                    <Nav.Link>
+                      <span>Login</span>
+                    </Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/nftcart">
+                    <Nav.Link>
+                      <span>NFTs</span>
+                    </Nav.Link>
+                  </LinkContainer>
+                </>
               )}
 
               {user && userInfo.isAdmin && (

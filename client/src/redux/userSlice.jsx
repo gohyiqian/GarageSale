@@ -1,7 +1,7 @@
 import {
   createSlice,
-  createSelector,
-  createAsyncThunk,
+  // createSelector,
+  // createAsyncThunk,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
 
@@ -49,13 +49,13 @@ const usersAdapter = createEntityAdapter();
 
 const userSlice = createSlice({
   name: "users",
-  initialState: usersAdapter.getInitialState({
+  initialState: {
     userInfo: null,
     details: {},
     users: [],
     status: "idle",
     error: null,
-  }),
+  },
   reducers: {
     loginStart: (state) => {
       state.status = "loading";

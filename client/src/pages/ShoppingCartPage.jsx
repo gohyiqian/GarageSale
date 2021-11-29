@@ -23,7 +23,6 @@ const AllProductsPage = () => {
   const dispatch = useDispatch();
   const { nfts, status } = useSelector((state) => state.products);
   console.log(nfts);
-  // console.log(status);
 
   useEffect(() => {
     dispatch(getNFTs());

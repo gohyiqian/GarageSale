@@ -6,7 +6,6 @@ import Footer from "../components/Footer";
 import { mobile } from "../responsiveMobile.js";
 import { useLocation } from "react-router";
 import { useState } from "react";
-import CartDndSection from "../components/CartDndSection";
 
 const Container = styled.div``;
 
@@ -100,7 +99,6 @@ const ProductCategoryPage = () => {
         {/* pass filtering props to products component */}
         <ProductsList cat={cat} filters={filters} sort={sort} />
       </Container>
-      <CartDndSection />
       <Footer />
     </>
   );

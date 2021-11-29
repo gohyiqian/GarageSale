@@ -4,33 +4,47 @@ const cartAdapter = createEntityAdapter();
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: cartAdapter.getInitialState({
-    // products: [],
-    // quantity: 0,
-    // total: 0,
-    cartItems: [],
-    shippingAddress: {},
+  initialState: {
+    cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
+    shippingAddress: JSON.parse(localStorage.getItem("shippingAddress")) || {},
     status: "idle",
-  }),
+  },
   reducers: {
-    // state.products.push(action.payload);
-    // state.quantity += 1;
-    // state.total += action.payload.price * action.payload.quantity;
-    addToCart: (state, action) => {
-      const itemExists = state.cartItems.find(
-        (item) => item.id === action.payload.id
+    addToCart(state, action) {
+      const item = action.payload;
+      const itemExistInCart = state.cartItems.find(
+        (x) => x.productId === item.productId
       );
-      if (itemExists) {
-        itemExists.quantity++;
+      if (itemExistInCart) {
+        return {
+          ...state,
+          cartItems: state.cartItems.map((x) =>
+            x.productId === itemExistInCart.productId ? item : x
+          ),
+        };
       } else {
-        state.cartItems.push({ ...action.payload, quantity: 1 });
+        return {
+          ...state,
+          cartItems: [...state.cartItems, item],
+        };
       }
     },
-    incrementQty: (state, action) => {
+
+    removeFromCart(state, action) {
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(
+          (x) => x.productId !== action.payload
+        ),
+      };
+    },
+
+    incrementQty(state, action) {
       const item = state.cartItems.find((item) => item.id === action.payload);
       item.quantity++;
     },
-    decrementQty: (state, action) => {
+
+    decrementQty(state, action) {
       const item = state.find((item) => item.id === action.payload);
       if (item.quantity === 1) {
         const index = state.cartItems.findIndex(
@@ -41,15 +55,31 @@ const cartSlice = createSlice({
         item.quantity--;
       }
     },
-    removeFromCart: (state, action) => {
-      const index = state.cartItems.findIndex(
-        (item) => item.id === action.payload
-      );
-      state.splice(index, 1);
+
+    saveShippingAress(state, action) {
+      return {
+        ...state,
+        shippingAddress: action.payload,
+      };
     },
-    cartAddOne: cartAdapter.addOne,
-    cartAddMany: cartAdapter.addMany,
-    cartUpdate: cartAdapter.updateOne,
+
+    savePaymentMethod(state, action) {
+      return {
+        ...state,
+        PaymentMethod: action.payload,
+      };
+    },
+
+    cartReset(state, action) {
+      return {
+        ...state,
+        cartItems: [],
+        shippingAddress: {},
+      };
+    },
+    // cartAddOne: cartAdapter.addOne,
+    // cartAddMany: cartAdapter.addMany,
+    // cartUpdate: cartAdapter.updateOne,
     cartRemove: cartAdapter.removeOne,
   },
 });
@@ -57,6 +87,8 @@ const cartSlice = createSlice({
 //export all reducer actions for use in components
 export const { actions } = cartSlice;
 // console.log(actions);
-export const cartSelectors = cartAdapter.getSelectors((state) => state.cart);
+export const cartSelectors = cartAdapter.getSelectors(
+  (state) => state.cartItems
+);
 // console.log(cartSelectors);
 export const cartReducer = cartSlice.reducer;

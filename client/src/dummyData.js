@@ -34,7 +34,7 @@ export const dummyProducts = [
 
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "art",
+    category: "shirt",
     price: 89.99,
     stockCount: 10,
     rating: 4.5,
@@ -48,7 +48,7 @@ export const dummyProducts = [
 
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "music",
+    category: "coat",
     price: 599.99,
     stockCount: 0,
     rating: 2,
@@ -62,7 +62,7 @@ export const dummyProducts = [
 
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "sports",
+    category: "jeans",
     price: 929.99,
     stockCount: 5,
     rating: 3,
@@ -76,7 +76,7 @@ export const dummyProducts = [
 
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "collectibles",
+    category: "hats",
     price: 399.99,
     stockCount: 11,
     rating: 5,
@@ -90,7 +90,7 @@ export const dummyProducts = [
 
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "utility",
+    category: "sunglasses",
     price: 49.99,
     stockCount: 7,
     rating: 3.5,
@@ -104,7 +104,7 @@ export const dummyProducts = [
 
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "videos",
+    category: "shoes",
     price: 29.99,
     stockCount: 0,
     rating: 4,
@@ -118,7 +118,7 @@ export const dummyProducts = [
 
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "virtual",
+    category: "dresses",
     price: 69.99,
     stockCount: 11,
     rating: 2.5,
@@ -132,7 +132,7 @@ export const dummyProducts = [
 
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "domain",
+    category: "skirts",
     price: 49.99,
     stockCount: 51,
     rating: 4,
@@ -146,7 +146,7 @@ export const dummyProducts = [
 
     description:
       "From our Legends Collection, the Naga was inspired by the mythical water dragon that protects the ocean's pearl. Wear facing inward to be bestowed with love and abundance, or outward for protection.",
-    category: "cards",
+    category: "blouses",
     price: 49.99,
     stockCount: 13,
     rating: 5,

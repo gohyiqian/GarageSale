@@ -2,7 +2,7 @@ import styled from "styled-components";
 import styles from "../App.module.css";
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import Loader from "../components/Loader";
+// import Loader from "../components/Loader";
 import { login } from "../redux/apiCalls";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
@@ -26,7 +26,7 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user); // get user info from store
-  const { error, status, userInfo } = user;
+  // const { error, status, userInfo } = user;
 
   // const redirect = location.search ? location.search.split("=")[1] : "/";
 

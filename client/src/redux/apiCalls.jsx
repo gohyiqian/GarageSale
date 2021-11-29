@@ -18,7 +18,7 @@ export const login = (username, password) => async (dispatch) => {
     );
     dispatch(actions.loginSuccess(data));
   } catch (err) {
-    dispatch(actions.loginFailure(err));
+    dispatch(actions.loginFailure(err.message));
   }
 };
 
@@ -38,7 +38,7 @@ export const register = (username, email, password) => async (dispatch) => {
 
     dispatch(actions.registerSuccess(data));
   } catch (err) {
-    dispatch(actions.registerFailure(err));
+    dispatch(actions.registerFailure(err.message));
   }
 };
 
@@ -61,7 +61,7 @@ export const getAllUsers = () => async (dispatch, getState) => {
     const { data } = await axios.get(`/api/users/`, authConfig);
     dispatch(actions.allUsersSuccess(data));
   } catch (err) {
-    dispatch(actions.allUsersFailure());
+    dispatch(actions.allUsersFailure(err.message));
   }
 };
 
@@ -83,7 +83,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     const { data } = await axios.get(`/api/users/${id}/`, authConfig);
     dispatch(actions.userDetailsByIdSuccess(data));
   } catch (err) {
-    dispatch(actions.userDetailsByIdFailure());
+    dispatch(actions.userDetailsByIdFailure(err.message));
   }
 };
 
@@ -107,7 +107,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
     );
     dispatch(actions.userUpdateSuccess(data));
   } catch (err) {
-    dispatch(actions.userUpdateFailure());
+    dispatch(actions.userUpdateFailure(err.message));
   }
 };
 
@@ -128,6 +128,8 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     const { data } = await axios.delete(`/api/users/delete/${id}/`, authConfig);
     dispatch(actions.userDeleteSuccess(data));
   } catch (err) {
-    dispatch(actions.userDeleteFailure());
+    dispatch(actions.userDeleteFailure(err.message));
   }
 };
+
+// GET A PRODUCT

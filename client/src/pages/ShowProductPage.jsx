@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
@@ -16,8 +16,12 @@ import {
 } from "react-bootstrap";
 import RatingStar from "../components/RatingStar";
 import Loader from "../components/Loader";
-import { dummyProducts } from "../dummyData";
+// import { dummyProducts } from "../dummyData";
 import { Add, Remove } from "@material-ui/icons";
+import { addToCartAction } from "../redux/apiCart";
+import { getProduct } from "../redux/apiProduct";
+import Message from "../components/Message";
+// import axios from "axios";
 // import Message from '../components/Message'
 // import { listProductDetails, createProductReview } from '../actions/productActions'
 // import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
@@ -36,6 +40,22 @@ const Amount = styled.span`
 
 const ShowProductPage = ({ match, history }) => {
   const [qty, setQty] = useState(0);
+  const dispatch = useDispatch();
+  const { product, status, error } = useSelector((state) => state.products);
+  console.log(product);
+
+  useEffect(() => {
+    dispatch(getProduct(match.params.id));
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   async function getProduct() {
+  //     const { data } = await axios.get(`/api/products/${match.params.id}`);
+  //     console.log(data);
+  //     setProduct(data);
+  //   }
+  //   getProduct();
+  // }, []);
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);
@@ -59,108 +79,109 @@ const ShowProductPage = ({ match, history }) => {
     // }
   };
 
-  const handleClick = () => {
-    // dispatch(
-    //   addProduct({ ...product, quantity, color, size })
-    // );
-  };
-
-  const product = dummyProducts.find((p) => p.id == match.params.id);
   return (
     <>
       <NavBar />
-      <Container>
-        <Link to="/" className="btn btn-light my-3">
-          Go Back
-        </Link>
-        <Row>
-          <Col md={5}>
-            <Image src={product.image} alt="" height="400px" />
-          </Col>
+      {status === "loading" ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
+        <Container>
+          <Link to="/" className="btn btn-light my-3">
+            Go Back
+          </Link>
+          <Row>
+            <Col md={5}>
+              <Image src={product.image} alt="" height="400px" />
+            </Col>
 
-          <Col md={3}>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                <h3>{product.name}</h3>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <RatingStar
-                  value={product.rating}
-                  text={`${product.numReviews} reviews`}
-                  color={"#945047"}
-                />
-              </ListGroup.Item>
-              <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-              <ListGroup.Item>
-                Description: {product.description}
-              </ListGroup.Item>
-            </ListGroup>
-          </Col>
-
-          <Col md={3}>
-            <Card>
+            <Col md={3}>
               <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Price:</Col>
-                    <Col>
-                      <strong>${product.price}</strong>
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Status:</Col>
-                    <Col>
-                      {product.stockCount > 0 ? "In Stock" : "Out of Stock"}
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
+                <ListGroupItem>
+                  <h3>{product.name}</h3>
+                </ListGroupItem>
+                <ListGroupItem>
+                  <RatingStar
+                    value={product.rating}
+                    text={`${product.numReviews} reviews`}
+                    color={"#945047"}
+                  />
+                </ListGroupItem>
+                <ListGroupItem>Price: ${product.price}</ListGroupItem>
+                <ListGroupItem>
+                  Description: {product.description}
+                </ListGroupItem>
+              </ListGroup>
+            </Col>
 
-                {product.stockCount > 0 && (
-                  <ListGroup.Item>
+            <Col md={3}>
+              <Card>
+                <ListGroup variant="flush">
+                  <ListGroupItem>
                     <Row>
-                      <Col>Qty</Col>
-                      <Col xs="auto" className="my-1">
-                        <AmountContainer>
-                          <Remove onClick={() => handleQuantity("dec")} />
-                          <Amount>
-                            <Form.Control
-                              as="select"
-                              value={qty}
-                              onChange={(e) => setQty(e.target.value)}
-                            >
-                              {[...Array(product.stockCount).keys()].map(
-                                (x) => (
-                                  <option key={x + 1} value={x + 1}>
-                                    {x + 1}
-                                  </option>
-                                )
-                              )}
-                            </Form.Control>
-                          </Amount>
-                          <Add onClick={() => handleQuantity("inc")} />
-                        </AmountContainer>
+                      <Col>Price:</Col>
+                      <Col>
+                        <strong>${product.price}</strong>
                       </Col>
                     </Row>
-                  </ListGroup.Item>
-                )}
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <Row>
+                      <Col>Status:</Col>
+                      <Col>
+                        {product.stockCount > 0 ? "In Stock" : "Out of Stock"}
+                      </Col>
+                    </Row>
+                  </ListGroupItem>
 
-                <ListGroup.Item>
-                  <button
-                    onClick={addToCartHandler}
-                    className={styles.loginBtn}
-                    disabled={product.stockCount == 0}
-                    type="button"
-                  >
-                    Add to Cart
-                  </button>
-                </ListGroup.Item>
-              </ListGroup>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+                  {product.stockCount > 0 && (
+                    <ListGroupItem>
+                      <Row>
+                        <Col>Qty</Col>
+                        <Col xs="auto" className="my-1">
+                          <AmountContainer>
+                            <Remove onClick={() => handleQuantity("dec")} />
+                            <Amount>
+                              <Form.Control
+                                as="select"
+                                value={Number(qty)}
+                                onChange={(e) => setQty(e.target.value)}
+                              >
+                                {[...Array(product.stockCount).keys()].map(
+                                  (x) => (
+                                    <option key={x + 1} value={Number(x) + 1}>
+                                      {x + 1}
+                                    </option>
+                                  )
+                                )}
+                              </Form.Control>
+                            </Amount>
+                            <Add onClick={() => handleQuantity("inc")} />
+                          </AmountContainer>
+                        </Col>
+                      </Row>
+                    </ListGroupItem>
+                  )}
+
+                  <ListGroupItem>
+                    <button
+                      onClick={() =>
+                        dispatch(addToCartAction(product.id, Number(qty)))
+                      }
+                      className={styles.loginBtn}
+                      disabled={product.stockCount === 0}
+                      type="button"
+                    >
+                      Add to Cart
+                    </button>
+                  </ListGroupItem>
+                </ListGroup>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      )}
     </>
   );
 };

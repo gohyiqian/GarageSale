@@ -18,7 +18,7 @@ def getProducts(request):
         name__icontains=query).order_by('-createdAt')
 
     page = request.query_params.get('page')
-    paginator = Paginator(products, 5)
+    paginator = Paginator(products, 8)
 
     try:
         products = paginator.page(page)
@@ -40,7 +40,7 @@ def getProducts(request):
 @api_view(['GET'])
 def getProduct(request, pk):
     product = Product.objects.get(id=pk)
-    serializer = ProductSerializer(instance=product, many=False)
+    serializer = ProductSerializer(instance=product, many=False) 
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
