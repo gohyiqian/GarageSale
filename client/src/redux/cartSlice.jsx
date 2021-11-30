@@ -10,27 +10,31 @@ const cartSlice = createSlice({
     status: "idle",
   },
   reducers: {
-    addToCart(state, action) {
+    addItem(state, action) {
       const item = action.payload;
       const itemExistInCart = state.cartItems.find(
         (x) => x.productId === item.productId
       );
+      // if exist, replace the item with new item
       if (itemExistInCart) {
         return {
           ...state,
           cartItems: state.cartItems.map((x) =>
+            // if match, replace by new Item, if not return original item x
             x.productId === itemExistInCart.productId ? item : x
           ),
         };
       } else {
+        // if item does not exist
         return {
-          ...state,
+          ...state, // return original state
+          // return cartItems stae, and add new item to it
           cartItems: [...state.cartItems, item],
         };
       }
     },
 
-    removeFromCart(state, action) {
+    removeItem(state, action) {
       return {
         ...state,
         cartItems: state.cartItems.filter(
@@ -56,7 +60,7 @@ const cartSlice = createSlice({
       }
     },
 
-    saveShippingAress(state, action) {
+    saveShippingAddress(state, action) {
       return {
         ...state,
         shippingAddress: action.payload,

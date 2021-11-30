@@ -1,11 +1,11 @@
 import axios from "axios";
 import { actions } from "./cartSlice";
 
-export const addToCartAction = (id, qty) => async (dispatch, getState) => {
+export const addToCart = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`);
   try {
     dispatch(
-      actions.addToCart({
+      actions.addItem({
         productId: data.id,
         name: data.name,
         image: data.image,
@@ -20,8 +20,8 @@ export const addToCartAction = (id, qty) => async (dispatch, getState) => {
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
-export const removeFromCartAction = (id) => (dispatch, getState) => {
-  dispatch(actions.removeFromCart(id));
+export const removeFromCart = (id) => (dispatch, getState) => {
+  dispatch(actions.removeItem(id));
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 

@@ -95,7 +95,7 @@ const NavBar = () => {
       <Container>
         <Left>
           <LinkContainer to="/">
-            <Logo>GARAGESALE</Logo>
+            <Logo>MYGARAGESALE</Logo>
           </LinkContainer>
           <SocialContainer>
             <SocialIcon color="3B5999">
@@ -154,6 +154,11 @@ const NavBar = () => {
                   <LinkContainer to="/nftcart">
                     <Nav.Link>
                       <span>NFTs</span>
+                    </Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/threejs">
+                    <Nav.Link>
+                      <span>3JS</span>
                     </Nav.Link>
                   </LinkContainer>
                 </>

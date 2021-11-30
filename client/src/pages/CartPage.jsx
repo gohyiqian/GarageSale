@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import NavBar from "../components/NavBar";
 import {
   Container,
@@ -15,12 +15,15 @@ import {
 } from "react-bootstrap";
 import Message from "../components/Message";
 import styles from "../App.module.css";
-import { addToCartAction, removeFromCartAction } from "../redux/apiCart";
-import { actions } from "../redux/cartSlice";
+import { addToCart, removeFromCart } from "../redux/apiCart";
+// import { actions } from "../redux/cartSlice";
+// import { Add, Remove } from "@material-ui/icons";
 
 const CartPage = ({ match, location, history }) => {
   const productId = match.params.id;
 
+  // fail safe
+  // qty?=x, if doesnt exist, show qty = 1
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
   const dispatch = useDispatch();
@@ -29,13 +32,21 @@ const CartPage = ({ match, location, history }) => {
 
   useEffect(() => {
     if (productId) {
-      dispatch(addToCartAction(productId, qty));
+      dispatch(addToCart(productId, qty));
     }
   }, [dispatch, productId, qty]);
 
   const checkoutHandler = () => {
     history.push("/login?redirect=shipping");
   };
+
+  // const handleQuantity = (type) => {
+  //   if (type === "dec") {
+  //     qty > 1 && setQty(qty - 1);
+  //   } else {
+  //     setQty(qty + 1);
+  //   }
+  // };
 
   return (
     <>
@@ -68,15 +79,13 @@ const CartPage = ({ match, location, history }) => {
                       <Col md={2}>${item.price}</Col>
 
                       <Col md={3}>
+                        {/* <Remove /> */}
                         <Form.Control
                           as="select"
                           value={item.qty}
                           onChange={(e) =>
                             dispatch(
-                              addToCartAction(
-                                item.productId,
-                                Number(e.target.value)
-                              )
+                              addToCart(item.productId, Number(e.target.value))
                             )
                           }
                         >
@@ -86,6 +95,7 @@ const CartPage = ({ match, location, history }) => {
                             </option>
                           ))}
                         </Form.Control>
+                        {/* <Add /> */}
                       </Col>
 
                       <Col md={1}>
@@ -93,7 +103,7 @@ const CartPage = ({ match, location, history }) => {
                           type="button"
                           variant="light"
                           onClick={() => {
-                            dispatch(removeFromCartAction(item.productId));
+                            dispatch(removeFromCart(item.productId));
                           }}
                         >
                           <i className="fas fa-trash"></i>

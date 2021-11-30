@@ -18,7 +18,7 @@ import RatingStar from "../components/RatingStar";
 import Loader from "../components/Loader";
 // import { dummyProducts } from "../dummyData";
 import { Add, Remove } from "@material-ui/icons";
-import { addToCartAction } from "../redux/apiCart";
+import { addToCart } from "../redux/apiCart";
 import { getProduct } from "../redux/apiProduct";
 import Message from "../components/Message";
 // import axios from "axios";
@@ -57,9 +57,9 @@ const ShowProductPage = ({ match, history }) => {
   //   getProduct();
   // }, []);
 
-  const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
-  };
+  // const addToCartHandler = () => {
+  //   history.push(`/cart/${match.params.id}?qty=${qty}`);
+  // };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -72,11 +72,11 @@ const ShowProductPage = ({ match, history }) => {
   };
 
   const handleQuantity = (type) => {
-    // if (type === "dec") {
-    //   quantity > 1 && setQuantity(quantity - 1);
-    // } else {
-    //   setQuantity(quantity + 1);
-    // }
+    if (type === "dec") {
+      qty > 1 && setQty(qty - 1);
+    } else {
+      setQty(qty + 1);
+    }
   };
 
   return (
@@ -141,7 +141,10 @@ const ShowProductPage = ({ match, history }) => {
                         <Col>Qty</Col>
                         <Col xs="auto" className="my-1">
                           <AmountContainer>
-                            <Remove onClick={() => handleQuantity("dec")} />
+                            <Remove
+                              style={{ cursor: "pointer" }}
+                              onClick={() => handleQuantity("dec")}
+                            />
                             <Amount>
                               <Form.Control
                                 as="select"
@@ -157,7 +160,10 @@ const ShowProductPage = ({ match, history }) => {
                                 )}
                               </Form.Control>
                             </Amount>
-                            <Add onClick={() => handleQuantity("inc")} />
+                            <Add
+                              style={{ cursor: "pointer" }}
+                              onClick={() => handleQuantity("inc")}
+                            />
                           </AmountContainer>
                         </Col>
                       </Row>
@@ -167,7 +173,7 @@ const ShowProductPage = ({ match, history }) => {
                   <ListGroupItem>
                     <button
                       onClick={() =>
-                        dispatch(addToCartAction(product.id, Number(qty)))
+                        dispatch(addToCart(product.id, Number(qty)))
                       }
                       className={styles.loginBtn}
                       disabled={product.stockCount === 0}

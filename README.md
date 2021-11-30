@@ -12,39 +12,33 @@ Self-practice project to improve my development skills.
 
 ## Ecommerce App built with:
 
-- ReactJS
-- Redux
-- NodeJS
-- ExpressJS
-- MongoDB/ PostsgreSQL
-- Stripe API/ Paypal (Payment CheckOut)
-- Unsplash API (For querying Photos)
+- ReactJS - frontEnd
+- React3Fiber - 3D features
+- ThreeJS - 3D features
+- ReactDnD - Drag&Drop features for cart
+- Redux - frontEnd state management
+- Django - backend API
+- NodeJS - npm package management
+- PostsgreSQL - relational database
+- Stripe API/ Paypal - Payment CheckOut
 - Socket io (Live Chat)
+- Amazon S3 - storage of product images
+- Heroku - deployment together with gunicorn webserver
 
-## Styled using (ordered in degree of usage) :
+## Styled using a mixed of the following:
 
 - Styled-components
 - CSS Flexbox
+- React-bootstrap
 - Material UI (for Icons)
 - TailWind CSS (some classNames)
 
 ## Authorisation & Authentication:
 
 - JWT Tokens
-- Cookier-Parser
-- CryptoJS (used Advanced Encryption Standard (AES) cipher algorithm for encryption)
-- Read more at https://cryptojs.gitbook.io/docs/"
+- Set Local Storage
 
-## Other packages or libraries used:
-
-- dotenv
-- cors
-- mongoose
-- nodemon
-- multer
-- express-validator
-
-## Mongoose Schemas:
+## Django Models:
 
 - User: { username, email, password, profilePicture, coverPicture, followers, followings, isAdmin, timestamp}
 - Conversations: {members(which is array of users), timestamp}
@@ -56,7 +50,7 @@ Self-practice project to improve my development skills.
 The MVP will have the essential features of an ecommerce applications such as:
 
 1. Browsing Products by categories
-2. Filter Products by colors, sizes
+2. Filter Products by colors, sizes, gender
 3. Sort Products by prices and createdDates
 4. Add to Cart Feature
 5. Check out Feature
@@ -65,22 +59,24 @@ The MVP will have the essential features of an ecommerce applications such as:
 ### To-do Checklist:
 
 - [x] Add Navbar and Footer
-- [x] Design Layout using CSS Flexbox with styled-components
+- [x] Design Layout using CSS Flexbox with styled-components/ react-bootstrap
 - [x] Display all Categories on HomePage
 - [x] Display 8 Products on HomePage
-- [x] Add Caurosel
+- [x] Add Caurosel on HomePage
 - [x] Fix the login credentials
 - [x] store JWTs inside an httpOnly cookie (avoid XSS attack)
-- [ ] Create Redux store, slice and actions
-- [ ] useSelector and useDispatch to connect components to store
-- [ ] Add to Cart Features
-- [ ] Delete From Cart Features
+- [x] Create Redux store, slice and actions
+- [x] useSelector and useDispatch to connect components to store
+- [x] Add to Cart Features
+- [x] Delete From Cart Features
+- [x] Image Storage on AWS S3
 - [ ] Add Stripe CheckOut
 - [ ] Add Order Success Page
 - [ ] Add Admin Dashboard to see Sales Data
-- [ ] Add Create Shop
+- [ ] Add Shop
 - [ ] Add Follow Favorite Product
 - [ ] Add Follow Favorite Shop
+- [ ] Add threeJS features on showProductPage
 
 ## Pending Bonus:
 
