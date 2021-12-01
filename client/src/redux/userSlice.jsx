@@ -51,12 +51,13 @@ const userSlice = createSlice({
   name: "users",
   initialState: {
     userInfo: JSON.parse(localStorage.getItem("userInfo")) || null,
-    details: {},
+    profileDetails: {},
     users: [],
     status: "idle",
     error: null,
   },
   reducers: {
+    // USER LOGIN
     loginStart: (state) => {
       state.status = "loading";
     },
@@ -69,6 +70,7 @@ const userSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     },
+    // USER REGISTER
     registerStart: (state) => {
       state.status = "loading";
     },
@@ -81,12 +83,50 @@ const userSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     },
+    // USER LOG OUT
     logOut: (state, action) => {
       localStorage.removeItem("userInfo");
       // localStorage.removeItem("cartItems");
       localStorage.removeItem("shippingAddress");
       state.userInfo = action.payload;
     },
+    // USER GET OWN PROFILE
+    userDetailsStart(state) {
+      return {
+        ...state,
+        status: "loading",
+      };
+    },
+    userDetailsSuccess: (state, action) => {
+      state.status = "success";
+      state.profileDetails = action.payload;
+    },
+    userDetailsFailure: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    },
+    userDetailsReset: (state) => {
+      state.status = "success";
+      state.profileDetails = {};
+    },
+    // USER UPDATE OWN PROFILE
+    userProfileUpdateStart: (state) => {
+      state.status = "loading";
+    },
+    userProfileUpdateSuccess: (state, action) => {
+      state.status = "success";
+      // state.userInfo = {};
+      state.profileDetails = action.payload;
+    },
+    userProfileUpdateFailure: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    },
+    userProfileUpdateReset: (state) => {
+      state.status = "success";
+      state.userInfo = {};
+    },
+    // ADMIN GET ALL USERS
     allUsersStart: (state) => {
       state.status = "loading";
     },
@@ -102,21 +142,7 @@ const userSlice = createSlice({
       state.status = "failed";
       state.users = [];
     },
-    userDetailsByIdStart: (state) => {
-      state.status = "loading";
-    },
-    userDetailsByIdSuccess: (state, action) => {
-      state.status = "success";
-      state.details = action.payload;
-    },
-    userDetailsByIdFailure: (state, action) => {
-      state.status = "failed";
-      state.error = action.payload;
-    },
-    userDetailsByIdReset: (state) => {
-      state.status = "failed";
-      state.details = {};
-    },
+    // ADMIN UPDATE user
     userUpdateStart: (state) => {
       state.status = "loading";
     },
@@ -129,8 +155,9 @@ const userSlice = createSlice({
     },
     userUpdateReset: (state) => {
       state.status = "failed";
-      state.details = {};
+      state.userInfo = {};
     },
+    // ADMIN DELETE user
     userDeleteStart: (state) => {
       state.status = "loading";
     },
@@ -141,11 +168,11 @@ const userSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     },
-    usersSetAll: usersAdapter.setAll,
-    usersAddOne: usersAdapter.addOne,
-    usersAddMany: usersAdapter.addMany,
-    userUpdate: usersAdapter.updateOne,
-    userRemove: usersAdapter.removeOne,
+    // usersSetAll: usersAdapter.setAll,
+    // usersAddOne: usersAdapter.addOne,
+    // usersAddMany: usersAdapter.addMany,
+    // userUpdate: usersAdapter.updateOne,
+    // userRemove: usersAdapter.removeOne,
   },
   // extraReducers: (builder) => {
   //   builder

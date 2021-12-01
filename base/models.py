@@ -1,5 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User #Django built-in user view
+from django.contrib.auth.models import User, AbstractUser #Django built-in user view
+
+# class CustomUser(AbstractUser):
+#     profileImage = models.ImageField(default='/noAvatar.png', null=True, blank=True)
+#     coverImage = models.ImageField(default='/noCover.jpg', null=True, blank=True)
+#     followers = models.ManyToManyField(User, blank=True)
+#     followings = models.ManyToManyField(User, blank=True)
+
 
 # Create your models here.
 class Product(models.Model):
@@ -73,3 +80,25 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return str(self.address)
+
+# class FollowRequest(models.Model):
+#     to_user = models.ForeignKey(User, related_name="following", on_delete=models.CASCADE)
+#     from_user = models.ForeignKey(User, related_name="follower", on_delete=models.CASCADE)
+#     timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
+
+# class Message(models.Model):
+#     id = models.AutoField(primary_key=True, editable=False)
+#     sender = models.ForeignKey(User,on_delete=models.CASCADE)
+#     content = models.TextField(null=True, blank=True)
+#     timestamp = models.DateField(auto_now_add=True)
+
+#     def __str__(self):
+#         return str(self.)
+
+
+# class Conversation(models.Model):
+#     participants = models.ManyToManyField(User,related_name='conversation',blank=True)
+#     message = models.ManyToManyField(Message, blank=True)
+#     timestamp = models.DateField(auto_now_add=True)
+#     def __str__(self):
+#         return str(self.name)

@@ -9,6 +9,9 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import styled from "styled-components";
 import styles from "../App.module.css";
+import { getUserDetails, updateUserProfile } from "../redux/apiUser";
+import { actions } from "../redux/userSlice";
+import { useHistory } from "react-router";
 
 const ProfileContainer = styled.div`
   height: 280px;
@@ -47,23 +50,44 @@ const UserProfilePage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const { error, status, userInfo } = useSelector((state) => state.user);
+  const { error, status, userInfo, profileDetails } = useSelector(
+    (state) => state.user
+  );
+
+  useEffect(() => {
+    if (!userInfo) {
+      history.push("/login");
+    } else {
+      if (!profileDetails || userInfo.id !== profileDetails.id) {
+        // dispatch(actions.userProfileUpdateReset());
+        dispatch(getUserDetails("profile"));
+        // dispatch(listMyOrders());
+      } else {
+        // pre-fill the form with existing logged-in user data
+        setName(profileDetails.name);
+        setEmail(profileDetails.email);
+      }
+    }
+  }, [dispatch, history, userInfo, profileDetails]);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // if (password != confirmPassword) {
-    //     setMessage('Passwords do not match')
-    // } else {
-    //     dispatch(updateUserProfile({
-    //         'id': user._id,
-    //         'name': name,
-    //         'email': email,
-    //         'password': password
-    //     }))
-    //     setMessage('')
-    // }
+    if (password != confirmPassword) {
+      setMessage("Passwords do not match");
+    } else {
+      dispatch(
+        updateUserProfile({
+          id: profileDetails.id,
+          username: name,
+          email: email,
+          password: password,
+        })
+      );
+      setMessage("");
+    }
   };
 
   return (

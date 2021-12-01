@@ -3,7 +3,7 @@ import styles from "../App.module.css";
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 // import Loader from "../components/Loader";
-import { login } from "../redux/apiCalls";
+import { login } from "../redux/apiUser";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useDispatch, useSelector } from "react-redux";

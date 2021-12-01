@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { register } from "../redux/apiCalls";
+import { register } from "../redux/apiUser";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";

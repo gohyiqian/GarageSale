@@ -88,7 +88,7 @@ def deleteUser(request, pk):
     userForDeletion.delete()
     return Response('User was deleted', status=status.HTTP_204_NO_CONTENT)
 
-# User GET profile at CheckOut
+# User GET profile
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getUserProfile(request):

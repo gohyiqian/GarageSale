@@ -76,7 +76,7 @@ const SocialIcon = styled.div`
 const NavBar = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const dispatch = useDispatch();
 

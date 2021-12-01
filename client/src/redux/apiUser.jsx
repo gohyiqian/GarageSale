@@ -42,13 +42,61 @@ export const register = (username, email, password) => async (dispatch) => {
   }
 };
 
+// GET USER DETAILS
+export const getUserDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(actions.userDetailsStart());
+
+    const {
+      user: { userInfo },
+    } = getState();
+
+    const authConfig = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/users/${id}/`, authConfig);
+    dispatch(actions.userDetailsSuccess(data));
+  } catch (err) {
+    dispatch(actions.userDetailsFailure(err.message));
+  }
+};
+
+// USER UPDATE OWN PROFILE
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch(actions.userProfileUpdateStart());
+    const {
+      user: { userInfo },
+    } = getState();
+
+    const authConfig = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.patch(
+      `/api/users/profile/update/`,
+      user,
+      authConfig
+    );
+    dispatch(actions.userProfileUpdateSuccess(data));
+    dispatch(actions.loginSuccess(data));
+  } catch (err) {
+    dispatch(actions.userProfileUpdateFailure(err.message));
+  }
+};
+
 // ADMIN GET ALL USERS
 export const getAllUsers = () => async (dispatch, getState) => {
   try {
     dispatch(actions.allUsersStart());
 
     const {
-      userLogin: { userInfo },
+      user: { userInfo },
     } = getState();
 
     const authConfig = {
@@ -65,34 +113,12 @@ export const getAllUsers = () => async (dispatch, getState) => {
   }
 };
 
-// ADMIN GET USER DETAILS BY ID
-export const getUserDetails = (id) => async (dispatch, getState) => {
-  try {
-    dispatch(actions.userDetailsByIdStart());
-
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const authConfig = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.get(`/api/users/${id}/`, authConfig);
-    dispatch(actions.userDetailsByIdSuccess(data));
-  } catch (err) {
-    dispatch(actions.userDetailsByIdFailure(err.message));
-  }
-};
-
 // ADMIN UPDATE USER
 export const updateUser = (user) => async (dispatch, getState) => {
   try {
     dispatch(actions.userUpdateStart());
     const {
-      userLogin: { userInfo },
+      user: { userInfo },
     } = getState();
 
     const authConfig = {
@@ -102,7 +128,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.patch(
-      `/api/users/update/${user._id}/`,
+      `/api/users/update/${user.id}/`,
       authConfig
     );
     dispatch(actions.userUpdateSuccess(data));
@@ -116,7 +142,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
   try {
     dispatch(actions.userDeleteStart());
     const {
-      userLogin: { userInfo },
+      user: { userInfo },
     } = getState();
 
     const authConfig = {
