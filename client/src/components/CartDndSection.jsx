@@ -53,8 +53,8 @@ const CartStatus = styled.div`
 `;
 
 const CartDndSection = () => {
-  const dispatch = useDispatch();
-  const cartItems = useSelector(cartSelectors.selectAll);
+  // const dispatch = useDispatch();
+  // const cartItems = useSelector(cartSelectors.selectAll);
   const [basket, setBasket] = useState([]);
   // Drag&Drop Feature
   const [{ isOver }, drop] = useDrop({

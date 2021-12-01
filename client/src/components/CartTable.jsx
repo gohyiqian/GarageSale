@@ -51,7 +51,7 @@ const CartTable = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(cartSelectors.selectAll);
   //   const [employees, setEmployees] = useState([]);
-  const [tableItems, setTableItems] = useState(cartItems);
+  // const [tableItems, setTableItems] = useState(cartItems);
   console.log(cartItems);
 
   let url = "https://fakestoreapi.com/products?limit=8";
@@ -63,7 +63,7 @@ const CartTable = () => {
       dispatch(actions.cartAddMany(cartItems));
     };
     getData();
-  }, []);
+  }, [url, dispatch]);
 
   const renderHeader = () => {
     let headerElement = ["No.", "Items", "Price", "Quantity", ""];

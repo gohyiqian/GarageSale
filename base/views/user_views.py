@@ -12,12 +12,14 @@ from django.contrib.auth.hashers import make_password
 
 # jwt Token
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    # validate method
     def validate(self, attrs):
         data = super().validate(attrs)
 
+        # loop through all the serializer fields and return
         serializer = UserSerializerWithToken(self.user).data
-        for k, v in serializer.items():
-            data[k] = v
+        for key, value in serializer.items():
+            data[key] = value
 
         return data
 
@@ -36,15 +38,16 @@ def registerUser(request):
             email=data['email'],
             password=make_password(data['password'])
         )
+        # return the token upon registration
         serializer = UserSerializerWithToken(instance=user, many=False)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
-        message = {'detail': 'User with this email already exists'}
+        message = {'detail': 'Username or email already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 # Admin GET all users
 @api_view(['GET'])
-# @permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def getAllUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(instance=users, many=True)

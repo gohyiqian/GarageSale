@@ -12,7 +12,8 @@ import styled from "styled-components";
 import { mobile } from "../responsiveMobile";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import { Container, Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import { actions } from "../redux/userSlice";
 
 const NavBarStyle = {
   position: "sticky",
@@ -74,22 +75,15 @@ const SocialIcon = styled.div`
 
 const NavBar = () => {
   const { cartItems } = useSelector((state) => state.cart);
-
-  // get user info from store
-  // const userLogin = useSelector(state => state.userLogin)
-  // const { userInfo } = userLogin
-
-  // dummy
-  const user = false;
-  const userInfo = {
-    isAdmin: true,
-  };
+  const { userInfo } = useSelector((state) => state.user);
+  console.log(userInfo);
 
   const dispatch = useDispatch();
 
-  const logoutHandler = () => {
-    // dispatch(logout())
+  const logOutHandler = () => {
+    dispatch(actions.logOut());
   };
+
   return (
     <Navbar style={NavBarStyle} variant="light" expand="lg" collapseOnSelect>
       <Container>
@@ -132,14 +126,18 @@ const NavBar = () => {
                   </Badge>
                 </Nav.Link>
               </LinkContainer>
-              {user ? (
+
+              {userInfo ? (
                 <>
                   <Person />
-                  <NavDropdown title="Dummy" id="username">
+                  <NavDropdown title={userInfo.name} id="username">
                     <LinkContainer to="/profile">
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                      <NavDropdown.Item>My Profile</NavDropdown.Item>
                     </LinkContainer>
-                    <NavDropdown.Item onClick={logoutHandler}>
+                    <LinkContainer to="/shop">
+                      <NavDropdown.Item>My Shop</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Item onClick={logOutHandler}>
                       Logout
                     </NavDropdown.Item>
                   </NavDropdown>
@@ -151,20 +149,21 @@ const NavBar = () => {
                       <span>Login</span>
                     </Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/nftcart">
-                    <Nav.Link>
-                      <span>NFTs</span>
-                    </Nav.Link>
-                  </LinkContainer>
+
                   <LinkContainer to="/threejs">
                     <Nav.Link>
                       <span>3JS</span>
                     </Nav.Link>
                   </LinkContainer>
+                  <LinkContainer to="/nftcart">
+                    <Nav.Link>
+                      <Button variant="dark">Connect Wallet</Button>
+                    </Nav.Link>
+                  </LinkContainer>
                 </>
               )}
 
-              {user && userInfo.isAdmin && (
+              {userInfo && userInfo.isAdmin && (
                 <NavDropdown title="Admin" id="adminmenue">
                   <LinkContainer to="/admin/userlist">
                     <NavDropdown.Item>Users</NavDropdown.Item>

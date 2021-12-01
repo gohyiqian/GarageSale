@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
 // import { dummyProducts } from "../dummyData";
-import { getProducts } from "../redux/productSlice";
+import { getProducts, getNFTs } from "../redux/productSlice";
 
 const Container = styled.div`
   display: flex;
@@ -27,11 +27,12 @@ const Title = styled.h1`
 
 const ProductsList = ({ cat, filters, sort }) => {
   // (cat, filters, sort) props passed from ProductCategoryPage
-  // console.log(filters);
-  // const [products, setProducts] = useState([]);
+  console.log(filters);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const dispatch = useDispatch();
   const { products, status, error } = useSelector((state) => state.products);
+  // products.map();
+  console.log(products);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -71,6 +72,7 @@ const ProductsList = ({ cat, filters, sort }) => {
         );
         console.log(filterOption);
         setFilteredProducts(filterOption);
+        console.log(filteredProducts);
       }
     }
   }, [products, cat, filters]);
@@ -107,16 +109,13 @@ const ProductsList = ({ cat, filters, sort }) => {
         <Loader />
       ) : (
         <Container>
-          {products.map((product) => (
-            <ProductCard product={product} />
-          ))}
-          {/* {cat
-            ? filteredProducts.map((item) => (
-                <ProductCard item={item} key={item.id} />
+          {cat
+            ? filteredProducts.map((product) => (
+                <ProductCard product={product} key={product.id} />
               ))
-            : products
-                .slice(0, 10)
-                .map((item) => <ProductCard item={item} key={item.id} />)} */}
+            : products.map((product) => (
+                <ProductCard product={product} key={product.id} />
+              ))}
         </Container>
       )}
     </>

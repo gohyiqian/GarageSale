@@ -32,7 +32,7 @@ export const getProducts = createAsyncThunk(
     try {
       const res = await axios.get("/api/products");
       // console.log(res.data);
-      console.log(res.data["products"]);
+      // console.log(res.data["products"]);
       return res.data["products"];
     } catch (err) {
       console.log(err);

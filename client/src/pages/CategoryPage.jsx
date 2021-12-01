@@ -1,13 +1,11 @@
 import styled from "styled-components";
 import NavBar from "../components/NavBar";
-import Banner from "../components/Banner";
+// import Banner from "../components/Banner";
 import ProductsList from "../components/ProductsList";
 import Footer from "../components/Footer";
 import { mobile } from "../responsiveMobile.js";
 import { useLocation } from "react-router";
 import { useState } from "react";
-
-const Container = styled.div``;
 
 const FilterContainer = styled.div`
   display: flex;
@@ -34,12 +32,9 @@ const Select = styled.select`
 `;
 
 const ProductCategoryPage = () => {
-  // USING PATH LOCATION TO CHANGE FILTER STATE
   const location = useLocation();
-  // console.log(location);
-  // console.log(location.pathname.split("/")[2]);
-
-  // get selected product category from path
+  // get the category type from path
+  console.log(location.pathname.split("/")[2]);
   const cat = location.pathname.split("/")[2];
 
   // sort & filter state
@@ -60,9 +55,9 @@ const ProductCategoryPage = () => {
   return (
     <>
       <NavBar />
-      <Banner />
+      {/* <Banner /> */}
 
-      <Container className="p-4">
+      <div className="p-4">
         <h2 className="m-3">Category: {cat}</h2>
         <FilterContainer>
           <Filter>
@@ -75,6 +70,7 @@ const ProductCategoryPage = () => {
               <option>blue</option>
               <option>yellow</option>
               <option>green</option>
+              <option>orange</option>
             </Select>
 
             <FilterText>Size:</FilterText>
@@ -96,9 +92,9 @@ const ProductCategoryPage = () => {
             </Select>
           </Filter>
         </FilterContainer>
-        {/* pass filtering props to products component */}
+        {/* pass filtering props to productsList component */}
         <ProductsList cat={cat} filters={filters} sort={sort} />
-      </Container>
+      </div>
       <Footer />
     </>
   );

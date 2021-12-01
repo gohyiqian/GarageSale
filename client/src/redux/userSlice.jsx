@@ -50,7 +50,7 @@ const usersAdapter = createEntityAdapter();
 const userSlice = createSlice({
   name: "users",
   initialState: {
-    userInfo: null,
+    userInfo: JSON.parse(localStorage.getItem("userInfo")) || null,
     details: {},
     users: [],
     status: "idle",
@@ -81,8 +81,11 @@ const userSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     },
-    logOut: () => {
+    logOut: (state, action) => {
       localStorage.removeItem("userInfo");
+      // localStorage.removeItem("cartItems");
+      localStorage.removeItem("shippingAddress");
+      state.userInfo = action.payload;
     },
     allUsersStart: (state) => {
       state.status = "loading";

@@ -52,7 +52,7 @@ const Categories = () => {
       <Container className="p-4">
         {/* using dummyData */}
         {dummyProducts.map((item) => (
-          <CategoryItem item={item} key={item.id} cat={cat} />
+          <CategoryItem item={item} key={item.id} />
         ))}
       </Container>
     </>

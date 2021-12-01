@@ -41,6 +41,7 @@ const AllProductsPage = () => {
       <NavBar />
       <h2 className={styles.title}>OpenSea NFTs</h2>
       <Container>
+        {nfts}
         {nfts.map((product) => (
           <ProductCardTest product={product} />
         ))}

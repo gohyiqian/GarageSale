@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import styles from "../App.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { register } from "../redux/apiCalls";
-// import Loader from "../components/Loader";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 const Hr = styled.hr`
   color: red;
@@ -25,7 +27,15 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const history = useHistory();
   const dispatch = useDispatch();
+  const { userInfo, status, error } = useSelector((state) => state.user); // get user info from store
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/");
+    }
+  }, [userInfo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -96,6 +106,9 @@ const RegisterPage = () => {
   return (
     <>
       <NavBar />
+
+      {error && <Message variant="danger">{error}</Message>}
+      {status === "loading" && <Loader />}
       <div className={styles.loginContainer}>
         <div className={styles.loginWrapper}>
           <Link to="/" style={linkStyle}>

@@ -7,6 +7,9 @@ import { login } from "../redux/apiCalls";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useDispatch, useSelector } from "react-redux";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import { useHistory } from "react-router";
 
 const Hr = styled.hr`
   color: red;
@@ -23,23 +26,19 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-
+  const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user); // get user info from store
-  // const { error, status, userInfo } = user;
+  const { userInfo, status, error } = useSelector((state) => state.user); // get user info from store
 
-  // const redirect = location.search ? location.search.split("=")[1] : "/";
-
-  // useEffect(() => {
-  //   if (user) {
-  //     history.push(redirect);
-  //   }
-  // }, [history, user, redirect]);
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/");
+    }
+  }, [userInfo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(username, password));
-    // window.location.assign("/");
   };
 
   // const handleSubmit = async (e) => {
@@ -93,6 +92,8 @@ const LoginPage = () => {
   return (
     <>
       <NavBar />
+      {error && <Message variant="danger">{error}</Message>}
+      {status === "loading" && <Loader />}
       <div className={styles.loginContainer}>
         <div className={styles.loginWrapper}>
           <Link to="/" style={linkStyle}>

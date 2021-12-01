@@ -74,8 +74,8 @@ const ShowProductPage = ({ match, history }) => {
   const handleQuantity = (type) => {
     if (type === "dec") {
       qty > 1 && setQty(qty - 1);
-    } else {
-      setQty(qty + 1);
+    } else if (type === "inc") {
+      qty > 1 && setQty(qty + 1);
     }
   };
 
@@ -126,6 +126,7 @@ const ShowProductPage = ({ match, history }) => {
                       </Col>
                     </Row>
                   </ListGroupItem>
+
                   <ListGroupItem>
                     <Row>
                       <Col>Status:</Col>
@@ -151,6 +152,7 @@ const ShowProductPage = ({ match, history }) => {
                                 value={Number(qty)}
                                 onChange={(e) => setQty(e.target.value)}
                               >
+                                <option selected="true">Select Quantity</option>
                                 {[...Array(product.stockCount).keys()].map(
                                   (x) => (
                                     <option key={x + 1} value={Number(x) + 1}>
@@ -169,6 +171,14 @@ const ShowProductPage = ({ match, history }) => {
                       </Row>
                     </ListGroupItem>
                   )}
+                  <ListGroupItem>
+                    <Row>
+                      <Col>Sizes:</Col>
+                      <Col>
+                        {product.stockCount > 0 ? "In Stock" : "Out of Stock"}
+                      </Col>
+                    </Row>
+                  </ListGroupItem>
 
                   <ListGroupItem>
                     <button

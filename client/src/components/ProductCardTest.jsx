@@ -6,7 +6,7 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
 
-const ProductCard = ({ product }) => {
+const ProductCardTest = ({ product }) => {
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.CARD,
     product: product,
@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
             value={product.rating}
             text={`${product.numReviews} reviews`}
             color={"#f8e825"}
-          />{" "}
+          />
           <button className={styles.loginBtn} variant="primary">
             <strong>${product.seller_fee_basis_points} | SHOP NOW </strong>
           </button>
@@ -43,4 +43,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default ProductCardTest;

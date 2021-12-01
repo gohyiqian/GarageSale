@@ -35,9 +35,14 @@ const ProductCard = ({ product }) => {
             text={`${product.numReviews} reviews`}
             color={"#f8e825"}
           />{" "}
-          <button className={styles.loginBtn} variant="primary">
-            <strong>${product.price} | SHOP NOW </strong>
-          </button>
+          <Link
+            to={`/product/${product.id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <button className={styles.loginBtn} variant="primary">
+              <strong>${product.price} | SHOP NOW </strong>
+            </button>
+          </Link>
         </Card.Body>
       </Card>
     </div>
