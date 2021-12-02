@@ -37,7 +37,7 @@ const CartPage = ({ match, location, history }) => {
   }, [dispatch, productId, qty]);
 
   const checkoutHandler = () => {
-    history.push("/login?redirect=shipping");
+    history.push("/shipping");
   };
 
   // const handleQuantity = (type) => {

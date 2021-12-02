@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { actions } from "../redux/userSlice";
+import { useHistory } from "react-router";
 
 const NavBarStyle = {
   position: "sticky",
@@ -77,11 +78,12 @@ const NavBar = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
   // console.log(userInfo);
-
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const logOutHandler = () => {
     dispatch(actions.logOut());
+    history.push("/login");
   };
 
   return (

@@ -16,6 +16,9 @@ import CartPage from "./pages/CartPage";
 import CategoryPage from "./pages/CategoryPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import UserShopPage from "./pages/UserShopPage";
+import CheckOutPage from "./pages/CheckOutPage";
+import PaymentPage from "./pages/PaymentPage";
+import OrderPage from "./pages/OrderPage";
 // import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 
 const App = () => {
@@ -31,6 +34,9 @@ const App = () => {
         <Route path="/register">
           {user ? <Redirect to="/" /> : <RegisterPage />}
         </Route>
+        <Route path="/order" exact component={OrderPage} />
+        <Route path="/payment" exact component={PaymentPage} />
+        <Route path="/shipping" exact component={CheckOutPage} />
         {/* <Route path="/threejs" exact component={ThreeJSProductPage} /> */}
         <Route path="/cart" exact component={CartPage} />
         <Route path="/profile" exact component={UserProfilePage} />

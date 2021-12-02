@@ -229,6 +229,7 @@ const UserProfilePage = () => {
           </Table>
         </Col>
       </Row>
+      <hr />
       <Footer />
     </>
   );

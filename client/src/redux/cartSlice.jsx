@@ -8,6 +8,7 @@ const cartSlice = createSlice({
     cartItems: JSON.parse(localStorage.getItem("cartItems")) || [],
     shippingAddress: JSON.parse(localStorage.getItem("shippingAddress")) || {},
     status: "idle",
+    error: null,
   },
   reducers: {
     addItem(state, action) {
@@ -70,7 +71,7 @@ const cartSlice = createSlice({
     savePaymentMethod(state, action) {
       return {
         ...state,
-        PaymentMethod: action.payload,
+        paymentMethod: action.payload,
       };
     },
 
@@ -84,7 +85,7 @@ const cartSlice = createSlice({
     // cartAddOne: cartAdapter.addOne,
     // cartAddMany: cartAdapter.addMany,
     // cartUpdate: cartAdapter.updateOne,
-    cartRemove: cartAdapter.removeOne,
+    // cartRemove: cartAdapter.removeOne,
   },
 });
 
