@@ -86,6 +86,8 @@ class ShippingAddress(models.Model):
 #     to_user = models.ForeignKey(User, related_name="following", on_delete=models.CASCADE)
 #     from_user = models.ForeignKey(User, related_name="follower", on_delete=models.CASCADE)
 #     timestamp = models.DateTimeField(auto_now_add=True, db_index=True)
+#     def __str__(self):
+#         return str(self.from_user)
 
 # class Message(models.Model):
 #     id = models.AutoField(primary_key=True, editable=False)
@@ -94,7 +96,7 @@ class ShippingAddress(models.Model):
 #     timestamp = models.DateField(auto_now_add=True)
 
 #     def __str__(self):
-#         return str(self.)
+#         return str(self.sender)
 
 
 # class Conversation(models.Model):
@@ -102,4 +104,4 @@ class ShippingAddress(models.Model):
 #     message = models.ManyToManyField(Message, blank=True)
 #     timestamp = models.DateField(auto_now_add=True)
 #     def __str__(self):
-#         return str(self.name)
+#         return str(self.message)

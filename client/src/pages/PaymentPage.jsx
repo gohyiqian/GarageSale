@@ -22,7 +22,7 @@ const PaymentPage = () => {
     e.preventDefault();
     dispatch(actions.savePaymentMethod(payment));
     localStorage.setItem("paymentMethod", JSON.stringify(payment));
-    history.push("/order");
+    history.push("/createorder");
   };
 
   return (

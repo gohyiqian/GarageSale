@@ -8,7 +8,7 @@ const tabStyle = {
   color: "#945047",
   textDecoration: "none",
 };
-const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
+const CheckoutSteps = ({ step1, step2, step3, step4, step5 }) => {
   return (
     <Nav className="justify-content-center mb-4">
       <Nav.Item>
@@ -43,11 +43,21 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
 
       <Nav.Item>
         {step4 ? (
-          <LinkContainer style={tabStyle} to="/placeorder">
+          <LinkContainer style={tabStyle} to="/createorder">
             <Nav.Link>Place Order</Nav.Link>
           </LinkContainer>
         ) : (
           <Nav.Link disabled>Place Order</Nav.Link>
+        )}
+      </Nav.Item>
+
+      <Nav.Item>
+        {step5 ? (
+          <LinkContainer style={tabStyle} to="/order">
+            <Nav.Link>Order Sent</Nav.Link>
+          </LinkContainer>
+        ) : (
+          <Nav.Link disabled>Order Sent</Nav.Link>
         )}
       </Nav.Item>
     </Nav>

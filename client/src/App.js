@@ -19,6 +19,7 @@ import UserShopPage from "./pages/UserShopPage";
 import CheckOutPage from "./pages/CheckOutPage";
 import PaymentPage from "./pages/PaymentPage";
 import OrderPage from "./pages/OrderPage";
+import OrderSuccessPage from "./pages/OrderSuccessPage";
 // import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 
 const App = () => {
@@ -34,18 +35,19 @@ const App = () => {
         <Route path="/register">
           {user ? <Redirect to="/" /> : <RegisterPage />}
         </Route>
-        <Route path="/order" exact component={OrderPage} />
-        <Route path="/payment" exact component={PaymentPage} />
-        <Route path="/shipping" exact component={CheckOutPage} />
+        <Route path="/order/:id" component={OrderSuccessPage} />
+        <Route path="/createorder" component={OrderPage} />
+        <Route path="/payment" component={PaymentPage} />
+        <Route path="/shipping" component={CheckOutPage} />
         {/* <Route path="/threejs" exact component={ThreeJSProductPage} /> */}
-        <Route path="/cart" exact component={CartPage} />
-        <Route path="/profile" exact component={UserProfilePage} />
-        <Route path="/shop" exact component={UserShopPage} />
-        <Route path="/product/:id" exact component={ShowProductPage} />
+        <Route path="/cart" component={CartPage} />
+        <Route path="/profile" component={UserProfilePage} />
+        <Route path="/shop" component={UserShopPage} />
+        <Route path="/product/:id" component={ShowProductPage} />
         <DndProvider backend={HTML5Backend}>
-          <Route exact path="/" exact component={HomePage} />
-          <Route path="/nftcart" exact component={ShopNFTCartPage} />
-          <Route path="/products/:category" exact component={CategoryPage} />
+          <Route exact path="/" component={HomePage} />
+          <Route path="/nftcart" component={ShopNFTCartPage} />
+          <Route path="/products/:category" component={CategoryPage} />
         </DndProvider>
       </Switch>
     </Router>

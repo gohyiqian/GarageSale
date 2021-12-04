@@ -6,6 +6,7 @@ const orderSlice = createSlice({
   name: "order",
   initialState: {
     orders: {},
+    orderDetails: {},
     // shippingAddress: {},
     // paid: false,
     // delivered: false,
@@ -25,10 +26,10 @@ const orderSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     },
-    createOrderReset: (state) => {
-      state.status = "reset";
-      state.orders = {};
-    },
+    // createOrderReset: (state) => {
+    //   state.status = "reset";
+    //   state.orders = {};
+    // },
 
     // USER GET own order
     getOrderStart(state, action) {
@@ -50,17 +51,17 @@ const orderSlice = createSlice({
     },
 
     // USER GET order by ID
-    getOrderbyIdStart(state, action) {
+    getOrderByIdStart(state, action) {
       return {
         ...state,
         status: "loading",
       };
     },
-    getOrderbyIdSuccess: (state, action) => {
+    getOrderByIdSuccess: (state, action) => {
       state.status = "success";
-      state.orders = action.payload;
+      state.orderDetails = action.payload;
     },
-    getOrderbyIdFailure: (state, action) => {
+    getOrderByIdFailure: (state, action) => {
       state.status = "failed";
       state.error = action.payload;
     },

@@ -67,7 +67,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(`/api/orders/${id}/`, authConfig);
+    const { data } = await axios.get(`/api/orders/${id}/`, authConfig);
     dispatch(actions.getOrderByIdSuccess(data));
   } catch (err) {
     dispatch(actions.getOrderByIdFailure(err.message));

@@ -30,13 +30,13 @@ def addOrder(request):
         )
        
         # Create user shipping address
-        # shipping = ShippingAddress.objects.create(
-        #     order=order,
-        #     address=data['shippingAddress']['address'],
-        #     city=data['shippingAddress']['city'],
-        #     postalCode=data['shippingAddress']['postalCode'],
-        #     country=data['shippingAddress']['country'],
-        # )
+        shipping = ShippingAddress.objects.create(
+            order=order,
+            address=data['shippingAddress']['address'],
+            city=data['shippingAddress']['city'],
+            postalCode=data['shippingAddress']['postalCode'],
+            country=data['shippingAddress']['country'],
+        )
        
         # Loop to create every orderItems
         for item in orderItems:
@@ -57,7 +57,7 @@ def addOrder(request):
             product.save()
 
         serializer = OrderSerializer(order, many=False)
-        print(serializer.data)
+        # print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
