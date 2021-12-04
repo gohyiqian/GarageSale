@@ -61,7 +61,7 @@ def getUserById(request, pk):
     serializer = UserSerializer(instance=user, many=False)
     return Response(serializer.data)
 
-# User can EDIT/UPDATE themselves
+# User can EDIT/UPDATE themselves 
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def updateUser(request, pk):

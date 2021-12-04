@@ -13,7 +13,6 @@ const CheckOutPage = () => {
   const dispatch = useDispatch();
   // get shippingAddress from store if already exists
   const { shippingAddress } = useSelector((state) => state.cart);
-
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);

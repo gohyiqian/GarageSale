@@ -42,6 +42,7 @@ const PaymentPage = () => {
                     type="radio"
                     label="Credit Card"
                     id="creditcard"
+                    value="Credit Card"
                     name="paymentMethod"
                     onChange={(e) => setPayment(e.target.value)}
                   ></Form.Check>
@@ -49,6 +50,7 @@ const PaymentPage = () => {
                     type="radio"
                     label="PayPal"
                     id="paypal"
+                    value="Paypal"
                     name="paymentMethod"
                     checked
                     onChange={(e) => setPayment(e.target.value)}
@@ -57,6 +59,7 @@ const PaymentPage = () => {
                     type="radio"
                     label="Stripe"
                     id="stripe"
+                    value="Stripe"
                     name="paymentMethod"
                     onChange={(e) => setPayment(e.target.value)}
                   ></Form.Check>
@@ -65,6 +68,7 @@ const PaymentPage = () => {
                     type="radio"
                     label="Crypto.com"
                     id="crypto"
+                    value="Crypto.com"
                     name="paymentMethod"
                     onChange={(e) => setPayment(e.target.value)}
                   ></Form.Check>

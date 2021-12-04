@@ -201,7 +201,7 @@ const UserProfilePage = () => {
             </tbody>
           </Table>
           <hr />
-          <h2>My Shop</h2>
+          <h2>My Sales</h2>
           <Table striped responsive className="table-sm">
             <thead>
               <tr>

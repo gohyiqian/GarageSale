@@ -65,6 +65,7 @@ const cartSlice = createSlice({
       return {
         ...state,
         shippingAddress: action.payload,
+        status: "success",
       };
     },
 
@@ -74,7 +75,10 @@ const cartSlice = createSlice({
         paymentMethod: action.payload,
       };
     },
-
+    allUsersReset: (state) => {
+      state.status = "failed";
+      state.users = [];
+    },
     cartReset(state, action) {
       return {
         ...state,

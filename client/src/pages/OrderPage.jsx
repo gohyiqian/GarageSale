@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Image, ListGroup, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { actions, orderSelectors } from "../redux/orderSlice";
+import { addOrder } from "../redux/apiOrder";
+import { actions } from "../redux/orderSlice";
 import { useHistory } from "react-router";
 import styles from "../App.module.css";
 import styled from "styled-components";
@@ -13,6 +14,7 @@ import Message from "../components/Message";
 
 const Description = styled.p`
   font-weight: 600;
+  line-height: 10px;
 `;
 const fontStyle = {
   color: "#945047",
@@ -36,19 +38,25 @@ const OrderPage = () => {
     Number(taxPrice)
   ).toFixed(2);
 
-  const { error } = useSelector((state) => state.order);
+  const { orders, status, error } = useSelector((state) => state.order);
 
+  const dispatch = useDispatch();
   const history = useHistory();
+
   if (!paymentMethod) {
     history.push("/payment");
   }
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (status === " success") {
+      history.push(`/order/${orders.id}`);
+      dispatch(actions.createOrderReset);
+    }
+  });
 
   const handleOrder = () => {
     dispatch(
-      actions.orderAddOne({
-        id: 1,
+      addOrder({
         orderItems: cartItems,
         shippingAddress: shippingAddress,
         paymentMethod: paymentMethod,
@@ -58,6 +66,7 @@ const OrderPage = () => {
         totalPrice: totalPrice,
       })
     );
+    history.push(`/order/${orders.id}`);
   };
 
   return (
@@ -175,7 +184,7 @@ const OrderPage = () => {
                   </Row>
                 </ListGroup.Item>
 
-                {error && <Message variant="danger">{error}</Message>}
+                {error && <Message variant="danger">{error} </Message>}
 
                 <ListGroup.Item className="mt-2">
                   <button

@@ -18,6 +18,7 @@ import styles from "../App.module.css";
 import { addToCart, removeFromCart } from "../redux/apiCart";
 // import { actions } from "../redux/cartSlice";
 // import { Add, Remove } from "@material-ui/icons";
+import CheckOutSteps from "../components/CheckOutSteps";
 
 const CartPage = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -51,7 +52,8 @@ const CartPage = ({ match, location, history }) => {
   return (
     <>
       <NavBar />
-      <Container>
+      <Container style={{ margin: "auto" }} className="mt-5 mb-5">
+        <CheckOutSteps step1 />
         <Link to="/" className="btn btn-light my-3">
           Go Back
         </Link>
@@ -60,7 +62,7 @@ const CartPage = ({ match, location, history }) => {
             <h1 className="mb-5">Shopping Cart</h1>
             {cartItems.length === 0 ? (
               <Message variant="dark">
-                Your cart is empty <Link to="/">Go Back</Link>
+                Your cart is empty <Link to="/">Start Shopping!</Link>
               </Message>
             ) : (
               <ListGroup variant="flush">
@@ -117,10 +119,11 @@ const CartPage = ({ match, location, history }) => {
           </Col>
 
           <Col md={4}>
-            <Card>
+            <Card className="mb-4">
               <ListGroup variant="flush">
                 <ListGroupItem>
-                  <h2 className="mb-5">Summary:</h2>
+                  <h2 className="mb-4">Summary:</h2>
+                  <hr />
                   <h3>
                     {cartItems.reduce((acc, item) => acc + item.qty, 0)} Items
                   </h3>
@@ -143,6 +146,15 @@ const CartPage = ({ match, location, history }) => {
                   Proceed To Checkout
                 </button>
               </ListGroupItem>
+            </Card>
+
+            <Card>
+              <ListGroup variant="flush">
+                <ListGroupItem style={{ height: "300px" }}>
+                  <h2>Drag Here to Discard:</h2>
+                  <hr />
+                </ListGroupItem>
+              </ListGroup>
             </Card>
           </Col>
         </Row>
