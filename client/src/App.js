@@ -4,7 +4,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import ShopNFTCartPage from "./pages/ShopNFTCartPage";
+// import ShopNFTCartPage from "./pages/ShopNFTCartPage";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 // import AllUserPage from "./pages/AllUserPage";
@@ -19,12 +19,12 @@ import UserShopPage from "./pages/UserShopPage";
 import CheckOutPage from "./pages/CheckOutPage";
 import PaymentPage from "./pages/PaymentPage";
 import OrderPage from "./pages/OrderPage";
-import OrderSuccessPage from "./pages/OrderSuccessPage";
+import OrderCompletePage from "./pages/OrderCompletePage";
 // import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 
 const App = () => {
   const user = false;
-  const cart = true;
+  // const cart = true;
   return (
     <Router>
       <Switch>
@@ -35,18 +35,22 @@ const App = () => {
         <Route path="/register">
           {user ? <Redirect to="/" /> : <RegisterPage />}
         </Route>
-        <Route path="/order/:id" component={OrderSuccessPage} />
-        <Route path="/createorder" component={OrderPage} />
-        <Route path="/payment" component={PaymentPage} />
+
+        <Route path="/profile" component={UserProfilePage} />
         <Route path="/shipping" component={CheckOutPage} />
+        <Route path="/order/:id" component={OrderCompletePage} />
+        <Route path="/order" component={OrderPage} />
+        <Route path="/payment" component={PaymentPage} />
+
         {/* <Route path="/threejs" exact component={ThreeJSProductPage} /> */}
         <Route path="/cart" component={CartPage} />
-        <Route path="/profile" component={UserProfilePage} />
+
         <Route path="/shop" component={UserShopPage} />
         <Route path="/product/:id" component={ShowProductPage} />
+
         <DndProvider backend={HTML5Backend}>
           <Route exact path="/" component={HomePage} />
-          <Route path="/nftcart" component={ShopNFTCartPage} />
+          {/* <Route path="/nftcart" component={ShopNFTCartPage} /> */}
           <Route path="/products/:category" component={CategoryPage} />
         </DndProvider>
       </Switch>

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Container, Row, Col, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { actions } from "../redux/cartSlice";
 import { useHistory } from "react-router";
@@ -33,7 +33,7 @@ const CheckOutPage = () => {
   return (
     <>
       <NavBar />
-      <Container style={{ margin: "auto" }} className="mt-5 mb-5">
+      <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <CheckOutSteps step1 step2 />
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>

@@ -19,6 +19,7 @@ import { addToCart, removeFromCart } from "../redux/apiCart";
 // import { actions } from "../redux/cartSlice";
 // import { Add, Remove } from "@material-ui/icons";
 import CheckOutSteps from "../components/CheckOutSteps";
+import { useState } from "react";
 
 const CartPage = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -30,6 +31,7 @@ const CartPage = ({ match, location, history }) => {
   const dispatch = useDispatch();
 
   const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (productId) {
@@ -52,20 +54,29 @@ const CartPage = ({ match, location, history }) => {
   return (
     <>
       <NavBar />
-      <Container style={{ margin: "auto" }} className="mt-5 mb-5">
+      <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <CheckOutSteps step1 />
-        <Link to="/" className="btn btn-light my-3">
+        <Link to="/" className="btn btn-light my-2">
           Go Back
         </Link>
         <Row>
           <Col md={8}>
-            <h1 className="mb-5">Shopping Cart</h1>
+            <h1 className="mb-4">Shopping Cart</h1>
+            {!userInfo && (
+              <Message variant="info">
+                Please Log in <Link to="/login">Here</Link> to Cart Out
+              </Message>
+            )}
+
             {cartItems.length === 0 ? (
-              <Message variant="dark">
+              <Message variant="info">
                 Your cart is empty <Link to="/">Start Shopping!</Link>
               </Message>
             ) : (
-              <ListGroup variant="flush">
+              <ListGroup
+                variant="flush"
+                className={styles.customized_scrollbar}
+              >
                 {cartItems.map((item) => (
                   <ListGroupItem key={item.productId}>
                     <Row>
@@ -140,7 +151,7 @@ const CartPage = ({ match, location, history }) => {
                 <button
                   onClick={checkoutHandler}
                   className={styles.loginBtn}
-                  disabled={cartItems.length == 0}
+                  disabled={cartItems.length === 0}
                   type="button"
                 >
                   Proceed To Checkout

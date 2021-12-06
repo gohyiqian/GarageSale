@@ -25,7 +25,7 @@ const linkStyle = {
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const { userInfo, status, error } = useSelector((state) => state.user); // get user info from store
@@ -34,7 +34,7 @@ const LoginPage = () => {
     if (userInfo) {
       history.push("/");
     }
-  }, [userInfo]);
+  }, [userInfo, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -124,7 +124,7 @@ const LoginPage = () => {
               />
             </Form.Group>
 
-            {message && <span className={styles.loginError}>{message}</span>}
+            {/* {message && <span className={styles.loginError}>{message}</span>} */}
 
             <button
               type="submit"

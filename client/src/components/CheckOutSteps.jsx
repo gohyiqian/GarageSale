@@ -43,7 +43,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4, step5 }) => {
 
       <Nav.Item>
         {step4 ? (
-          <LinkContainer style={tabStyle} to="/createorder">
+          <LinkContainer style={tabStyle} to="/order">
             <Nav.Link>Place Order</Nav.Link>
           </LinkContainer>
         ) : (
@@ -53,7 +53,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4, step5 }) => {
 
       <Nav.Item>
         {step5 ? (
-          <LinkContainer style={tabStyle} to="/order">
+          <LinkContainer style={tabStyle} to="/order/:id">
             <Nav.Link>Order Sent</Nav.Link>
           </LinkContainer>
         ) : (

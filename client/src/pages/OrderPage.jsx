@@ -1,7 +1,16 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Image, ListGroup, Card } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  Card,
+  ListGroupItem,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../components/Loader";
 import { addOrder } from "../redux/apiOrder";
 import { useHistory } from "react-router";
 import styles from "../App.module.css";
@@ -39,20 +48,16 @@ const OrderPage = () => {
   ).toFixed(2);
 
   const { orders, status, error } = useSelector((state) => state.order);
-
+  // console.log(orders);
   const dispatch = useDispatch();
   const history = useHistory();
 
   if (!paymentMethod) {
     history.push("/payment");
   }
-
-  useEffect(() => {
-    if (status === " success") {
-      history.push(`/order/${orders.id}`);
-      // dispatch(actions.createOrderReset);
-    }
-  }, [status, history, orders]);
+  if (!userInfo) {
+    history.push("/login");
+  }
 
   const handleOrder = () => {
     dispatch(
@@ -66,27 +71,28 @@ const OrderPage = () => {
         totalPrice: totalPrice,
       })
     );
-    history.push(`/order/${orders.id}`);
   };
+
+  useEffect(() => {
+    if (status === "success") {
+      history.push(`/order/${orders.id}`);
+      // dispatch(actions.createOrderReset);
+    }
+  }, [status, history]);
 
   return (
     <>
       <NavBar />
-      <Container style={{ margin: "auto" }} className="mt-5 mb-5">
+      <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <CheckOutSteps step1 step2 step3 step4 />
+        {status === "loading" && <Loader />}
         <Row className="justify-content-md-center">
           <Col md={8}>
             <h1 className="mb-3 px-3">Your Order</h1>
             <ListGroup variant="flush">
-              <ListGroup.Item>
+              <ListGroupItem>
                 <h2 className="mb-3">Shipping Information</h2>
-                <Description>
-                  Name:
-                  <span style={fontStyle}> {userInfo.name}</span>
-                </Description>
-                <Description>
-                  Email:<span style={fontStyle}> {userInfo.email}</span>
-                </Description>
+
                 <Description>
                   Shipping Address:{" "}
                   <span style={fontStyle}>
@@ -94,16 +100,16 @@ const OrderPage = () => {
                     {shippingAddress.country} {shippingAddress.postalCode}{" "}
                   </span>
                 </Description>
-              </ListGroup.Item>
+              </ListGroupItem>
 
-              <ListGroup.Item>
+              <ListGroupItem>
                 <h2 className="mb-3">Payment Method</h2>
                 <Description>
                   Payment by: <span style={fontStyle}>{paymentMethod}</span>
                 </Description>
-              </ListGroup.Item>
+              </ListGroupItem>
 
-              <ListGroup.Item>
+              <ListGroupItem>
                 <h2 className="mb-3">Order Items</h2>
                 <Description>
                   Total:{" "}
@@ -116,7 +122,7 @@ const OrderPage = () => {
                 ) : (
                   <ListGroup variant="flush">
                     {cartItems.map((item, index) => (
-                      <ListGroup.Item key={index}>
+                      <ListGroupItem key={index}>
                         <Row>
                           <Col md={1}>
                             <Image
@@ -138,29 +144,29 @@ const OrderPage = () => {
                             {(item.qty * item.price).toFixed(2)}
                           </Col>
                         </Row>
-                      </ListGroup.Item>
+                      </ListGroupItem>
                     ))}
                   </ListGroup>
                 )}
-              </ListGroup.Item>
+              </ListGroupItem>
             </ListGroup>
           </Col>
 
           <Col md={4}>
             <Card>
               <ListGroup variant="flush">
-                <ListGroup.Item>
+                <ListGroupItem>
                   <h2>Order Summary</h2>
-                </ListGroup.Item>
+                </ListGroupItem>
 
-                <ListGroup.Item>
+                <ListGroupItem>
                   <Row>
                     <Col>Items:</Col>
                     <Col>${itemsPrice}</Col>
                   </Row>
-                </ListGroup.Item>
+                </ListGroupItem>
 
-                <ListGroup.Item>
+                <ListGroupItem>
                   <Row>
                     <Col>
                       Shipping <br />
@@ -168,25 +174,25 @@ const OrderPage = () => {
                     </Col>
                     <Col>${shippingPrice}</Col>
                   </Row>
-                </ListGroup.Item>
+                </ListGroupItem>
 
-                <ListGroup.Item>
+                <ListGroupItem>
                   <Row>
                     <Col>Tax:</Col>
                     <Col>${taxPrice}</Col>
                   </Row>
-                </ListGroup.Item>
+                </ListGroupItem>
 
-                <ListGroup.Item>
+                <ListGroupItem>
                   <Row>
                     <Col>Total:</Col>
                     <Col>${totalPrice}</Col>
                   </Row>
-                </ListGroup.Item>
+                </ListGroupItem>
 
                 {error && <Message variant="danger">{error} </Message>}
 
-                <ListGroup.Item className="mt-2">
+                <ListGroupItem className="mt-2">
                   <button
                     type="button"
                     className={styles.loginBtn}
@@ -195,7 +201,7 @@ const OrderPage = () => {
                   >
                     Place Order
                   </button>
-                </ListGroup.Item>
+                </ListGroupItem>
               </ListGroup>
             </Card>
           </Col>

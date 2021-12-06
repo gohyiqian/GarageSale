@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utilities/itemTypes";
 import CartTable from "./CartTable";
-import { useDispatch, useSelector } from "react-redux";
-import { actions, cartSelectors } from "../redux/cartSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { actions, cartSelectors } from "../redux/cartSlice";
 
 const Container = styled.div`
   display: flex;
@@ -42,15 +42,15 @@ const CartAddBox = styled.div`
   box-shadow: inset 0 5px 5px rgb(0 0 0 / 5%);
 `;
 
-const CartStatus = styled.div`
-  display: flex;
-  flex: 2;
-  background: #fcf5f5;
-  height: 220px;
-  margin: 30px;
-  justify-content: center;
-  align-items: center;
-`;
+// const CartStatus = styled.div`
+//   display: flex;
+//   flex: 2;
+//   background: #fcf5f5;
+//   height: 220px;
+//   margin: 30px;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const CartDndSection = () => {
   // const dispatch = useDispatch();

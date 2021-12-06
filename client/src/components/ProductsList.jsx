@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
 // import { dummyProducts } from "../dummyData";
-import { getProducts, getNFTs } from "../redux/productSlice";
+import { getProducts } from "../redux/productSlice";
 
 const Container = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const ProductsList = ({ cat, filters, sort }) => {
   console.log(filters);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const dispatch = useDispatch();
-  const { products, status, error } = useSelector((state) => state.products);
+  const { products, status } = useSelector((state) => state.products);
   // products.map();
   console.log(products);
 
@@ -70,12 +70,12 @@ const ProductsList = ({ cat, filters, sort }) => {
             item[key].includes(value)
           )
         );
-        console.log(filterOption);
+        // console.log(filterOption);
         setFilteredProducts(filterOption);
-        console.log(filteredProducts);
+        // console.log(filteredProducts);
       }
     }
-  }, [products, cat, filters]);
+  }, []);
 
   // Sorting by Prices & CreatedDate
   useEffect(() => {

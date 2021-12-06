@@ -35,7 +35,7 @@ const RegisterPage = () => {
     if (userInfo) {
       history.push("/");
     }
-  }, [userInfo]);
+  }, [userInfo, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

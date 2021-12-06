@@ -5,8 +5,8 @@ import { getNFTs } from "../redux/productSlice";
 import styled from "styled-components";
 import styles from "../App.module.css";
 // import NavBar from "../components/NavBar";
-import CartDndSection from "../components/CartDndSection";
-import ProductCardTest from "../components/ProductCardTest";
+// import CartDndSection from "../components/CartDndSection";
+// import ProductCardTest from "../components/ProductCardTest";
 import NavBar from "../components/NavBar";
 
 const Container = styled.div`
@@ -26,7 +26,7 @@ const AllProductsPage = () => {
 
   useEffect(() => {
     dispatch(getNFTs());
-  }, []);
+  }, [dispatch]);
 
   if (status === "loading") {
     return (
@@ -42,11 +42,11 @@ const AllProductsPage = () => {
       <h2 className={styles.title}>OpenSea NFTs</h2>
       <Container>
         {nfts}
-        {nfts.map((product) => (
+        {/* {nfts.map((product) => (
           <ProductCardTest product={product} />
-        ))}
+        ))} */}
       </Container>
-      <CartDndSection />
+      {/* <CartDndSection /> */}
     </>
   );
 };

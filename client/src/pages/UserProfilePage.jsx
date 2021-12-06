@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { Container, Form, Button, Row, Col, Table } from "react-bootstrap";
+// import { Link } from "react-router-dom";
+import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -11,6 +11,7 @@ import styled from "styled-components";
 import styles from "../App.module.css";
 import { getUserDetails, updateUserProfile } from "../redux/apiUser";
 import { actions } from "../redux/userSlice";
+import { getMyOrders } from "../redux/apiOrder";
 import { useHistory } from "react-router";
 
 const ProfileContainer = styled.div`
@@ -52,10 +53,17 @@ const UserProfilePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { error, status, userInfo, profileDetails } = useSelector(
+  const { status, userInfo, profileDetails, error } = useSelector(
     (state) => state.user
   );
 
+  const {
+    orderList,
+    error: orderError,
+    status: orderStatus,
+  } = useSelector((state) => state.order);
+
+  console.log(orderList);
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
@@ -63,7 +71,7 @@ const UserProfilePage = () => {
       if (!profileDetails || userInfo.id !== profileDetails.id) {
         // dispatch(actions.userProfileUpdateReset());
         dispatch(getUserDetails("profile"));
-        // dispatch(listMyOrders());
+        dispatch(getMyOrders());
       } else {
         // pre-fill the form with existing logged-in user data
         setName(profileDetails.name);
@@ -75,7 +83,7 @@ const UserProfilePage = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       setMessage("Passwords do not match");
     } else {
       dispatch(
@@ -94,6 +102,8 @@ const UserProfilePage = () => {
     <>
       <NavBar />
       {status === "loading" && <Loader />}
+      {error && <Message variant="danger">{error}</Message>}
+      {message && <Message variant="danger">{message}</Message>}
       <ProfileContainer>
         <UserCoverImg src="images/noCover.jpg" alt="" />
         <UserProfileImg src="images/noAvatar.png" alt="" />
@@ -167,66 +177,89 @@ const UserProfilePage = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
-
+            {message && <Message variant="danger">{message}</Message>}
             <button type="submit" className={styles.loginBtn}>
               Update
             </button>
           </Form>
         </Col>
+
         <Col md={9} className="p-4">
           <h2>My Orders</h2>
-          <Table striped responsive className="table-sm">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Total</th>
-                <th>Paid</th>
-                <th>Delivered</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>09090</td>
-                <td>8989</td>
-                <td>8877</td>
-                <td>Paid</td>
-                <td>
-                  <LinkContainer to={`/order/`}>
-                    <Button className="btn-sm">Details</Button>
-                  </LinkContainer>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-          <hr />
-          <h2>My Sales</h2>
-          <Table striped responsive className="table-sm">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Total</th>
-                <th>Sold</th>
-                <th>Delivered</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>09090</td>
-                <td>8989</td>
-                <td>8877</td>
-                <td>Paid</td>
-                <td>
-                  <LinkContainer to={`/order/`}>
-                    <Button className="btn-sm">Details</Button>
-                  </LinkContainer>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+          {orderStatus === "loading" ? (
+            <Loader />
+          ) : orderError ? (
+            <Message variant="danger">{orderError}</Message>
+          ) : (
+            <>
+              <Table striped responsive className="table-sm">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Paid</th>
+                    <th>Delivered</th>
+                    <th></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {orderList.map((order) => (
+                    <tr key={order.id}>
+                      <td>{order.id}</td>
+                      <td>{order.createdAt.substring(0, 10)}</td>
+                      <td>${order.totalPrice}</td>
+                      <td>
+                        {order.isPaid ? (
+                          order.paidAt.substring(0, 10)
+                        ) : (
+                          <i
+                            className="fas fa-times"
+                            style={{ color: "red" }}
+                          ></i>
+                        )}
+                      </td>
+                      <td>
+                        <LinkContainer to={`/order/${order.id}`}>
+                          <Button className="btn-sm" variant="info">
+                            Details
+                          </Button>
+                        </LinkContainer>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <hr />
+              <h2>My Sales</h2>
+              <Table striped responsive className="table-sm">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Sold</th>
+                    <th>Delivered</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>09090</td>
+                    <td>8989</td>
+                    <td>8877</td>
+                    <td>Paid</td>
+                    <td>
+                      <LinkContainer to={`/order/`}>
+                        <Button className="btn-sm">Details</Button>
+                      </LinkContainer>
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+            </>
+          )}
         </Col>
       </Row>
       <hr />

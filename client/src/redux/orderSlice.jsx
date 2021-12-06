@@ -6,12 +6,11 @@ const orderSlice = createSlice({
   name: "order",
   initialState: {
     orders: {},
-    orderDetails: {},
-    // shippingAddress: {},
-    // paid: false,
-    // delivered: false,
     status: "idle",
+    payStatus: "idle",
+    deliverStatus: "idle",
     error: null,
+    orderList: [],
   },
   reducers: {
     // USER CREATE order
@@ -32,7 +31,7 @@ const orderSlice = createSlice({
     // },
 
     // USER GET own order
-    getOrderStart(state, action) {
+    getOrderStart(state) {
       return {
         ...state,
         status: "loading",
@@ -40,14 +39,14 @@ const orderSlice = createSlice({
     },
     getOrderSuccess: (state, action) => {
       state.status = "success";
-      state.orders = action.payload;
+      state.orderList = action.payload;
     },
     getOrderFailure: (state, action) => {
       state.status = "failed";
       state.error = action.payload;
     },
-    getOrderReset: (state, action) => {
-      state.orders = [];
+    getOrderReset: (state) => {
+      state.orderList = [];
     },
 
     // USER GET order by ID
@@ -59,7 +58,7 @@ const orderSlice = createSlice({
     },
     getOrderByIdSuccess: (state, action) => {
       state.status = "success";
-      state.orderDetails = action.payload;
+      state.orders = action.payload;
     },
     getOrderByIdFailure: (state, action) => {
       state.status = "failed";
@@ -67,38 +66,35 @@ const orderSlice = createSlice({
     },
 
     // UPATE order pay
-    // payOrderStart: (state, action) => {
-    //   state.status = "loading";
-    // },
-    // payOrderSuccess: (state, action) => {
-    //   state.status = "success";
-    //   state.paid = true;
-    // },
-    // payOrderFailure: (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.payload;
-    // },
-    // payOrderReset(state, action) {
-    //   state.status = "success";
-    //   state.paid = false;
-    // },
+    payOrderStart: (state, action) => {
+      state.payStatus = "loading";
+    },
+    payOrderSuccess(state, action) {
+      state.payStatus = "success";
+      state.orders = action.payload;
+    },
+    payOrderFailure: (state, action) => {
+      state.payStatus = "failed";
+      state.error = action.payload;
+    },
+    payOrderReset(state, action) {
+      state.payStatus = "idle";
+    },
 
-    // ADMIN UPDATE order deliver
-    // deliverOrderStart: (state, action) => {
-    //   state.status = "loading";
-    // },
-    // deliverOrderSuccess: (state, action) => {
-    //   state.status = "success";
-    //   state.delivered = true;
-    // },
-    // deliverOrderFailure: (state, action) => {
-    //   state.status = "failed";
-    //   state.error = action.payload;
-    // },
-    // deliveryOrderReset(state, action) {
-    //   state.status = "success";
-    //   state.delivered = false;
-    // },
+    // ADMIN UPDATE set delivered
+    deliverOrderStart: (state, action) => {
+      state.deliverStatus = "loading";
+    },
+    deliverOrderSuccess: (state, action) => {
+      state.deliverStatus = "success";
+    },
+    deliverOrderFailure: (state, action) => {
+      state.deliverStatus = "failed";
+      state.error = action.payload;
+    },
+    deliverOrderReset(state, action) {
+      state.deliverStatus = "idle";
+    },
 
     // ADMIN get all orders
     getAllOrdersStart: (state, action) => {
@@ -106,7 +102,7 @@ const orderSlice = createSlice({
     },
     getAllOrdersSuccess: (state, action) => {
       state.status = "success";
-      state.orders = action.payload;
+      state.orderList = action.payload;
     },
     getAllOrdersFailure: (state, action) => {
       state.status = "failed";

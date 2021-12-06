@@ -46,7 +46,7 @@ const ShowProductPage = ({ match, history }) => {
 
   useEffect(() => {
     dispatch(getProduct(match.params.id));
-  }, [dispatch]);
+  }, [dispatch, match.params.id]);
 
   // useEffect(() => {
   //   async function getProduct() {
@@ -61,15 +61,15 @@ const ShowProductPage = ({ match, history }) => {
   //   history.push(`/cart/${match.params.id}?qty=${qty}`);
   // };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    // dispatch(createProductReview(
-    //     match.params.id, {
-    //     rating,
-    //     comment
-    // }
-    // ))
-  };
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   // dispatch(createProductReview(
+  //   //     match.params.id, {
+  //   //     rating,
+  //   //     comment
+  //   // }
+  //   // ))
+  // };
 
   const handleQuantity = (type) => {
     if (type === "dec") {

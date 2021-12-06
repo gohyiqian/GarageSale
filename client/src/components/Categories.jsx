@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { dummyProducts } from "../dummyData";
 import { mobile } from "../responsiveMobile";
 import CategoryItem from "./CategoryItem";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ const Title = styled.span`
 `;
 
 const Categories = () => {
-  const [cat, setCat] = useState();
+  // const [cat, setCat] = useState();
 
   //   useEffect(() => {
   //     const getProductCategories = async () => {

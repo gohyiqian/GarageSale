@@ -22,7 +22,12 @@ export const addOrder = (orderItems) => async (dispatch, getState) => {
       authConfig
     );
     dispatch(actions.createOrderSuccess(data));
-    console.log(data);
+
+    // localStorage.setItem(
+    //   "orderItems",
+    //   JSON.stringify(getState().order.orders.orderItems)
+    // );
+
     // clear cartItems after success order creation
     dispatch(cartActions.cartReset());
     localStorage.removeItem("cartItems");
@@ -32,7 +37,7 @@ export const addOrder = (orderItems) => async (dispatch, getState) => {
 };
 
 // USER GET own order
-export const getOrder = () => async (dispatch, getState) => {
+export const getMyOrders = () => async (dispatch, getState) => {
   try {
     dispatch(actions.getOrderStart());
     const {
@@ -78,6 +83,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
   try {
     dispatch(actions.payOrderStart());
+
     const {
       user: { userInfo },
     } = getState();

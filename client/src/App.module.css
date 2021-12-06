@@ -181,11 +181,26 @@
   }
 }
 
+.customized_scrollbar_v2 {
+  display: block;
+  width: 65em;
+  overflow: auto;
+  height: 25em;
+  border: solid #aaa 0.1px;
+}
+
+.customized_scrollbar_v2::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+  background-color: #aaa; /* or add it to the track */
+}
+
 .customized_scrollbar {
   display: block;
-  width: 40em;
+  width: 53.5em;
   overflow: auto;
-  height: 11em;
+  height: 25em;
+  border: solid #aaa 0.1px;
 }
 
 .customized_scrollbar::-webkit-scrollbar {
