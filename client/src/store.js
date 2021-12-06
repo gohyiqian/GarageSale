@@ -7,9 +7,9 @@ import { orderReducer } from "./redux/orderSlice";
 const store = configureStore({
   reducer: {
     products: productReducer,
+    order: orderReducer,
     user: userReducer,
     cart: cartReducer,
-    order: orderReducer,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });

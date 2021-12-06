@@ -15,13 +15,15 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     # validate method
     def validate(self, attrs):
         data = super().validate(attrs)
-
-        # loop through all the serializer fields and return
-        serializer = UserSerializerWithToken(self.user).data
-        for key, value in serializer.items():
-            data[key] = value
-
-        return data
+        try:
+            # loop through all the serializer fields and return
+            serializer = UserSerializerWithToken(self.user).data
+            for key, value in serializer.items():
+                data[key] = value
+            return data
+        except:
+            message = {'detail':'Wrong username or password'}
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer

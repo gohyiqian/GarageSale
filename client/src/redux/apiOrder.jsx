@@ -1,11 +1,15 @@
 import axios from "axios";
-import { actions } from "./orderSlice";
+import { actions as orderActions } from "./orderSlice";
 import { actions as cartActions } from "./cartSlice";
+// import store from "../store";
+// const currentStoreState = store.getState();
+// const { userInfo } = currentStoreState.user;
+// console.log(userInfo);
 
 // USER CREATE order
 export const addOrder = (orderItems) => async (dispatch, getState) => {
   try {
-    dispatch(actions.createOrderStart());
+    dispatch(orderActions.createOrderStart());
     const {
       user: { userInfo },
     } = getState();
@@ -21,25 +25,25 @@ export const addOrder = (orderItems) => async (dispatch, getState) => {
       orderItems,
       authConfig
     );
-    dispatch(actions.createOrderSuccess(data));
+    dispatch(orderActions.createOrderSuccess(data));
 
-    // localStorage.setItem(
-    //   "orderItems",
-    //   JSON.stringify(getState().order.orders.orderItems)
-    // );
+    localStorage.setItem(
+      "orderItems",
+      JSON.stringify(getState().order.orders.orderItems)
+    );
 
     // clear cartItems after success order creation
     dispatch(cartActions.cartReset());
     localStorage.removeItem("cartItems");
   } catch (err) {
-    dispatch(actions.createOrderFailure(err.message));
+    dispatch(orderActions.createOrderFailure(err.message));
   }
 };
 
 // USER GET own order
 export const getMyOrders = () => async (dispatch, getState) => {
   try {
-    dispatch(actions.getOrderStart());
+    dispatch(orderActions.getOrderStart());
     const {
       user: { userInfo },
     } = getState();
@@ -51,16 +55,16 @@ export const getMyOrders = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(`/api/orders/`, authConfig);
-    dispatch(actions.getOrderSuccess(data));
+    dispatch(orderActions.getOrderSuccess(data));
   } catch (err) {
-    dispatch(actions.getOrderFailure(err.message));
+    dispatch(orderActions.getOrderFailure(err.message));
   }
 };
 
 // GET order by ID
 export const getOrderDetails = (id) => async (dispatch, getState) => {
   try {
-    dispatch(actions.getOrderByIdStart());
+    dispatch(orderActions.getOrderByIdStart());
     const {
       user: { userInfo },
     } = getState();
@@ -73,16 +77,16 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(`/api/orders/${id}/`, authConfig);
-    dispatch(actions.getOrderByIdSuccess(data));
+    dispatch(orderActions.getOrderByIdSuccess(data));
   } catch (err) {
-    dispatch(actions.getOrderByIdFailure(err.message));
+    dispatch(orderActions.getOrderByIdFailure(err.message));
   }
 };
 
 //  UPDATE order paid
 export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
   try {
-    dispatch(actions.payOrderStart());
+    dispatch(orderActions.payOrderStart());
 
     const {
       user: { userInfo },
@@ -100,10 +104,10 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
       paymentResult,
       authConfig
     );
-    dispatch(actions.payOrderSuccess(data));
+    dispatch(orderActions.payOrderSuccess(data));
   } catch (err) {
     dispatch(
-      actions.payOrderFailure(
+      orderActions.payOrderFailure(
         err.response ? err.response.data.detail : err.message
       )
     );
@@ -113,7 +117,7 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 //  ADMIN UPDATE order delivered
 export const deliverOrder = (order) => async (dispatch, getState) => {
   try {
-    dispatch(actions.deliverOrderStart());
+    dispatch(orderActions.deliverOrderStart());
     const {
       user: { userInfo },
     } = getState();
@@ -130,16 +134,16 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
       {},
       authConfig
     );
-    dispatch(actions.deliverOrderSuccess(data));
+    dispatch(orderActions.deliverOrderSuccess(data));
   } catch (err) {
-    dispatch(actions.deliverOrderFailure(err.message));
+    dispatch(orderActions.deliverOrderFailure(err.message));
   }
 };
 
 // ADMIN GET all orders
 export const getAllOrders = () => async (dispatch, getState) => {
   try {
-    dispatch(actions.getAllOrdersStart());
+    dispatch(orderActions.getAllOrdersStart());
     const {
       user: { userInfo },
     } = getState();
@@ -151,8 +155,8 @@ export const getAllOrders = () => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(`/api/orders/all/`, authConfig);
-    dispatch(actions.getAllOrdersSuccess(data));
+    dispatch(orderActions.getAllOrdersSuccess(data));
   } catch (err) {
-    dispatch(actions.getAllOrdersFailure(err.message));
+    dispatch(orderActions.getAllOrdersFailure(err.message));
   }
 };

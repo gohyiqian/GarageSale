@@ -78,7 +78,7 @@ const OrderPage = () => {
       history.push(`/order/${orders.id}`);
       // dispatch(actions.createOrderReset);
     }
-  }, [status, history]);
+  }, [status, history, orders.id]);
 
   return (
     <>

@@ -7,7 +7,6 @@ import { login } from "../redux/apiUser";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useHistory } from "react-router";
 
@@ -25,7 +24,7 @@ const linkStyle = {
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const { userInfo, status, error } = useSelector((state) => state.user); // get user info from store
@@ -34,11 +33,15 @@ const LoginPage = () => {
     if (userInfo) {
       history.push("/");
     }
-  }, [userInfo, history]);
+    setMessage(""); //clear error
+  }, [userInfo, history, error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(username, password));
+    if (error) {
+      setMessage(error);
+    }
   };
 
   // const handleSubmit = async (e) => {
@@ -92,8 +95,6 @@ const LoginPage = () => {
   return (
     <>
       <NavBar />
-      {error && <Message variant="danger">{error}</Message>}
-      {status === "loading" && <Loader />}
       <div className={styles.loginContainer}>
         <div className={styles.loginWrapper}>
           <Link to="/" style={linkStyle}>
@@ -101,10 +102,10 @@ const LoginPage = () => {
               GARAGESALE
             </h1>
           </Link>
-          <p className="mb-3">
-            <i>Hi Welcome Back Shopper!</i>
-          </p>
+          <p className="mb-3"></p>
           <p className="mb-3">Enter your Credentials</p>
+          {status === "loading" && <Loader />}
+
           <Form>
             <Form.Group className="mb-3">
               <Form.Control
@@ -124,8 +125,8 @@ const LoginPage = () => {
               />
             </Form.Group>
 
-            {/* {message && <span className={styles.loginError}>{message}</span>} */}
-
+            {/* {error && <Message variant="danger">{error}</Message>} */}
+            {message && <span className={styles.loginError}>{message}</span>}
             <button
               type="submit"
               className={styles.loginBtn}

@@ -25,10 +25,10 @@ const orderSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     },
-    // createOrderReset: (state) => {
-    //   state.status = "reset";
-    //   state.orders = {};
-    // },
+    createOrderReset: (state) => {
+      state.status = "reset";
+      state.orders = {};
+    },
 
     // USER GET own order
     getOrderStart(state) {

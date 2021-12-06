@@ -5,7 +5,6 @@ import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { register } from "../redux/apiUser";
-import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -35,12 +34,19 @@ const RegisterPage = () => {
     if (userInfo) {
       history.push("/");
     }
+    setMessage("");
   }, [userInfo, history]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (error) {
+      setMessage(error);
+    }
+    if (password.length < 6) {
+      setMessage("Password is too weak");
+    }
     if (password !== confirmPassword) {
-      return setMessage("Passwords do not match");
+      setMessage("Passwords do not match");
     } else {
       dispatch(register(username, email, password));
     }
@@ -106,9 +112,6 @@ const RegisterPage = () => {
   return (
     <>
       <NavBar />
-
-      {error && <Message variant="danger">{error}</Message>}
-      {status === "loading" && <Loader />}
       <div className={styles.loginContainer}>
         <div className={styles.loginWrapper}>
           <Link to="/" style={linkStyle}>
@@ -119,6 +122,7 @@ const RegisterPage = () => {
           <p className="mb-4">
             <i>Create an Account Now!</i>
           </p>
+          {status === "loading" && <Loader />}
           <Form>
             <Form.Group>
               <Form.Control

@@ -19,7 +19,6 @@ import { addToCart, removeFromCart } from "../redux/apiCart";
 // import { actions } from "../redux/cartSlice";
 // import { Add, Remove } from "@material-ui/icons";
 import CheckOutSteps from "../components/CheckOutSteps";
-import { useState } from "react";
 
 const CartPage = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -63,7 +62,7 @@ const CartPage = ({ match, location, history }) => {
           <Col md={8}>
             <h1 className="mb-4">Shopping Cart</h1>
             {!userInfo && (
-              <Message variant="info">
+              <Message variant="warning">
                 Please Log in <Link to="/login">Here</Link> to Cart Out
               </Message>
             )}

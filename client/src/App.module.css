@@ -183,9 +183,9 @@
 
 .customized_scrollbar_v2 {
   display: block;
-  width: 65em;
+  width: 63em;
   overflow: auto;
-  height: 25em;
+  height: 40em;
   border: solid #aaa 0.1px;
 }
 
@@ -193,6 +193,12 @@
   width: 10px;
   height: 8px;
   background-color: #aaa; /* or add it to the track */
+}
+
+@media only screen and (max-width: 600px) {
+  .customized_scrollbar_v2 {
+    width: 30em;
+  }
 }
 
 .customized_scrollbar {

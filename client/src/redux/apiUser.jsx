@@ -1,4 +1,4 @@
-import { actions } from "./userSlice";
+import { actions as userActions } from "./userSlice";
 import axios from "axios";
 
 const config = {
@@ -10,22 +10,22 @@ const config = {
 // USER LOGIN
 export const login = (username, password) => async (dispatch) => {
   try {
-    dispatch(actions.loginStart());
+    dispatch(userActions.loginStart());
     const { data } = await axios.post(
       "/api/users/login/",
       { username: username, password: password },
       config
     );
-    dispatch(actions.loginSuccess(data));
+    dispatch(userActions.loginSuccess(data));
   } catch (err) {
-    dispatch(actions.loginFailure(err.message));
+    dispatch(userActions.loginFailure(err.response.data.detail));
   }
 };
 
 // USER REGISTER
 export const register = (username, email, password) => async (dispatch) => {
   try {
-    dispatch(actions.registerStart());
+    dispatch(userActions.registerStart());
     const { data } = await axios.post(
       "/api/users/register/",
       {
@@ -36,16 +36,16 @@ export const register = (username, email, password) => async (dispatch) => {
       config
     );
 
-    dispatch(actions.registerSuccess(data));
+    dispatch(userActions.registerSuccess(data));
   } catch (err) {
-    dispatch(actions.registerFailure(err.message));
+    dispatch(userActions.registerFailure(err.response.data.detail));
   }
 };
 
 // GET USER DETAILS
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
-    dispatch(actions.userDetailsStart());
+    dispatch(userActions.userDetailsStart());
 
     const {
       user: { userInfo },
@@ -58,16 +58,16 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(`/api/users/${id}/`, authConfig);
-    dispatch(actions.userDetailsSuccess(data));
+    dispatch(userActions.userDetailsSuccess(data));
   } catch (err) {
-    dispatch(actions.userDetailsFailure(err.message));
+    dispatch(userActions.userDetailsFailure(err.message));
   }
 };
 
 // USER UPDATE OWN PROFILE
 export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
-    dispatch(actions.userProfileUpdateStart());
+    dispatch(userActions.userProfileUpdateStart());
     const {
       user: { userInfo },
     } = getState();
@@ -83,17 +83,17 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       user,
       authConfig
     );
-    dispatch(actions.userProfileUpdateSuccess(data));
-    dispatch(actions.loginSuccess(data));
+    dispatch(userActions.userProfileUpdateSuccess(data));
+    dispatch(userActions.loginSuccess(data));
   } catch (err) {
-    dispatch(actions.userProfileUpdateFailure(err.message));
+    dispatch(userActions.userProfileUpdateFailure(err.message));
   }
 };
 
 // ADMIN GET ALL USERS
 export const getAllUsers = () => async (dispatch, getState) => {
   try {
-    dispatch(actions.allUsersStart());
+    dispatch(userActions.allUsersStart());
 
     const {
       user: { userInfo },
@@ -107,16 +107,16 @@ export const getAllUsers = () => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(`/api/users/`, authConfig);
-    dispatch(actions.allUsersSuccess(data));
+    dispatch(userActions.allUsersSuccess(data));
   } catch (err) {
-    dispatch(actions.allUsersFailure(err.message));
+    dispatch(userActions.allUsersFailure(err.message));
   }
 };
 
 // ADMIN UPDATE USER
 export const updateUser = (user) => async (dispatch, getState) => {
   try {
-    dispatch(actions.userUpdateStart());
+    dispatch(userActions.userUpdateStart());
     const {
       user: { userInfo },
     } = getState();
@@ -131,16 +131,16 @@ export const updateUser = (user) => async (dispatch, getState) => {
       `/api/users/update/${user.id}/`,
       authConfig
     );
-    dispatch(actions.userUpdateSuccess(data));
+    dispatch(userActions.userUpdateSuccess(data));
   } catch (err) {
-    dispatch(actions.userUpdateFailure(err.message));
+    dispatch(userActions.userUpdateFailure(err.message));
   }
 };
 
 // ADMIN DELETE USER
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
-    dispatch(actions.userDeleteStart());
+    dispatch(userActions.userDeleteStart());
     const {
       user: { userInfo },
     } = getState();
@@ -152,9 +152,9 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.delete(`/api/users/delete/${id}/`, authConfig);
-    dispatch(actions.userDeleteSuccess(data));
+    dispatch(userActions.userDeleteSuccess(data));
   } catch (err) {
-    dispatch(actions.userDeleteFailure(err.message));
+    dispatch(userActions.userDeleteFailure(err.message));
   }
 };
 

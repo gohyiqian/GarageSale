@@ -10,7 +10,6 @@ import Message from "../components/Message";
 import styled from "styled-components";
 import styles from "../App.module.css";
 import { getUserDetails, updateUserProfile } from "../redux/apiUser";
-import { actions } from "../redux/userSlice";
 import { getMyOrders } from "../redux/apiOrder";
 import { useHistory } from "react-router";
 
@@ -63,7 +62,8 @@ const UserProfilePage = () => {
     status: orderStatus,
   } = useSelector((state) => state.order);
 
-  console.log(orderList);
+  // console.log(orderList);
+
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
@@ -192,7 +192,7 @@ const UserProfilePage = () => {
             <Message variant="danger">{orderError}</Message>
           ) : (
             <>
-              <Table striped responsive className="table-sm">
+              {/* <Table striped responsive className="table-sm">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -200,64 +200,50 @@ const UserProfilePage = () => {
                     <th>Total</th>
                     <th>Paid</th>
                     <th>Delivered</th>
-                    <th></th>
                   </tr>
                 </thead>
-
-                <tbody>
-                  {orderList.map((order) => (
-                    <tr key={order.id}>
-                      <td>{order.id}</td>
-                      <td>{order.createdAt.substring(0, 10)}</td>
-                      <td>${order.totalPrice}</td>
-                      <td>
-                        {order.isPaid ? (
-                          order.paidAt.substring(0, 10)
-                        ) : (
-                          <i
-                            className="fas fa-times"
-                            style={{ color: "red" }}
-                          ></i>
-                        )}
-                      </td>
-                      <td>
-                        <LinkContainer to={`/order/${order.id}`}>
-                          <Button className="btn-sm" variant="info">
-                            Details
-                          </Button>
-                        </LinkContainer>
-                      </td>
+              </Table> */}
+              <div className={styles.customized_scrollbar_v2}>
+                <Table striped responsive className="table-sm">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Date</th>
+                      <th>Total</th>
+                      <th>Paid</th>
+                      <th>Delivered</th>
+                      <th></th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
-              <hr />
-              <h2>My Sales</h2>
-              <Table striped responsive className="table-sm">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th>Sold</th>
-                    <th>Delivered</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>09090</td>
-                    <td>8989</td>
-                    <td>8877</td>
-                    <td>Paid</td>
-                    <td>
-                      <LinkContainer to={`/order/`}>
-                        <Button className="btn-sm">Details</Button>
-                      </LinkContainer>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
+                  </thead>
+
+                  <tbody>
+                    {orderList.map((order) => (
+                      <tr key={order.id}>
+                        <td>{order.id}</td>
+                        <td>{order.createdAt.substring(0, 10)}</td>
+                        <td>${order.totalPrice}</td>
+                        <td>
+                          {order.isPaid ? (
+                            order.paidAt.substring(0, 10)
+                          ) : (
+                            <i
+                              className="fas fa-times"
+                              style={{ color: "red" }}
+                            ></i>
+                          )}
+                        </td>
+                        <td>
+                          <LinkContainer to={`/order/${order.id}`}>
+                            <Button className="btn-sm" variant="info">
+                              Details
+                            </Button>
+                          </LinkContainer>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
             </>
           )}
         </Col>
