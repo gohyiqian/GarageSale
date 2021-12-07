@@ -39,15 +39,22 @@ const RegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (error) {
       setMessage(error);
     }
-    if (password.length < 6) {
-      setMessage("Password is too weak");
+    if (!username || !email || !password || !confirmPassword) {
+      setMessage("Please fill in form");
+    }
+
+    if (password.length > 0 && password.length < 6) {
+      setMessage("Password is too short");
     }
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
-    } else {
+      setMessage("");
+    }
+    if (username && email && password && confirmPassword) {
       dispatch(register(username, email, password));
     }
   };

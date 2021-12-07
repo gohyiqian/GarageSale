@@ -19,6 +19,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import CheckOutSteps from "../components/CheckOutSteps";
 import Message from "../components/Message";
+import { actions } from "../redux/orderSlice";
 
 const Description = styled.p`
   font-weight: 600;
@@ -76,7 +77,7 @@ const OrderPage = () => {
   useEffect(() => {
     if (status === "success") {
       history.push(`/order/${orders.id}`);
-      // dispatch(actions.createOrderReset);
+      dispatch(actions.createOrderReset());
     }
   }, [status, history, orders.id]);
 

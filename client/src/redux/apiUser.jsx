@@ -129,6 +129,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
     };
     const { data } = await axios.patch(
       `/api/users/update/${user.id}/`,
+      user,
       authConfig
     );
     dispatch(userActions.userUpdateSuccess(data));

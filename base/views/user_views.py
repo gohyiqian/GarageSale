@@ -61,11 +61,11 @@ def getAllUsers(request):
 def getUserById(request, pk):
     user = User.objects.get(id=pk)
     serializer = UserSerializer(instance=user, many=False)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
-# User can EDIT/UPDATE themselves 
+# Admin UPDATE other users
 @api_view(['PATCH'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAdminUser])
 def updateUser(request, pk):
     user = User.objects.get(id=pk)
     data = request.data
@@ -73,7 +73,7 @@ def updateUser(request, pk):
     user.first_name = data['username']
     user.username = data['username']
     user.email = data['email']
-    user.is_staff = data['isAdmin'] #check for is_staff = true
+    user.is_staff = data['isAdmin']
     user.save()
 
     serializer = UserSerializer(instance=user, data=request.data, partial=True)
@@ -98,7 +98,7 @@ def getUserProfile(request):
     serializer = UserSerializer(instance=user, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-# User EDIT profile
+# User UPDATE profile
 @api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def updateUserProfile(request):

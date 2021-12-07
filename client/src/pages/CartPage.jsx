@@ -16,7 +16,7 @@ import {
 import Message from "../components/Message";
 import styles from "../App.module.css";
 import { addToCart, removeFromCart } from "../redux/apiCart";
-// import { actions } from "../redux/cartSlice";
+import { actions } from "../redux/orderSlice";
 // import { Add, Remove } from "@material-ui/icons";
 import CheckOutSteps from "../components/CheckOutSteps";
 
@@ -39,6 +39,7 @@ const CartPage = ({ match, location, history }) => {
   }, [dispatch, productId, qty]);
 
   const checkoutHandler = () => {
+    dispatch(actions.createOrderReset());
     history.push("/shipping");
   };
 

@@ -8,6 +8,7 @@ const tabStyle = {
   color: "#945047",
   textDecoration: "none",
 };
+
 const CheckoutSteps = ({ step1, step2, step3, step4, step5 }) => {
   return (
     <Nav className="justify-content-center mb-4">

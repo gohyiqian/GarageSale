@@ -29,12 +29,25 @@ export const getTopProduct = () => async (dispatch) => {
   }
 };
 
-// CREATE PRODUCT - ADMIN
+//  ADMIN GET PRODUCTS BY KEYWORDS
+export const getProductsByKeyword =
+  (keyword = "") =>
+  async (dispatch) => {
+    try {
+      dispatch(actions.listProductsByKeywordStart());
+      const { data } = await axios.get(`/api/products${keyword}`);
+      dispatch(actions.listProductsByKeywordSuccess(data));
+    } catch (err) {
+      dispatch(actions.listProductsByKeywordFailure(err.message));
+    }
+  };
+
+// ADMIN - CREATE PRODUCT
 export const createProduct = () => async (dispatch, getState) => {
   try {
     dispatch(actions.productCreateStart());
     const {
-      userLogin: { userInfo },
+      user: { userInfo },
     } = getState();
 
     const authConfig = {
@@ -50,12 +63,12 @@ export const createProduct = () => async (dispatch, getState) => {
   }
 };
 
-// UPDATE PRODUCT -  ADMIN
+// ADMIN - UPDATE PRODUCT
 export const updateProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch(actions.productUpdateStart());
     const {
-      userLogin: { userInfo },
+      user: { userInfo },
     } = getState();
 
     const authConfig = {
@@ -75,12 +88,12 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   }
 };
 
-// DELETE PRODUCT -  ADMIN
+// ADMIN - DELETE PRODUCT
 export const deleteProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch(actions.productDeleteStart());
     const {
-      userLogin: { userInfo },
+      user: { userInfo },
     } = getState();
 
     const authConfig = {
@@ -89,7 +102,10 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(`/api/products/delete/${id}`, authConfig);
+    const { data } = await axios.delete(
+      `/api/products/delete/${id}`,
+      authConfig
+    );
     dispatch(actions.productDeleteSuccess(data));
   } catch (err) {
     dispatch(actions.productDeleteFailure(err.message));

@@ -48,11 +48,13 @@ const OrderCompletePage = () => {
   );
   console.log(orders);
 
-  if (!orders) {
-    window.location.reload();
-    orders = JSON.parse(localStorage.getItem("orderItems"));
-  }
-  console.log(orders);
+  useEffect(() => {
+    if (!orders) {
+      window.location.reload();
+      orders = JSON.parse(localStorage.getItem("orderItems"));
+      console.log(orders);
+    }
+  }, []);
 
   useEffect(() => {
     if (!userInfo) {

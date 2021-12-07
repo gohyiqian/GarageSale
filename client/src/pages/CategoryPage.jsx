@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import NavBar from "../components/NavBar";
-// import Banner from "../components/Banner";
 import ProductsList from "../components/ProductsList";
 import Footer from "../components/Footer";
 import { mobile } from "../responsiveMobile.js";
@@ -55,7 +54,6 @@ const ProductCategoryPage = () => {
   return (
     <>
       <NavBar />
-      {/* <Banner /> */}
 
       <div className="p-4">
         <h2 className="m-3">Category: {cat}</h2>

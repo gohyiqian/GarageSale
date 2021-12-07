@@ -98,6 +98,11 @@ const UserProfilePage = () => {
     }
   };
 
+  // const handleDetails = () =>
+  //   {
+  //     orderList.map((order) => history.push(`/order/${order.id}`));
+  //   }
+  // };
   return (
     <>
       <NavBar />
@@ -203,16 +208,15 @@ const UserProfilePage = () => {
                   </tr>
                 </thead>
               </Table> */}
-              <div className={styles.customized_scrollbar_v2}>
+              <div className={styles.customized_scrollbar}>
                 <Table striped responsive className="table-sm">
                   <thead>
                     <tr>
                       <th>ID</th>
                       <th>Date</th>
                       <th>Total</th>
-                      <th>Paid</th>
+                      <th>Payment Status</th>
                       <th>Delivered</th>
-                      <th></th>
                     </tr>
                   </thead>
 
@@ -222,9 +226,9 @@ const UserProfilePage = () => {
                         <td>{order.id}</td>
                         <td>{order.createdAt.substring(0, 10)}</td>
                         <td>${order.totalPrice}</td>
-                        <td>
+                        <td style={{ color: "green" }}>
                           {order.isPaid ? (
-                            order.paidAt.substring(0, 10)
+                            "Paid on " + order.paidAt.substring(0, 10)
                           ) : (
                             <i
                               className="fas fa-times"
@@ -234,7 +238,11 @@ const UserProfilePage = () => {
                         </td>
                         <td>
                           <LinkContainer to={`/order/${order.id}`}>
-                            <Button className="btn-sm" variant="info">
+                            <Button
+                              className="btn-sm"
+                              variant="secondary"
+                              // onClick={handleDetails}
+                            >
                               Details
                             </Button>
                           </LinkContainer>

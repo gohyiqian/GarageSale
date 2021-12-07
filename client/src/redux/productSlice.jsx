@@ -49,6 +49,7 @@ export const productSlice = createSlice({
     pages: 1,
     nfts: [],
     status: "idle",
+    createStatus: "idle",
     error: null,
   },
   reducers: {
@@ -63,6 +64,19 @@ export const productSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     },
+    listProductsByKeywordStart: (state) => {
+      state.status = "loading";
+    },
+    listProductsByKeywordSuccess: (state, action) => {
+      state.status = "success";
+      state.products = action.payload.products;
+      state.page = action.payload.page;
+      state.pages = action.payload.pages;
+    },
+    listProductsByKeywordFailure: (state, action) => {
+      state.status = "failure";
+      state.error = action.payload;
+    },
     productTopStart: (state) => {
       state.status = "loading";
     },
@@ -75,15 +89,19 @@ export const productSlice = createSlice({
       state.error = action.payload;
     },
     productCreateStart: (state) => {
-      state.status = "loading";
+      state.createStatus = "loading";
     },
     productCreateSuccess: (state, action) => {
-      state.status = "success";
+      state.createStatus = "success";
       state.product = action.payload;
     },
     productCreateFailure: (state, action) => {
-      state.status = "failed";
+      state.createStatus = "failed";
       state.error = action.payload;
+    },
+    productCreateReset: (state) => {
+      state.createStatus = "reset";
+      state.product = {};
     },
     productUpdateStart: (state) => {
       state.status = "loading";
@@ -99,9 +117,8 @@ export const productSlice = createSlice({
     productDeleteStart: (state) => {
       state.status = "loading";
     },
-    productDeleteSuccess: (state, action) => {
+    productDeleteSuccess: (state) => {
       state.status = "success";
-      state.product = action.payload;
     },
     productDeleteFailure: (state, action) => {
       state.status = "failed";

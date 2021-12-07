@@ -20,6 +20,10 @@ import CheckOutPage from "./pages/CheckOutPage";
 import PaymentPage from "./pages/PaymentPage";
 import OrderPage from "./pages/OrderPage";
 import OrderCompletePage from "./pages/OrderCompletePage";
+import UsersListPage from "./pages/UsersListPage";
+import UserEditPage from "./pages/UserEditPage";
+import ProductsListPage from "./pages/ProductsListPage";
+import ProductEditPage from "./pages/ProductEditPage";
 // import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 
 const App = () => {
@@ -41,12 +45,17 @@ const App = () => {
         <Route path="/order/:id" component={OrderCompletePage} />
         <Route path="/order" component={OrderPage} />
         <Route path="/payment" component={PaymentPage} />
-
         {/* <Route path="/threejs" exact component={ThreeJSProductPage} /> */}
         <Route path="/cart" component={CartPage} />
 
+        <Route path="/admin/allusers" component={UsersListPage} />
+        <Route path="/admin/user/:id/edit" component={UserEditPage} />
+
         <Route path="/shop" component={UserShopPage} />
         <Route path="/product/:id" component={ShowProductPage} />
+
+        <Route path="/admin/productlist" component={ProductsListPage} />
+        <Route path="/admin/product/:id/edit" component={ProductEditPage} />
 
         <DndProvider backend={HTML5Backend}>
           <Route exact path="/" component={HomePage} />

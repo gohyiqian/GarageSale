@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div ref={drag} className="m-2 py-3">
-      <Card key={product.id} style={{ width: "18rem" }}>
+      <Card key={product.id} className={styles.card_effect}>
         <Link to={`/product/${product.id}`}>
           <Card.Img
             className={styles.card_img_top}

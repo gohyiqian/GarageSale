@@ -9,6 +9,7 @@ import NavBar from "../components/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import { useHistory } from "react-router";
+import { actions } from "../redux/orderSlice";
 
 const Hr = styled.hr`
   color: red;
@@ -39,6 +40,7 @@ const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(username, password));
+    dispatch(actions.createOrderReset());
     if (error) {
       setMessage(error);
     }

@@ -53,6 +53,7 @@ const userSlice = createSlice({
     userInfo: JSON.parse(localStorage.getItem("userInfo")) || null,
     profileDetails: {},
     users: [],
+    updateStatus: "idle",
     status: "idle",
     error: null,
   },
@@ -124,7 +125,7 @@ const userSlice = createSlice({
     },
     userProfileUpdateReset: (state) => {
       state.status = "success";
-      state.userInfo = {};
+      state.profileDetails = {};
     },
     // ADMIN GET ALL USERS
     allUsersStart: (state) => {
@@ -144,18 +145,19 @@ const userSlice = createSlice({
     },
     // ADMIN UPDATE user
     userUpdateStart: (state) => {
-      state.status = "loading";
+      state.updateStatus = "loading";
     },
-    userUpdateSuccess: (state) => {
-      state.status = "success";
+    userUpdateSuccess: (state, action) => {
+      state.updateStatus = "success";
+      state.profileDetails = action.payload;
     },
     userUpdateFailure: (state, action) => {
-      state.status = "failed";
+      state.updateStatus = "failed";
       state.error = action.payload;
     },
     userUpdateReset: (state) => {
       state.status = "failed";
-      state.userInfo = {};
+      state.profileDetails = {};
     },
     // ADMIN DELETE user
     userDeleteStart: (state) => {

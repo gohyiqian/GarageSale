@@ -7,7 +7,7 @@ from base.models import Product, Review
 from base.serializers import ProductSerializer
 from rest_framework import status
 
-# GET all products with Pagination
+# GET all products with Pagination && Search by keyword
 @api_view(['GET'])
 def getProducts(request):
     query = request.query_params.get('keyword')
@@ -19,7 +19,7 @@ def getProducts(request):
         
     # category = request.query_params.get('category')
     page = request.query_params.get('page')
-    paginator = Paginator(products, 8)
+    paginator = Paginator(products, 24)
 
     try:
         products = paginator.page(page)
