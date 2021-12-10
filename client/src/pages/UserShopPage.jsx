@@ -17,7 +17,7 @@ const ProfileContainer = styled.div`
 `;
 const UserCoverImg = styled.img`
   width: 100%;
-  height: 250px;
+  height: 260px;
   object-fit: cover;
 `;
 

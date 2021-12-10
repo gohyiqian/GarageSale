@@ -1,13 +1,14 @@
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import styles from "../App.module.css";
 import { useEffect, useState } from "react";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { register } from "../redux/apiUser";
 import Loader from "../components/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { updateUserProfile } from "../redux/apiUser";
 
 const Hr = styled.hr`
   color: red;
@@ -26,11 +27,9 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSeller, setIsSeller] = useState(false);
-  const [isBuyer, setIsBuyer] = useState(false);
-  const [usertype, setUsertype] = useState({
-    is_seller: isSeller,
-    is_buyer: isBuyer,
-  });
+  const [isBuyer, setIsBuyer] = useState(true);
+  const [popOut, setPopOut] = useState(false);
+  const [bio, setBio] = useState("Hello Everyone!");
   const [message, setMessage] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
@@ -38,10 +37,12 @@ const RegisterPage = () => {
 
   useEffect(() => {
     if (userInfo) {
-      history.push("/");
+      setPopOut(true);
     }
-    setMessage("");
-  }, [userInfo, history]);
+    if (error) {
+      setMessage(error);
+    }
+  }, [userInfo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,15 +62,26 @@ const RegisterPage = () => {
       setMessage("");
     }
     if (username && email && password && confirmPassword) {
-      console.log(isBuyer);
-      console.log(isSeller);
-      setUsertype({
-        is_seller: isSeller,
-        is_buyer: isBuyer,
-      });
-      // console.log(usertype);
-      dispatch(register(username, email, usertype, password));
+      dispatch(register(username, email, password));
+      setPopOut(true);
     }
+  };
+
+  const handleSeller = () => {
+    dispatch(
+      updateUserProfile({
+        id: userInfo.id,
+        username: username,
+        email: email,
+        password: password,
+        is_buyer: isBuyer,
+        is_seller: isSeller,
+        bio: bio,
+      })
+    );
+    setPopOut(false);
+    setMessage("");
+    history.push("/login");
   };
 
   // Fetch() Method
@@ -173,27 +185,6 @@ const RegisterPage = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-
-              <Row>
-                <Col>
-                  <Form.Check
-                    type="checkbox"
-                    className="mb-3"
-                    label="Seller"
-                    checked={isSeller}
-                    onChange={(e) => setIsSeller(e.target.checked)}
-                  ></Form.Check>
-                </Col>
-                <Col>
-                  <Form.Check
-                    type="checkbox"
-                    className="mb-3"
-                    label="Buyer"
-                    checked={isBuyer}
-                    onChange={(e) => setIsBuyer(e.target.checked)}
-                  ></Form.Check>
-                </Col>
-              </Row>
             </Form.Group>
 
             {message && <span className={styles.loginError}>{message}</span>}
@@ -214,6 +205,58 @@ const RegisterPage = () => {
           <p>Terms & Conditions Apply</p>
         </div>
       </div>
+      {userInfo ? (
+        <Modal show={popOut}>
+          <Modal.Header closeButton>
+            <Modal.Title>
+              Welcome{" "}
+              <strong style={{ color: "#945047" }}>{userInfo.name}!</strong>
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Welcome on board, what do you aspire to do!</Modal.Body>
+          <Modal.Footer>
+            <Form onSubmit={handleSeller}>
+              <Row>
+                <Col>
+                  <Form.Group controlId="is_buyer">
+                    <Form.Check
+                      type="checkbox"
+                      className="mb-3"
+                      label="I just love shopping"
+                      checked={isBuyer}
+                      onChange={(e) => setIsBuyer(e.target.checked)}
+                    ></Form.Check>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <Form.Group controlId="is_seller">
+                    <Form.Check
+                      type="checkbox"
+                      className="mb-3"
+                      label="I want to start my Shop too!"
+                      checked={isSeller}
+                      onChange={(e) => setIsSeller(e.target.checked)}
+                    ></Form.Check>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  <button className={styles.loginBtn} type="submit">
+                    Submit
+                  </button>
+                </Col>
+              </Row>
+            </Form>
+            {/* <button className={styles.loginBtn} onClick={handleBuyer}>
+              I just want to Shop!
+            </button>
+            <button className={styles.loginBtn} onClick={handleSeller}>
+              I want to start my Shop too!
+            </button> */}
+          </Modal.Footer>
+        </Modal>
+      ) : (
+        <div></div>
+      )}
     </>
   );
 };

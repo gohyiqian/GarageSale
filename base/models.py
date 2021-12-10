@@ -19,6 +19,8 @@ class UserType(models.Model):
     user = models.OneToOneField(User,on_delete=models.SET_NULL, null=True)
     is_seller = models.BooleanField(default=False)
     is_buyer = models.BooleanField(default=False)
+    bio = models.TextField(null=True, blank=True)
+    profile_image = models.ImageField(default='/placeholder.png',null=True, blank=True)
 
     @receiver(post_save, sender=User)
     def create_user_type(sender, instance, created, **kwargs):

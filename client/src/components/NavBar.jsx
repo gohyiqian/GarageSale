@@ -7,7 +7,7 @@ import {
   Pinterest,
   Person,
 } from "@material-ui/icons";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import styles from "../App.module.css";
 import { mobile } from "../responsiveMobile";
@@ -81,7 +81,8 @@ const NavBar = () => {
   // console.log(userInfo);
   const history = useHistory();
   const dispatch = useDispatch();
-  const shop = true;
+  const shop = false;
+  const seller = true;
   const logOutHandler = () => {
     dispatch(actions.logOut());
     history.push("/login");
@@ -133,7 +134,7 @@ const NavBar = () => {
               {userInfo ? (
                 <>
                   <Person />
-                  {shop ? (
+                  {userInfo.usertype.is_seller ? (
                     <NavDropdown
                       title={userInfo.name}
                       id="username"
@@ -143,9 +144,15 @@ const NavBar = () => {
                         <NavDropdown.Item>My Profile</NavDropdown.Item>
                       </LinkContainer>
                       {/* <LinkContainer to="/seller/:id/shop"> */}
-                      <LinkContainer to="/seller/shop">
-                        <NavDropdown.Item>My Shop</NavDropdown.Item>
-                      </LinkContainer>
+                      {shop ? (
+                        <LinkContainer to="/seller/shop">
+                          <NavDropdown.Item>My Shop</NavDropdown.Item>
+                        </LinkContainer>
+                      ) : (
+                        <LinkContainer to="/seller/shop">
+                          <NavDropdown.Item>Create Shop</NavDropdown.Item>
+                        </LinkContainer>
+                      )}
                       <NavDropdown.Item onClick={logOutHandler}>
                         Logout
                       </NavDropdown.Item>
@@ -158,9 +165,6 @@ const NavBar = () => {
                     >
                       <LinkContainer to="/profile">
                         <NavDropdown.Item>My Profile</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/seller/:id/createshop">
-                        <NavDropdown.Item>Create Shop</NavDropdown.Item>
                       </LinkContainer>
                       <NavDropdown.Item onClick={logOutHandler}>
                         Logout
@@ -188,7 +192,8 @@ const NavBar = () => {
                   </LinkContainer>
                 </>
               )}
-              {userInfo && userInfo.usertype.is_seller && (
+
+              {userInfo && userInfo.usertype.is_seller && shop && (
                 <NavDropdown
                   title="Manage Shop"
                   id="seller"

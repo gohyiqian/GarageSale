@@ -19,7 +19,7 @@ const ProfileContainer = styled.div`
 `;
 const UserCoverImg = styled.img`
   width: 100%;
-  height: 250px;
+  height: 260px;
   object-fit: cover;
 `;
 
@@ -42,12 +42,17 @@ const UserProfilePage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [profileImage, setProfileImage] = useState("");
+  const [bio, setBio] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
 
   const { status, userInfo, profileDetails, error } = useSelector(
     (state) => state.user
   );
+
+  const isBuyer = userInfo.usertype.is_buyer;
+  const isSeller = userInfo.usertype.is_seller;
 
   const {
     orderList,
@@ -56,6 +61,10 @@ const UserProfilePage = () => {
   } = useSelector((state) => state.order);
 
   // console.log(orderList);
+
+  useEffect(() => {
+    dispatch(getMyOrders());
+  }, []);
 
   useEffect(() => {
     if (!userInfo) {
@@ -69,6 +78,9 @@ const UserProfilePage = () => {
         // pre-fill the form with existing logged-in user data
         setName(profileDetails.name);
         setEmail(profileDetails.email);
+        setPassword(profileDetails.password);
+        setConfirmPassword(profileDetails.password);
+        setBio(profileDetails.usertype.bio);
       }
     }
   }, [dispatch, history, userInfo, profileDetails, orderList]);
@@ -85,38 +97,39 @@ const UserProfilePage = () => {
           username: name,
           email: email,
           password: password,
+          is_buyer: isBuyer,
+          is_seller: isSeller,
+          bio: bio,
         })
       );
       setMessage("");
     }
   };
 
-  // const handleDetails = () =>
-  //   {
-  //     orderList.map((order) => history.push(`/order/${order.id}`));
-  //   }
-  // };
   return (
     <>
       <NavBar />
       {status === "loading" && <Loader />}
-      {error && <Message variant="danger">{error}</Message>}
       {message && <Message variant="danger">{message}</Message>}
       <ProfileContainer>
         <UserCoverImg src="images/userCoverImage.jpg" alt="" />
-        <UserProfileImg src="images/marylamb.jpg" alt="" />
+        <UserProfileImg src="images/merrykim.jpg" alt="" />
       </ProfileContainer>
 
       <Row style={{ margin: "20px" }}>
-        <Col md={3} className="p-4" style={{ backgroundColor: "#fcf5f5" }}>
-          <h2 style={{ textAlign: "center" }}>{userInfo.name} </h2>
+        <Col
+          md={3}
+          className="p-4"
+          style={{ backgroundColor: "#fcf5f5" }}
+          className={styles.scrollbar_v2}
+        >
+          <h2 style={{ textAlign: "center" }} className="mt-5">
+            {userInfo.name}{" "}
+          </h2>
           <hr />
           <h4 style={{ textAlign: "center" }}> My Bio </h4>
           <hr />
-          <span>
-            I am a full-time shopper, specialised in curating and recommending
-            the best nike shoes in town
-          </span>
+          <span>{userInfo.usertype.bio}</span>
           <h4 className="mt-3" style={{ textAlign: "center" }}>
             Joined
           </h4>
@@ -172,6 +185,28 @@ const UserProfilePage = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
+
+            {/* <Form.Group controlId="Image" className="mb-3">
+              <Form.Label>Profile Picture</Form.Label>
+              <Form.Control
+                type="file"
+                placeholder="Upload Profile Image"
+                value={profileImage}
+                onChange={(e) => setProfileImage(e.target.value)}
+              ></Form.Control>
+            </Form.Group> */}
+
+            <Form.Group controlId="Bio" className="mb-3">
+              <Form.Label>Update Biography</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Update Bio"
+                value={bio}
+                rows={5}
+                onChange={(e) => setBio(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
             {message && <Message variant="danger">{message}</Message>}
             <button type="submit" className={styles.loginBtn}>
               Update

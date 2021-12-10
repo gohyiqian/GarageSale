@@ -8,6 +8,7 @@ import Message from "../components/Message";
 import { getAllUsers, deleteUser } from "../redux/apiUser";
 import NavBar from "../components/NavBar";
 import { actions as userActions } from "../redux/userSlice";
+import styles from "../App.module.css";
 
 const AllUsersPage = () => {
   const dispatch = useDispatch();
@@ -41,87 +42,89 @@ const AllUsersPage = () => {
           ) : error ? (
             <Message variant="danger">{error}</Message>
           ) : (
-            <Table striped bordered hover responsive className="table-sm">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Admin</th>
-                  <th>Seller</th>
-                  <th>Buyer</th>
-                  <th>Date Joined</th>
-                  <th>Edit | Delete</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>
-                      {user.isAdmin ? (
-                        <i
-                          className="fas fa-check"
-                          style={{ color: "green" }}
-                        ></i>
-                      ) : (
-                        <i
-                          className="fas fa-times"
-                          style={{ color: "red" }}
-                        ></i>
-                      )}
-                    </td>
-                    <td>
-                      {user.usertype.is_seller ? (
-                        <i
-                          className="fas fa-check"
-                          style={{ color: "green" }}
-                        ></i>
-                      ) : (
-                        <i
-                          className="fas fa-times"
-                          style={{ color: "red" }}
-                        ></i>
-                      )}
-                    </td>
-
-                    <td>
-                      {user.usertype.is_buyer ? (
-                        <i
-                          className="fas fa-check"
-                          style={{ color: "green" }}
-                        ></i>
-                      ) : (
-                        <i
-                          className="fas fa-times"
-                          style={{ color: "red" }}
-                        ></i>
-                      )}
-                    </td>
-                    <td>{userInfo.date_joined.substring(0, 10)}</td>
-
-                    <td className="py-2">
-                      <LinkContainer to={`/admin/user/${user.id}/edit`}>
-                        <Button variant="light" className="btn-sm">
-                          <i className="fas fa-edit"></i>
-                        </Button>
-                      </LinkContainer>
-
-                      <Button
-                        variant="danger"
-                        className="btn-sm"
-                        onClick={() => handleDelete(user.id)}
-                      >
-                        <i className="fas fa-trash"></i>
-                      </Button>
-                    </td>
+            <div className={styles.customized_scrollbar}>
+              <Table striped bordered hover responsive className="table-sm">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Admin</th>
+                    <th>Seller</th>
+                    <th>Buyer</th>
+                    <th>Date Joined</th>
+                    <th>Edit | Delete</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user.id}>
+                      <td>{user.id}</td>
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+                      <td>
+                        {user.isAdmin ? (
+                          <i
+                            className="fas fa-check"
+                            style={{ color: "green" }}
+                          ></i>
+                        ) : (
+                          <i
+                            className="fas fa-times"
+                            style={{ color: "red" }}
+                          ></i>
+                        )}
+                      </td>
+                      <td>
+                        {user.usertype.is_seller ? (
+                          <i
+                            className="fas fa-check"
+                            style={{ color: "green" }}
+                          ></i>
+                        ) : (
+                          <i
+                            className="fas fa-times"
+                            style={{ color: "red" }}
+                          ></i>
+                        )}
+                      </td>
+
+                      <td>
+                        {user.usertype.is_buyer ? (
+                          <i
+                            className="fas fa-check"
+                            style={{ color: "green" }}
+                          ></i>
+                        ) : (
+                          <i
+                            className="fas fa-times"
+                            style={{ color: "red" }}
+                          ></i>
+                        )}
+                      </td>
+                      <td>{userInfo.date_joined.substring(0, 10)}</td>
+
+                      <td className="py-2">
+                        <LinkContainer to={`/admin/user/${user.id}/edit`}>
+                          <Button variant="light" className="btn-sm">
+                            <i className="fas fa-edit"></i>
+                          </Button>
+                        </LinkContainer>
+
+                        <Button
+                          variant="danger"
+                          className="btn-sm"
+                          onClick={() => handleDelete(user.id)}
+                        >
+                          <i className="fas fa-trash"></i>
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
           )}
         </div>
       </Container>

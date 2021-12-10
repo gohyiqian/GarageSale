@@ -39,9 +39,6 @@ def registerUser(request):
             first_name=data['username'],
             username=data['username'],
             email=data['email'],
-            usertype= data['usertype'],
-            # is_seller = data['isSeller'],
-            # is_buyer = data['isBuyer'],
             password=make_password(data['password'])
         )
         # return the token upon registration
@@ -116,7 +113,10 @@ def updateUserProfile(request):
     user.first_name = data['username']
     user.username = data['username']
     user.email = data['email']
-
+    user.usertype.bio = data['bio']
+    user.usertype.is_buyer = data['is_buyer']
+    user.usertype.is_seller = data['is_seller']
+    
     if data['password'] != '':
         user.password = make_password(data['password'])
 

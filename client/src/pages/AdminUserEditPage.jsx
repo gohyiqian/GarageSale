@@ -46,8 +46,8 @@ const UserEditPage = ({ match }) => {
         username: name,
         email: email,
         isAdmin: isAdmin,
-        isBuyer: isBuyer,
-        isSeller: isSeller,
+        is_buyer: isBuyer,
+        is_seller: isSeller,
       })
     );
     setMessage("User Profile Updated");
@@ -102,28 +102,29 @@ const UserEditPage = ({ match }) => {
                     </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Group controlId="isbuyer">
+                    <Form.Group controlId="is_buyer">
                       <Form.Check
                         type="checkbox"
                         className="mb-3"
-                        label="Is Buyer"
+                        label="is_buyer"
                         checked={isBuyer}
                         onChange={(e) => setIsBuyer(e.target.checked)}
                       ></Form.Check>
                     </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Group controlId="isseller">
+                    <Form.Group controlId="is_seller">
                       <Form.Check
                         type="checkbox"
                         className="mb-3"
-                        label="Is Seller"
+                        label="is_seller"
                         checked={isSeller}
                         onChange={(e) => setIsSeller(e.target.checked)}
                       ></Form.Check>
                     </Form.Group>
                   </Col>
                 </Row>
+
                 {/* <Form.Group>
                   <Form.Label>Profile Picture</Form.Label>
                   <Form.Control className="mb-3"></Form.Control>
