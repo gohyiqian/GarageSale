@@ -7,7 +7,7 @@ from base.models import Product, Review
 from base.serializers import ProductSerializer
 from rest_framework import status
 
-# GET all products with Pagination && Search by keyword
+# GET all products with Pagination && Search by keyword (Public)
 @api_view(['GET'])
 def getProducts(request):
     query = request.query_params.get('keyword')
@@ -37,7 +37,7 @@ def getProducts(request):
     return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
 
 
-# GET 1 Product for ProductShowPage
+# GET 1 Product for ProductShowPage (Public)
 @api_view(['GET'])
 def getProduct(request, pk):
     product = Product.objects.get(id=pk)
@@ -53,7 +53,7 @@ def getTopProducts(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# Admin POST Product
+# Admin POST Product (Admin/Seller)
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createProduct(request):
@@ -73,14 +73,14 @@ def createProduct(request):
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# Admin POST Product Image
+# Admin POST Product Image (Admin/Seller)
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def uploadImage(request):
     data = request.data
 
-    product_id = data['product_id']
-    product = Product.objects.get(id=product_id)
+    productId = data['productId']
+    product = Product.objects.get(id=productId)
 
     product.image = request.FILES.get('image')
     product.save()
@@ -99,7 +99,10 @@ def updateProduct(request, pk):
     product.price = data['price']
     product.brand = data['brand']
     product.stockCount = data['stockCount']
+    product.color = data['color']
     product.category = data['category']
+    product.gender = data['gender']
+    product.size = data['size']
     product.description = data['description']
 
     product.save()
@@ -125,18 +128,18 @@ def createProductReview(request, pk):
     product = Product.objects.get(id=pk)
     data = request.data
 
-    # 1 - Review already exists
-    alreadyExists = product.review_set.filter(user=user).exists()
-    if alreadyExists:
+    # Check if review already exists
+    checkExists = product.review_set.filter(user=user).exists()
+    if checkExists:
         content = {'detail': 'Product already reviewed'}
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
-    # 2 - No Rating or 0
+    # If no rating selected
     elif data['rating'] == 0:
         content = {'detail': 'Please select a rating'}
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
-    # 3 - Create review
+    # Create new review
     else:
         review = Review.objects.create(
             user=user,
@@ -156,4 +159,4 @@ def createProductReview(request, pk):
         product.rating = total / len(reviews)
         product.save()
 
-        return Response('Review Added')
+        return Response('Review Added', status=status.HTTP_201_CREATED)

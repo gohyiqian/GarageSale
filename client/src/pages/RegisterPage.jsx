@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import styles from "../App.module.css";
 import { useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { register } from "../redux/apiUser";
@@ -25,6 +25,12 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSeller, setIsSeller] = useState(false);
+  const [isBuyer, setIsBuyer] = useState(false);
+  const [usertype, setUsertype] = useState({
+    is_seller: isSeller,
+    is_buyer: isBuyer,
+  });
   const [message, setMessage] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
@@ -55,7 +61,14 @@ const RegisterPage = () => {
       setMessage("");
     }
     if (username && email && password && confirmPassword) {
-      dispatch(register(username, email, password));
+      console.log(isBuyer);
+      console.log(isSeller);
+      setUsertype({
+        is_seller: isSeller,
+        is_buyer: isBuyer,
+      });
+      // console.log(usertype);
+      dispatch(register(username, email, usertype, password));
     }
   };
 
@@ -146,7 +159,6 @@ const RegisterPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-
               <Form.Control
                 type="password"
                 className="mb-2"
@@ -154,7 +166,6 @@ const RegisterPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-
               <Form.Control
                 type="password"
                 className="mb-4"
@@ -162,6 +173,27 @@ const RegisterPage = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
+
+              <Row>
+                <Col>
+                  <Form.Check
+                    type="checkbox"
+                    className="mb-3"
+                    label="Seller"
+                    checked={isSeller}
+                    onChange={(e) => setIsSeller(e.target.checked)}
+                  ></Form.Check>
+                </Col>
+                <Col>
+                  <Form.Check
+                    type="checkbox"
+                    className="mb-3"
+                    label="Buyer"
+                    checked={isBuyer}
+                    onChange={(e) => setIsBuyer(e.target.checked)}
+                  ></Form.Check>
+                </Col>
+              </Row>
             </Form.Group>
 
             {message && <span className={styles.loginError}>{message}</span>}

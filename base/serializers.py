@@ -1,21 +1,17 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Product, Review, ShippingAddress, Order, OrderItem
-
+from .models import Product, Review, ShippingAddress, Order, OrderItem, Shop, UserType, Conversation, Message
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
-    # _id = serializers.SerializerMethodField(read_only=True)
     isAdmin = serializers.SerializerMethodField(read_only=True)
+    usertype = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'date_joined']
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'date_joined', 'usertype']
 
-    # def get__id(self, obj):
-    #     return obj.id
-
-    # customised is_staff to isAdmin
+    # customised default is_staff to isAdmin
     def get_isAdmin(self, obj):
         return obj.is_staff
 
@@ -26,13 +22,18 @@ class UserSerializer(serializers.ModelSerializer):
             name = obj.email
         return name
 
-# For refresh token
+    def get_usertype(self,obj):
+        usertype = obj.usertype
+        # print(usertype)
+        serializer = UserTypeSerializer(usertype, many=False)
+        return serializer.data
+
 class UserSerializerWithToken(UserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'date_joined', 'token']
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'date_joined', 'token','usertype']
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -82,7 +83,6 @@ class OrderSerializer(serializers.ModelSerializer):
         return serializer.data
 
     def get_shippingAddress(self, obj):
-        
         address = obj.shippingaddress
         serializers = ShippingAddressSerializer(address, many=False)
        
@@ -92,3 +92,26 @@ class OrderSerializer(serializers.ModelSerializer):
         user = obj.user
         serializer = UserSerializer(user, many=False)
         return serializer.data
+
+class ShopSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Shop
+            fields = '__all__'
+
+
+class UserTypeSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = UserType
+            fields = '__all__'
+
+class ConversationSerializer(serializers.ModelSerializer):
+        user = serializers.SerializerMethodField(read_only=True)
+        class Meta:
+            model: Conversation
+            fields = '__all__'
+
+class MessageSerializer(serializers.ModelSerializer):
+        user = serializers.SerializerMethodField(read_only=True)
+        class Meta:
+            model: Message
+            fields = '__all__'

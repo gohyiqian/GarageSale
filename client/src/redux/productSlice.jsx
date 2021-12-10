@@ -50,6 +50,8 @@ export const productSlice = createSlice({
     nfts: [],
     status: "idle",
     createStatus: "idle",
+    updateStatus: "idle",
+    reviewStatus: "idle",
     error: null,
   },
   reducers: {
@@ -104,14 +106,14 @@ export const productSlice = createSlice({
       state.product = {};
     },
     productUpdateStart: (state) => {
-      state.status = "loading";
+      state.updateStatus = "loading";
     },
     productUpdateSuccess: (state, action) => {
-      state.status = "success";
+      state.updateStatus = "success";
       state.product = action.payload;
     },
     productUpdateFailure: (state, action) => {
-      state.status = "failed";
+      state.updateStatus = "failed";
       state.error = action.payload;
     },
     productDeleteStart: (state) => {
@@ -124,10 +126,24 @@ export const productSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     },
-    productAddOne: productsAdapter.addOne,
-    productAddMany: productsAdapter.addMany,
-    productUpdate: productsAdapter.updateOne,
-    productRemove: productsAdapter.removeOne,
+    createReviewStart: (state) => {
+      state.reviewStatus = "loading";
+    },
+    createReviewSuccess: (state, action) => {
+      state.reviewStatus = "success";
+    },
+    createReviewFailure: (state, action) => {
+      state.reviewStatus = "failed";
+      state.error = action.payload;
+    },
+    createReviewReset: (state, action) => {
+      state.reviewStatus = "failed";
+      state.product.reviews = {};
+    },
+    // productAddOne: productsAdapter.addOne,
+    // productAddMany: productsAdapter.addMany,
+    // productUpdate: productsAdapter.updateOne,
+    // productRemove: productsAdapter.removeOne,
   },
   extraReducers: (builder) => {
     builder

@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, useLocation } from "react-router";
-import { getOrderDetails, payOrder, deliverOrder } from "../redux/apiOrder";
+import { getOrderById, payOrder, deliverOrder } from "../redux/apiOrder";
 import { actions } from "../redux/orderSlice";
 import styled from "styled-components";
 import styles from "../App.module.css";
@@ -48,33 +48,34 @@ const OrderCompletePage = () => {
   );
   console.log(orders);
 
-  useEffect(() => {
-    if (!orders) {
-      window.location.reload();
-      orders = JSON.parse(localStorage.getItem("orderItems"));
-      console.log(orders);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!orders) {
+  //     window.location.reload();
+  //     orders = JSON.parse(localStorage.getItem("orderItems"));
+  //     console.log(orders);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
-    }
-    if (!orders || orders.id !== orderId) {
-      dispatch(getOrderDetails(orderId));
-      // localStorage.setItem("orderItems", JSON.stringify(orders));
-    }
-    if (payStatus || deliverStatus) {
-      dispatch(actions.payOrderReset());
-      dispatch(actions.deliverOrderReset());
-    } else if (!orders.isPaid) {
-      if (!window.paypal) {
-        addPayPalScript();
-      } else {
-        setSdkReady(true);
+    } else {
+      if (!orders || orders.id !== orderId) {
+        dispatch(getOrderById(orderId));
+        // localStorage.setItem("orderItems", JSON.stringify(orders));
+      }
+      if (payStatus || deliverStatus) {
+        dispatch(actions.payOrderReset());
+        dispatch(actions.deliverOrderReset());
+      } else if (!orders.isPaid) {
+        if (!window.paypal) {
+          addPayPalScript();
+        } else {
+          setSdkReady(true);
+        }
       }
     }
-  }, [dispatch]);
+  }, [dispatch, orderId]);
 
   const addPayPalScript = () => {
     const script = document.createElement("script");

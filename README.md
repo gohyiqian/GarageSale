@@ -1,6 +1,6 @@
 # GarageSale
 
-A full-stack responsive ecommerce web application with the following features:
+A full-stack responsive ecommerce web application with React Front End and DjangoRestFrameowork for Backend, with the following features:
 
 1. Customised caurosel on Homepage
 2. Product Filtering function on ProductCategoryPage
@@ -30,7 +30,7 @@ Self-practice project to improve my development skills.
 - Styled-components
 - CSS Flexbox
 - React-bootstrap
-- Material UI (for Icons)
+- Material UI (for some Icons)
 - TailWind CSS (some classNames)
 
 ## Authorisation & Authentication:
@@ -70,21 +70,22 @@ The MVP will have the essential features of an ecommerce applications such as:
 - [x] Add to Cart Features
 - [x] Delete From Cart Features
 - [x] Store Product Image JPEG on AWS S3
-- [ ] Add Product Reviews
-- [ ] Add Stripe CheckOut
-- [ ] Add Order Success Page
+- [x] Add Product Reviews
+- [x] Add Paypal or Stripe CheckOut
+- [x] Add Order Success Page
 - [ ] Add Admin Dashboard to see Sales Data
 - [ ] Add threeJs for some products
+      = [ ] Add Seller
 - [ ] Add Shop
 - [ ] Add Chat with Shop Owner
-- [ ] Add Follow Favorite Product
-- [ ] Add Follow Favorite Shop
 - [ ] Add threeJS features on showProductPage
 - [ ] Hide credentials with environ
 - [ ] Deployment to Heroku
 
 ## Pending Bonus:
 
+- [ ] Add Follow Favorite Product
+- [ ] Add Follow Favorite Shop
 - [ ] Metamask Login Options for user to remain anonymous
 - [ ] Login via Google OAuth Options/ Passport JS
 - [ ] Email notification/verification upon Account registration

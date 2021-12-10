@@ -8,7 +8,9 @@ const Paginate = ({ pages, page, keyword = "", isAdmin = false }) => {
 
   return (
     pages > 1 && (
-      <Pagination>
+      <Pagination className="pagination justify-content-center">
+        {/* <Pagination.First />
+        <Pagination.Prev /> */}
         {[...Array(pages).keys()].map((x) => (
           <LinkContainer
             key={x + 1}
@@ -21,6 +23,8 @@ const Paginate = ({ pages, page, keyword = "", isAdmin = false }) => {
             <Pagination.Item active={x + 1 === page}>{x + 1}</Pagination.Item>
           </LinkContainer>
         ))}
+        {/* <Pagination.Next />
+        <Pagination.Last /> */}
       </Pagination>
     )
   );

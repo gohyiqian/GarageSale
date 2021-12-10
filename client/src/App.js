@@ -15,15 +15,16 @@ import ShowProductPage from "./pages/ShowProductPage";
 import CartPage from "./pages/CartPage";
 import CategoryPage from "./pages/CategoryPage";
 import UserProfilePage from "./pages/UserProfilePage";
-import UserShopPage from "./pages/UserShopPage";
 import CheckOutPage from "./pages/CheckOutPage";
 import PaymentPage from "./pages/PaymentPage";
 import OrderPage from "./pages/OrderPage";
 import OrderCompletePage from "./pages/OrderCompletePage";
-import UsersListPage from "./pages/UsersListPage";
-import UserEditPage from "./pages/UserEditPage";
-import ProductsListPage from "./pages/ProductsListPage";
-import ProductEditPage from "./pages/ProductEditPage";
+import AdminUsersListPage from "./pages/AdminUsersListPage";
+import AdminUserEditPage from "./pages/AdminUserEditPage";
+import AdminProductsListPage from "./pages/AdminProductsListPage";
+import AdminProductEditPage from "./pages/AdminProductEditPage";
+import AdminOrderListsPage from "./pages/AdminOrderListsPage";
+import UserShopPage from "./pages/UserShopPage";
 // import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 
 const App = () => {
@@ -48,15 +49,18 @@ const App = () => {
         {/* <Route path="/threejs" exact component={ThreeJSProductPage} /> */}
         <Route path="/cart" component={CartPage} />
 
-        <Route path="/admin/allusers" component={UsersListPage} />
-        <Route path="/admin/user/:id/edit" component={UserEditPage} />
+        <Route path="/admin/allusers" component={AdminUsersListPage} />
+        <Route path="/admin/user/:id/edit" component={AdminUserEditPage} />
 
-        <Route path="/shop" component={UserShopPage} />
         <Route path="/product/:id" component={ShowProductPage} />
 
-        <Route path="/admin/productlist" component={ProductsListPage} />
-        <Route path="/admin/product/:id/edit" component={ProductEditPage} />
-
+        <Route path="/admin/productlist" component={AdminProductsListPage} />
+        <Route
+          path="/admin/product/:id/edit"
+          component={AdminProductEditPage}
+        />
+        <Route path="/seller/shop" component={UserShopPage} />
+        <Route path="/admin/orderlist" component={AdminOrderListsPage} />
         <DndProvider backend={HTML5Backend}>
           <Route exact path="/" component={HomePage} />
           {/* <Route path="/nftcart" component={ShopNFTCartPage} /> */}

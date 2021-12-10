@@ -32,7 +32,7 @@ const ProductsList = ({ cat, filters, sort }) => {
   const dispatch = useDispatch();
   const { products, status } = useSelector((state) => state.products);
   // products.map();
-  console.log(products);
+  // console.log(products);
 
   useEffect(() => {
     dispatch(getProducts());

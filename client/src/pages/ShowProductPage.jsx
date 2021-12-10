@@ -23,11 +23,13 @@ import { getProduct } from "../redux/apiProduct";
 import Message from "../components/Message";
 // import axios from "axios";
 // import Message from '../components/Message'
-// import { listProductDetails, createProductReview } from '../actions/productActions'
+import { createProductReview } from "../redux/apiProduct";
+import { LinkContainer } from "react-router-bootstrap";
 // import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 const AmountContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   font-weight: 700;
 `;
 
@@ -40,8 +42,13 @@ const Amount = styled.span`
 
 const ShowProductPage = ({ match, history }) => {
   const [qty, setQty] = useState(0);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
   const dispatch = useDispatch();
-  const { product, status, error } = useSelector((state) => state.products);
+  const { product, status, error, reviewStatus } = useSelector(
+    (state) => state.products
+  );
+  const { userInfo } = useSelector((state) => state.user);
   console.log(product);
 
   useEffect(() => {
@@ -61,21 +68,23 @@ const ShowProductPage = ({ match, history }) => {
   //   history.push(`/cart/${match.params.id}?qty=${qty}`);
   // };
 
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   // dispatch(createProductReview(
-  //   //     match.params.id, {
-  //   //     rating,
-  //   //     comment
-  //   // }
-  //   // ))
-  // };
+  const handleReviewSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      createProductReview(match.params.id, {
+        rating,
+        comment,
+      })
+    );
+    window.location.reload();
+  };
 
   const handleQuantity = (type) => {
     if (type === "dec") {
       qty > 1 && setQty(qty - 1);
-    } else if (type === "inc") {
-      qty > 1 && setQty(qty + 1);
+    }
+    if (type === "inc" && qty >= 1) {
+      setQty(qty + 1);
     }
   };
 
@@ -87,16 +96,13 @@ const ShowProductPage = ({ match, history }) => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Container>
-          <Link to="/" className="btn btn-light my-3">
-            Go Back
-          </Link>
+        <Container style={{ margin: "auto" }} className="mt-4 mb-4">
           <Row>
-            <Col md={5}>
-              <Image src={product.image} alt="" height="400px" />
+            <Col md={6} className={styles.show_img_parent}>
+              <Image src={product.image} className={styles.show_img} />
             </Col>
 
-            <Col md={3}>
+            <Col md={6}>
               <ListGroup variant="flush">
                 <ListGroupItem>
                   <h3>{product.name}</h3>
@@ -108,30 +114,35 @@ const ShowProductPage = ({ match, history }) => {
                     color={"#945047"}
                   />
                 </ListGroupItem>
-                <ListGroupItem>Price: ${product.price}</ListGroupItem>
                 <ListGroupItem>
-                  Description: {product.description}
+                  <strong> Item Price: </strong>${product.price}
+                </ListGroupItem>
+                <ListGroupItem>
+                  <strong>Description: </strong> <br />
+                  {product.description}
                 </ListGroupItem>
               </ListGroup>
-            </Col>
 
-            <Col md={3}>
-              <Card>
+              <Card className="mt-5">
                 <ListGroup variant="flush">
                   <ListGroupItem>
                     <Row>
-                      <Col>Price:</Col>
+                      <Col>Total Selected Price:</Col>
                       <Col>
-                        <strong>${product.price}</strong>
+                        <strong>${parseInt(product.price) * qty}</strong>
                       </Col>
                     </Row>
                   </ListGroupItem>
 
                   <ListGroupItem>
                     <Row>
-                      <Col>Status:</Col>
+                      <Col>Pieces Available:</Col>
                       <Col>
-                        {product.stockCount > 0 ? "In Stock" : "Out of Stock"}
+                        {product.stockCount > 0 ? (
+                          <i> In Stock </i>
+                        ) : (
+                          <i style={{ color: "red" }}> Out of Stock </i>
+                        )}
                       </Col>
                     </Row>
                   </ListGroupItem>
@@ -139,7 +150,7 @@ const ShowProductPage = ({ match, history }) => {
                   {product.stockCount > 0 && (
                     <ListGroupItem>
                       <Row>
-                        <Col>Qty</Col>
+                        <Col>Select Quantity:</Col>
                         <Col xs="auto" className="my-1">
                           <AmountContainer>
                             <Remove
@@ -173,27 +184,113 @@ const ShowProductPage = ({ match, history }) => {
                   )}
                   <ListGroupItem>
                     <Row>
-                      <Col>Sizes:</Col>
-                      <Col>
-                        {product.stockCount > 0 ? "In Stock" : "Out of Stock"}
-                      </Col>
+                      <Col>Sizes Available:</Col>
+                      <Col>{product.size}</Col>
                     </Row>
                   </ListGroupItem>
 
                   <ListGroupItem>
-                    <button
-                      onClick={() =>
-                        dispatch(addToCart(product.id, Number(qty)))
-                      }
-                      className={styles.loginBtn}
-                      disabled={product.stockCount === 0}
-                      type="button"
-                    >
-                      Add to Cart
-                    </button>
+                    <Row>
+                      <Col>
+                        <LinkContainer to="/" className={styles.loginBtn}>
+                          <button>Back to Shop</button>
+                        </LinkContainer>
+                      </Col>
+                      <Col>
+                        <button
+                          onClick={() =>
+                            dispatch(addToCart(product.id, Number(qty)))
+                          }
+                          className={styles.loginBtn}
+                          disabled={product.stockCount === 0}
+                          type="button"
+                        >
+                          Add to Cart
+                        </button>
+                      </Col>
+                    </Row>
                   </ListGroupItem>
                 </ListGroup>
               </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <ListGroup variant="flush">
+                <ListGroup.Item>
+                  <h4>Reviews</h4>
+                  {product.reviews.length === 0 && (
+                    <Message variant="info">No Reviews</Message>
+                  )}
+                </ListGroup.Item>
+              </ListGroup>
+              <ListGroup variant="flush">
+                {product.reviews.map((review) => (
+                  <ListGroup.Item key={review._id}>
+                    <strong>{review.name}</strong>
+                    <RatingStar value={review.rating} color={"#945047"} />
+                    <p style={{ fontSize: "12px" }}>
+                      Reviewed On: {review.createdAt.substring(0, 10)}
+                    </p>
+                    <p>{review.comment}</p>
+                  </ListGroup.Item>
+                ))}
+
+                <ListGroup.Item>
+                  <h4>Write a review</h4>
+
+                  {reviewStatus === "loading" && <Loader />}
+                  {reviewStatus === "success" && (
+                    <Message variant="success">Review Submitted</Message>
+                  )}
+                  {reviewStatus === "failed" && (
+                    <Message variant="danger">{error}</Message>
+                  )}
+
+                  {userInfo ? (
+                    <Form onSubmit={handleReviewSubmit}>
+                      <Form.Group controlId="rating">
+                        <Form.Label>Choose Ratings:</Form.Label>
+                        <Form.Control
+                          className="mb-3"
+                          as="select"
+                          value={rating}
+                          onChange={(e) => setRating(e.target.value)}
+                        >
+                          <option value="">Select...</option>
+                          <option value="1">1 - Poor</option>
+                          <option value="2">2 - Fair</option>
+                          <option value="3">3 - Good</option>
+                          <option value="4">4 - Very Good</option>
+                          <option value="5">5 - Excellent</option>
+                        </Form.Control>
+                      </Form.Group>
+
+                      <Form.Group controlId="comment">
+                        <Form.Label>Your Comments: </Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          row="5"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+
+                      <button
+                        className={styles.loginBtn}
+                        type="submit"
+                        variant="primary"
+                      >
+                        Submit
+                      </button>
+                    </Form>
+                  ) : (
+                    <Message variant="info">
+                      Please <Link to="/login">login</Link> to write a review
+                    </Message>
+                  )}
+                </ListGroup.Item>
+              </ListGroup>
             </Col>
           </Row>
         </Container>

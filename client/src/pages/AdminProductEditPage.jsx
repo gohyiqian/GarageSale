@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import axios from "axios";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import styles from "../App.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,34 +10,53 @@ import Message from "../components/Message";
 import NavBar from "../components/NavBar";
 import { getProduct, updateProduct } from "../redux/apiProduct";
 import { LinkContainer } from "react-router-bootstrap";
+// import { actions } from "../redux/productSlice";
 
 const ProductEditPage = ({ match }) => {
   const productId = match.params.id;
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { product, status, error } = useSelector((state) => state.products);
+  // const history = useHistory();
+  const { product, status, error, updateStatus } = useSelector(
+    (state) => state.products
+  );
   console.log(product);
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
   const [brand, setBrand] = useState("");
+  const [size, setSize] = useState("");
   const [category, setCategory] = useState("");
+  const [gender, setGender] = useState("");
+  const [color, setColor] = useState("");
   const [stockCount, setStockCount] = useState(0);
   const [description, setDescription] = useState("");
   const [upload, setUpload] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    dispatch(getProduct(productId));
-  }, [dispatch, productId]);
+    if (product.id !== Number(productId)) {
+      dispatch(getProduct(productId));
+    } else {
+      setName(product.name);
+      setPrice(product.price);
+      setImage(product.image);
+      setBrand(product.brand);
+      setCategory(product.category);
+      setColor(product.color);
+      setSize(product.size);
+      setStockCount(product.stockCount);
+      setDescription(product.description);
+    }
+  }, [product]);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
+    console.log(file);
     const formData = new FormData();
     formData.append("image", file);
     formData.append("productId", productId);
     setUpload(true);
-
     try {
       const config = {
         headers: {
@@ -66,10 +85,14 @@ const ProductEditPage = ({ match }) => {
         image: image,
         brand: brand,
         category: category,
+        gender: gender,
+        color: color,
+        size: size,
         stockCount: stockCount,
         description: description,
       })
     );
+    setMessage("Product Updated");
   };
   return (
     <>
@@ -77,15 +100,7 @@ const ProductEditPage = ({ match }) => {
       <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <div>
           <h2 className="mb-4">Edit Product: {product.name}</h2>
-          <Row>
-            <Col md={3} className="mb-3">
-              <LinkContainer to="/admin/productlist">
-                <button className={styles.loginBtn}>
-                  Back to All Products
-                </button>
-              </LinkContainer>
-            </Col>
-          </Row>
+
           {status === "loading" ? (
             <Loader />
           ) : error ? (
@@ -144,6 +159,36 @@ const ProductEditPage = ({ match }) => {
                         onChange={(e) => setCategory(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="gender">
+                      <Form.Label>Gender</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter gender"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="color">
+                      <Form.Label>Color</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter color"
+                        value={color}
+                        onChange={(e) => setColor(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="category">
+                      <Form.Label>Sizes</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter available sizes"
+                        value={size}
+                        onChange={(e) => setSize(e.target.value)}
+                      ></Form.Control>
+                    </Form.Group>
                   </Col>
 
                   <Col md={6}>
@@ -155,14 +200,26 @@ const ProductEditPage = ({ match }) => {
                         placeholder="Enter image"
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
-                      ></Form.Control>
-
-                      <input type="file" onChange={handleFileUpload} />
-
+                      />
+                      <Form.Control
+                        type="file"
+                        id="image-file"
+                        placeholder="Enter image"
+                        label="Choose File"
+                        onChange={handleFileUpload}
+                      />
+                      {/* <input type="file" onChange={handleFileUpload} /> */}
+                      {/* <Form.File
+                        type="file"
+                        id="image-file"
+                        label="Choose File"
+                        custom
+                        onChange={handleFileUpload}
+                      /> */}
                       {upload && <Loader />}
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="description">
+                    <Form.Group className="mb-4" controlId="description">
                       <Form.Label>Description</Form.Label>
                       <Form.Control
                         as="textarea"
@@ -172,9 +229,23 @@ const ProductEditPage = ({ match }) => {
                         onChange={(e) => setDescription(e.target.value)}
                       ></Form.Control>
                     </Form.Group>
-                    <button className={styles.loginBtn} type="submit">
-                      Update
-                    </button>
+
+                    {updateStatus === "success" && message && (
+                      <Message variant="info">{message}</Message>
+                    )}
+
+                    <Row>
+                      <Col>
+                        <button className={styles.loginBtn} type="submit">
+                          Update
+                        </button>
+                      </Col>
+                      <Col>
+                        <LinkContainer to="/admin/productlist">
+                          <button className={styles.loginBtn}>Back</button>
+                        </LinkContainer>
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
               </Form>

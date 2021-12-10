@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useHistory } from "react-router";
 import { Container, Table, Button } from "react-bootstrap";
@@ -35,7 +35,7 @@ const AllUsersPage = () => {
       <NavBar />
       <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <div>
-          <h1 className="mb-4">All Users Profile</h1>
+          <h2 className="mb-4">All Users in Database</h2>
           {status === "loading" ? (
             <Loader />
           ) : error ? (
@@ -48,7 +48,10 @@ const AllUsersPage = () => {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Admin</th>
-                  <th>Edit User</th>
+                  <th>Seller</th>
+                  <th>Buyer</th>
+                  <th>Date Joined</th>
+                  <th>Edit | Delete</th>
                 </tr>
               </thead>
 
@@ -71,6 +74,34 @@ const AllUsersPage = () => {
                         ></i>
                       )}
                     </td>
+                    <td>
+                      {user.usertype.is_seller ? (
+                        <i
+                          className="fas fa-check"
+                          style={{ color: "green" }}
+                        ></i>
+                      ) : (
+                        <i
+                          className="fas fa-times"
+                          style={{ color: "red" }}
+                        ></i>
+                      )}
+                    </td>
+
+                    <td>
+                      {user.usertype.is_buyer ? (
+                        <i
+                          className="fas fa-check"
+                          style={{ color: "green" }}
+                        ></i>
+                      ) : (
+                        <i
+                          className="fas fa-times"
+                          style={{ color: "red" }}
+                        ></i>
+                      )}
+                    </td>
+                    <td>{userInfo.date_joined.substring(0, 10)}</td>
 
                     <td className="py-2">
                       <LinkContainer to={`/admin/user/${user.id}/edit`}>

@@ -38,7 +38,7 @@ def addOrder(request):
             country=data['shippingAddress']['country'],
         )
        
-        # Loop to create every orderItems
+        # Loop thru every orderItems and relate to order
         for item in orderItems:
             # get products
             product = Product.objects.get(id=item['productId'])

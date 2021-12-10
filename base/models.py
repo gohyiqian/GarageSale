@@ -1,11 +1,37 @@
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser #Django built-in user view
+#  For extending user model using one-for-one link
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+# import uuid
 
 # class CustomUser(AbstractUser):
 #     profileImage = models.ImageField(default='/noAvatar.png', null=True, blank=True)
 #     coverImage = models.ImageField(default='/noCover.jpg', null=True, blank=True)
 #     followers = models.ManyToManyField(User, blank=True)
 #     followings = models.ManyToManyField(User, blank=True)
+    # is_seller = models.BooleanField('seller', default=False)
+    # is_buyer = models.BooleanField('buyer', default=False)
+
+# Extend Django User Model to include userType
+class UserType(models.Model):
+    id = models.AutoField(primary_key=True, editable=False)
+    user = models.OneToOneField(User,on_delete=models.SET_NULL, null=True)
+    is_seller = models.BooleanField(default=False)
+    is_buyer = models.BooleanField(default=False)
+
+    @receiver(post_save, sender=User)
+    def create_user_type(sender, instance, created, **kwargs):
+        if created:
+            UserType.objects.get_or_create(user=instance)
+        # instance.usertype.save()
+
+    @receiver(post_save, sender=User)
+    def save_user_type(sender, instance, **kwargs):
+        instance.usertype.save()
+    
+    def __str__(self):
+        return str(self.user)
 
 
 # Create your models here.
@@ -25,7 +51,7 @@ class Product(models.Model):
     stockCount = models.IntegerField(null=True, blank=True, default=0)
     createdAt = models.DateTimeField(auto_now_add=True)
     id = models.AutoField(primary_key=True, editable=False)
-
+    
     def __str__(self):
         return self.name
 
@@ -89,19 +115,33 @@ class ShippingAddress(models.Model):
 #     def __str__(self):
 #         return str(self.from_user)
 
-# class Message(models.Model):
-#     id = models.AutoField(primary_key=True, editable=False)
-#     sender = models.ForeignKey(User,on_delete=models.CASCADE)
-#     content = models.TextField(null=True, blank=True)
-#     timestamp = models.DateField(auto_now_add=True)
 
-#     def __str__(self):
-#         return str(self.sender)
+class Conversation(models.Model):
+    chat_id = models.AutoField(primary_key=True, editable=False)
+    subject = models.CharField(max_length=200, null=True, blank=True)
+    participants = models.ManyToManyField(User,related_name='conversation',blank=True)
+    timestamp = models.DateField(auto_now_add=True)
+    def __str__(self):
+        return str(self.subject)
 
+class Message(models.Model):
+    msg_id = models.AutoField(primary_key=True, editable=False)
+    conversation = models.ForeignKey(Conversation,on_delete=models.CASCADE, null=True, blank=True)
+    sender = models.ForeignKey(User,on_delete=models.CASCADE)
+    content = models.TextField(max_length=500, null=True, blank=True) 
+    timestamp = models.DateField(auto_now_add=True)
 
-# class Conversation(models.Model):
-#     participants = models.ManyToManyField(User,related_name='conversation',blank=True)
-#     message = models.ManyToManyField(Message, blank=True)
-#     timestamp = models.DateField(auto_now_add=True)
-#     def __str__(self):
-#         return str(self.message)
+    def __str__(self):
+        return str(self.sender)
+
+class Shop(models.Model):
+    # shop_id = models.UUIDField(default=uuid.uuid4, unique=True)
+    shop_id = models.AutoField(primary_key=True, editable=False)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    image = models.ImageField(default='/placeholder.png',null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    contact = models.CharField(max_length=20, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.name)

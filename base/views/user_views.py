@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
+from base.models import UserType
 from base.serializers import UserSerializer, UserSerializerWithToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -38,13 +39,16 @@ def registerUser(request):
             first_name=data['username'],
             username=data['username'],
             email=data['email'],
+            usertype= data['usertype'],
+            # is_seller = data['isSeller'],
+            # is_buyer = data['isBuyer'],
             password=make_password(data['password'])
         )
         # return the token upon registration
         serializer = UserSerializerWithToken(instance=user, many=False)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     except:
-        message = {'detail': 'Username or email already exists'}
+        message = {'detail': 'Something is Wrong ...'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 # Admin GET all users
@@ -52,6 +56,7 @@ def registerUser(request):
 @permission_classes([IsAdminUser])
 def getAllUsers(request):
     users = User.objects.all()
+    print(users)
     serializer = UserSerializer(instance=users, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -74,6 +79,8 @@ def updateUser(request, pk):
     user.username = data['username']
     user.email = data['email']
     user.is_staff = data['isAdmin']
+    user.usertype.is_buyer = data['is_buyer']
+    user.usertype.is_seller = data['is_seller']
     user.save()
 
     serializer = UserSerializer(instance=user, data=request.data, partial=True)

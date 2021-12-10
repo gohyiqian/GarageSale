@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useHistory } from "react-router";
 import { Container, Table, Button, Row, Col } from "react-bootstrap";
@@ -18,11 +18,10 @@ import { actions } from "../redux/productSlice";
 const ProductsListPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { status, userInfo, error, users } = useSelector((state) => state.user);
+  const { userInfo } = useSelector((state) => state.user);
   const {
     status: productStatus,
     error: productError,
-    product,
     products,
     page,
     pages,
@@ -31,7 +30,7 @@ const ProductsListPage = () => {
   let keyword = history.location.search;
   console.log(keyword);
   useEffect(() => {
-    // dispatch(actions.productCreateReset());
+    dispatch(actions.productCreateReset());
     if (!userInfo && !userInfo.isAdmin) {
       history.push("/login");
     } else {
@@ -56,11 +55,14 @@ const ProductsListPage = () => {
       <NavBar />
       <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <div>
-          <h2 className="mb-4">All Products in Garage</h2>
+          <h2>All Products in Database</h2>
+          <h5 className="mb-4" style={{ color: "grey" }}>
+            Number of Product Type: {products.length}
+          </h5>
           <Row>
             <Col md={3} className="mb-4">
               <button className={styles.loginBtn} onClick={handleCreate}>
-                <i className="fas fa-plus px-2"> </i> Create Sample Product
+                <i className="fas fa-plus px-2"> </i> Add new Product
               </button>
             </Col>
             <Col></Col>
@@ -71,7 +73,10 @@ const ProductsListPage = () => {
           ) : productError ? (
             <Message variant="danger">{productError}</Message>
           ) : (
-            <div className={styles.customized_scrollbar}>
+            <div
+              className={styles.customized_scrollbar}
+              style={{ marginBottom: "20px" }}
+            >
               <Table striped bordered hover responsive className="table-sm">
                 <thead>
                   <tr>
@@ -81,8 +86,11 @@ const ProductsListPage = () => {
                     <th>Stock</th>
                     <th>Category</th>
                     <th>Brand</th>
+                    <th>Gender</th>
+                    <th>Colors</th>
+                    <th>Sizes</th>
 
-                    <th>Edit Product</th>
+                    <th>Edit | Delete</th>
                   </tr>
                 </thead>
 
@@ -101,6 +109,9 @@ const ProductsListPage = () => {
                       </td>
                       <td> {item.category}</td>
                       <td>{item.brand}</td>
+                      <td>{item.gender}</td>
+                      <td>{item.color}</td>
+                      <td>{item.size}</td>
                       <td className="py-2">
                         <LinkContainer to={`/admin/product/${item.id}/edit`}>
                           <Button variant="light" className="btn-sm">

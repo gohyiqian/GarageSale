@@ -5,6 +5,7 @@ import RatingStar from "./RatingStar";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ProductCard = ({ product }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -29,20 +30,19 @@ const ProductCard = ({ product }) => {
         </Link>
         <Card.Body>
           <Card.Title>{product.name}</Card.Title>
-          <Card.Text>Short description here...</Card.Text>
+          <Card.Text>${product.price}</Card.Text>
+
           <RatingStar
             value={product.rating}
             text={`${product.numReviews} reviews`}
             color={"#f8e825"}
-          />{" "}
-          <Link
-            to={`/product/${product.id}`}
-            style={{ textDecoration: "none" }}
-          >
+          />
+
+          <LinkContainer to={`/product/${product.id}`}>
             <button className={styles.loginBtn} variant="primary">
               <strong>${product.price} | SHOP NOW </strong>
             </button>
-          </Link>
+          </LinkContainer>
         </Card.Body>
       </Card>
     </div>

@@ -25,6 +25,10 @@ urlpatterns = [
     path('api/users/', include('base.urls.user_urls')),
     path('api/products/', include('base.urls.product_urls')),
     path('api/orders/', include('base.urls.order_urls')),
+    path('api/shops/', include('base.urls.shop_urls')),
+    path('api/messages/', include('base.urls.message_urls')),
+    path('api/conversations/', include('base.urls.conversation_urls'))
+    # path('s3direct/', include('s3direct.urls')),
 ]
 
 # configure path to uploaded images

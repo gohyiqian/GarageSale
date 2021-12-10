@@ -23,24 +23,27 @@ export const login = (username, password) => async (dispatch) => {
 };
 
 // USER REGISTER
-export const register = (username, email, password) => async (dispatch) => {
-  try {
-    dispatch(userActions.registerStart());
-    const { data } = await axios.post(
-      "/api/users/register/",
-      {
-        username: username,
-        email: email,
-        password: password,
-      },
-      config
-    );
+export const register =
+  (username, email, isSeller, isBuyer, password) => async (dispatch) => {
+    try {
+      dispatch(userActions.registerStart());
+      const { data } = await axios.post(
+        "/api/users/register/",
+        {
+          username: username,
+          email: email,
+          isSeller: isSeller,
+          isBuyer: isBuyer,
+          password: password,
+        },
+        config
+      );
 
-    dispatch(userActions.registerSuccess(data));
-  } catch (err) {
-    dispatch(userActions.registerFailure(err.response.data.detail));
-  }
-};
+      dispatch(userActions.registerSuccess(data));
+    } catch (err) {
+      dispatch(userActions.registerFailure(err.response.data.detail));
+    }
+  };
 
 // GET USER DETAILS
 export const getUserDetails = (id) => async (dispatch, getState) => {
@@ -158,5 +161,3 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     dispatch(userActions.userDeleteFailure(err.message));
   }
 };
-
-// GET A PRODUCT

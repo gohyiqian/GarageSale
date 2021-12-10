@@ -77,8 +77,8 @@ export const updateProduct = (product) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(
-      `/api/products/update/${product.id}`,
+    const { data } = await axios.patch(
+      `/api/products/update/${product.id}/`,
       product,
       authConfig
     );
@@ -103,7 +103,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.delete(
-      `/api/products/delete/${id}`,
+      `/api/products/delete/${id}/`,
       authConfig
     );
     dispatch(actions.productDeleteSuccess(data));
@@ -111,3 +111,31 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
     dispatch(actions.productDeleteFailure(err.message));
   }
 };
+
+// CREATE PRODUCT REVIEW
+export const createProductReview =
+  (productId, review) => async (dispatch, getState) => {
+    try {
+      dispatch(actions.createReviewStart());
+
+      const {
+        user: { userInfo },
+      } = getState();
+
+      const authConfig = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `/api/products/${productId}/reviews/`,
+        review,
+        authConfig
+      );
+      dispatch(actions.createReviewSuccess(data));
+    } catch (err) {
+      dispatch(actions.createReviewFailure(err.message));
+    }
+  };

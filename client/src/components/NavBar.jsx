@@ -9,6 +9,7 @@ import {
 } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
+import styles from "../App.module.css";
 import { mobile } from "../responsiveMobile";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
@@ -80,7 +81,7 @@ const NavBar = () => {
   // console.log(userInfo);
   const history = useHistory();
   const dispatch = useDispatch();
-
+  const shop = true;
   const logOutHandler = () => {
     dispatch(actions.logOut());
     history.push("/login");
@@ -115,7 +116,7 @@ const NavBar = () => {
           <Nav className="ml-auto">
             <Right>
               <LinkContainer to="/cart">
-                <Nav.Link>
+                <Nav.Link className={styles.nav_dropdown}>
                   <Badge
                     badgeContent={cartItems.reduce(
                       (acc, item) => acc + item.qty,
@@ -132,17 +133,40 @@ const NavBar = () => {
               {userInfo ? (
                 <>
                   <Person />
-                  <NavDropdown title={userInfo.name} id="username">
-                    <LinkContainer to="/profile">
-                      <NavDropdown.Item>My Profile</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/shop">
-                      <NavDropdown.Item>My Shop</NavDropdown.Item>
-                    </LinkContainer>
-                    <NavDropdown.Item onClick={logOutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  {shop ? (
+                    <NavDropdown
+                      title={userInfo.name}
+                      id="username"
+                      className={styles.nav_dropdown}
+                    >
+                      <LinkContainer to="/profile">
+                        <NavDropdown.Item>My Profile</NavDropdown.Item>
+                      </LinkContainer>
+                      {/* <LinkContainer to="/seller/:id/shop"> */}
+                      <LinkContainer to="/seller/shop">
+                        <NavDropdown.Item>My Shop</NavDropdown.Item>
+                      </LinkContainer>
+                      <NavDropdown.Item onClick={logOutHandler}>
+                        Logout
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  ) : (
+                    <NavDropdown
+                      title={userInfo.name}
+                      id="username"
+                      className={styles.nav_dropdown}
+                    >
+                      <LinkContainer to="/profile">
+                        <NavDropdown.Item>My Profile</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/seller/:id/createshop">
+                        <NavDropdown.Item>Create Shop</NavDropdown.Item>
+                      </LinkContainer>
+                      <NavDropdown.Item onClick={logOutHandler}>
+                        Logout
+                      </NavDropdown.Item>
+                    </NavDropdown>
+                  )}
                 </>
               ) : (
                 <>
@@ -164,19 +188,38 @@ const NavBar = () => {
                   </LinkContainer>
                 </>
               )}
+              {userInfo && userInfo.usertype.is_seller && (
+                <NavDropdown
+                  title="Manage Shop"
+                  id="seller"
+                  className={styles.nav_dropdown}
+                >
+                  <LinkContainer to="/seller/allbuyers">
+                    <NavDropdown.Item>My Buyers</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <LinkContainer to="/seller/productlist">
+                    <NavDropdown.Item>My Products</NavDropdown.Item>
+                  </LinkContainer>
+                </NavDropdown>
+              )}
 
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Admin" id="adminmenue">
+                <NavDropdown
+                  title="Admin"
+                  id="admin"
+                  className={styles.nav_dropdown}
+                >
                   <LinkContainer to="/admin/allusers">
-                    <NavDropdown.Item>Users</NavDropdown.Item>
+                    <NavDropdown.Item>All Users</NavDropdown.Item>
                   </LinkContainer>
 
                   <LinkContainer to="/admin/productlist">
-                    <NavDropdown.Item>Products</NavDropdown.Item>
+                    <NavDropdown.Item>All Products</NavDropdown.Item>
                   </LinkContainer>
 
                   <LinkContainer to="/admin/orderlist">
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                    <NavDropdown.Item>All Orders</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
               )}

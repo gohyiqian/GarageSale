@@ -62,7 +62,7 @@ export const getMyOrders = () => async (dispatch, getState) => {
 };
 
 // GET order by ID
-export const getOrderDetails = (id) => async (dispatch, getState) => {
+export const getOrderById = (id) => async (dispatch, getState) => {
   try {
     dispatch(orderActions.getOrderByIdStart());
     const {

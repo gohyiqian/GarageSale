@@ -24,25 +24,18 @@ const UserCoverImg = styled.img`
 `;
 
 const UserProfileImg = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   object-fit: cover;
   position: absolute;
   left: 0;
   right: 0;
-  margin: 50px;
+  margin: 50px 0 50px 120px;
   top: 100px;
   border: 5px solid white;
 `;
 
-const Following = styled.div`
-  display: flex;
-  flex: 1;
-`;
-const Follower = styled.div`
-  flex: 1;
-`;
 const UserProfilePage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -68,7 +61,7 @@ const UserProfilePage = () => {
     if (!userInfo) {
       history.push("/login");
     } else {
-      if (!profileDetails || userInfo.id !== profileDetails.id) {
+      if (!profileDetails || userInfo.id !== profileDetails.id || !orderList) {
         // dispatch(actions.userProfileUpdateReset());
         dispatch(getUserDetails("profile"));
         dispatch(getMyOrders());
@@ -78,7 +71,7 @@ const UserProfilePage = () => {
         setEmail(profileDetails.email);
       }
     }
-  }, [dispatch, history, userInfo, profileDetails]);
+  }, [dispatch, history, userInfo, profileDetails, orderList]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -110,31 +103,28 @@ const UserProfilePage = () => {
       {error && <Message variant="danger">{error}</Message>}
       {message && <Message variant="danger">{message}</Message>}
       <ProfileContainer>
-        <UserCoverImg src="images/noCover.jpg" alt="" />
-        <UserProfileImg src="images/noAvatar.png" alt="" />
+        <UserCoverImg src="images/userCoverImage.jpg" alt="" />
+        <UserProfileImg src="images/marylamb.jpg" alt="" />
       </ProfileContainer>
 
       <Row style={{ margin: "20px" }}>
-        <Col md={3} className="p-4">
-          <h2>{userInfo.name} </h2>
-          <div style={{ display: "flex" }}>
-            <Following>2</Following>
-            <Follower>20</Follower>
-          </div>
-          <div style={{ display: "flex" }} className="mb-3">
-            <Following>Following</Following>
-            <Follower>Followers</Follower>
-          </div>
-          <h4> Bio </h4>
+        <Col md={3} className="p-4" style={{ backgroundColor: "#fcf5f5" }}>
+          <h2 style={{ textAlign: "center" }}>{userInfo.name} </h2>
+          <hr />
+          <h4 style={{ textAlign: "center" }}> My Bio </h4>
           <hr />
           <span>
             I am a full-time shopper, specialised in curating and recommending
             the best nike shoes in town
           </span>
-          <h4 className="mt-3">Joined</h4>
+          <h4 className="mt-3" style={{ textAlign: "center" }}>
+            Joined
+          </h4>
           <hr />
           <span>{userInfo.date_joined}</span>
-          <h4 className="mt-3">Edit Profile</h4>
+          <h4 className="mt-3" style={{ textAlign: "center" }}>
+            Edit Profile
+          </h4>
           <hr />
 
           <Form onSubmit={submitHandler}>
@@ -190,7 +180,9 @@ const UserProfilePage = () => {
         </Col>
 
         <Col md={9} className="p-4">
-          <h2>My Orders</h2>
+          <h2 style={{ color: "#945047" }} className="mb-3">
+            My Purchase Order
+          </h2>
           {orderStatus === "loading" ? (
             <Loader />
           ) : orderError ? (
@@ -214,9 +206,10 @@ const UserProfilePage = () => {
                     <tr>
                       <th>ID</th>
                       <th>Date</th>
-                      <th>Total</th>
+                      <th>Order Amount</th>
                       <th>Payment Status</th>
-                      <th>Delivered</th>
+                      <th>Delivery Status</th>
+                      <th>Details</th>
                     </tr>
                   </thead>
 
@@ -226,9 +219,23 @@ const UserProfilePage = () => {
                         <td>{order.id}</td>
                         <td>{order.createdAt.substring(0, 10)}</td>
                         <td>${order.totalPrice}</td>
-                        <td style={{ color: "green" }}>
+                        <td>
                           {order.isPaid ? (
-                            "Paid on " + order.paidAt.substring(0, 10)
+                            <strong style={{ color: "green" }}>
+                              Paid on {order.paidAt.substring(0, 10)}{" "}
+                            </strong>
+                          ) : (
+                            <i
+                              className="fas fa-times"
+                              style={{ color: "red" }}
+                            ></i>
+                          )}
+                        </td>
+                        <td>
+                          {order.isDelivered ? (
+                            <strong style={{ color: "green" }}>
+                              Sent on {order.paidAt.substring(0, 10)}
+                            </strong>
                           ) : (
                             <i
                               className="fas fa-times"
@@ -238,11 +245,7 @@ const UserProfilePage = () => {
                         </td>
                         <td>
                           <LinkContainer to={`/order/${order.id}`}>
-                            <Button
-                              className="btn-sm"
-                              variant="secondary"
-                              // onClick={handleDetails}
-                            >
+                            <Button className="btn-sm" variant="secondary">
                               Details
                             </Button>
                           </LinkContainer>
