@@ -98,11 +98,11 @@ const ShowProductPage = ({ match }) => {
       ) : (
         <Container style={{ margin: "auto" }} className="mt-4 mb-4">
           <Row>
-            <Col md={6} className={styles.show_img_parent}>
+            <Col md={7} className={styles.show_img_parent}>
               <Image src={product.image} className={styles.show_img} />
             </Col>
 
-            <Col md={6}>
+            <Col md={5}>
               <ListGroup variant="flush">
                 <ListGroupItem>
                   <h3>{product.name}</h3>
@@ -191,6 +191,13 @@ const ShowProductPage = ({ match }) => {
 
                   <ListGroupItem>
                     <Row>
+                      <Col>Colors Available:</Col>
+                      <Col>{product.color}</Col>
+                    </Row>
+                  </ListGroupItem>
+
+                  <ListGroupItem>
+                    <Row>
                       <Col>
                         <LinkContainer to="/" className={styles.loginBtn}>
                           <button>Back to Shop</button>
@@ -219,7 +226,7 @@ const ShowProductPage = ({ match }) => {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h4>Reviews</h4>
-                  {product.reviews.length === 0 && (
+                  {!product.reviews && (
                     <Message variant="info">No Reviews</Message>
                   )}
                 </ListGroup.Item>
@@ -285,7 +292,7 @@ const ShowProductPage = ({ match }) => {
                       </button>
                     </Form>
                   ) : (
-                    <Message variant="info">
+                    <Message variant="warning">
                       Please <Link to="/login">login</Link> to write a review
                     </Message>
                   )}

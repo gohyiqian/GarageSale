@@ -73,12 +73,13 @@ def createProduct(request):
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# Admin POST Product Image (Admin/Seller)
+
+
 @api_view(['POST'])
-@permission_classes([IsAdminUser])
+# @permission_classes([IsAdminUser])
 def uploadImage(request):
     data = request.data
-
+    print(data)
     productId = data['productId']
     product = Product.objects.get(id=productId)
 

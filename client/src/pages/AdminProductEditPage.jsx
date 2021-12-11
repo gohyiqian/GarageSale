@@ -58,16 +58,11 @@ const ProductEditPage = ({ match }) => {
     formData.append("productId", productId);
     setUpload(true);
     try {
-      const config = {
+      const { data } = await axios.post("/api/products/upload/", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "content-type": "multipart/form-data",
         },
-      };
-      const { data } = await axios.post(
-        "/api/products/upload/",
-        formData,
-        config
-      );
+      });
       setImage(data);
       setUpload(false);
     } catch (error) {
@@ -195,28 +190,28 @@ const ProductEditPage = ({ match }) => {
                     <Form.Group className="mb-4" controlId="image">
                       <Form.Label>Image</Form.Label>
                       <Form.Control
-                        type="input"
+                        type="text"
                         rows={3}
                         placeholder="Enter image"
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
-                      />
+                      ></Form.Control>
+
                       <Form.Control
                         type="file"
                         id="image-file"
+                        accept="image/png, image/jpeg"
                         placeholder="Enter image"
-                        label="Choose File"
                         onChange={handleFileUpload}
                       />
+                      {upload && <Loader />}
                       {/* <input type="file" onChange={handleFileUpload} /> */}
                       {/* <Form.File
-                        type="file"
                         id="image-file"
                         label="Choose File"
                         custom
                         onChange={handleFileUpload}
-                      /> */}
-                      {upload && <Loader />}
+                      ></Form.File> */}
                     </Form.Group>
 
                     <Form.Group className="mb-4" controlId="description">
