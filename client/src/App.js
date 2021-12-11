@@ -24,7 +24,7 @@ import AdminUserEditPage from "./pages/AdminUserEditPage";
 import AdminProductsListPage from "./pages/AdminProductsListPage";
 import AdminProductEditPage from "./pages/AdminProductEditPage";
 import AdminOrderListsPage from "./pages/AdminOrderListsPage";
-import UserShopPage from "./pages/UserShopPage";
+import UserShopProfilePage from "./pages/UserShopProfilePage";
 // import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 
 const App = () => {
@@ -59,7 +59,7 @@ const App = () => {
           path="/admin/product/:id/edit"
           component={AdminProductEditPage}
         />
-        <Route path="/seller/shop" component={UserShopPage} />
+        <Route path="/seller/shop" component={UserShopProfilePage} />
         <Route path="/admin/orderlist" component={AdminOrderListsPage} />
         <DndProvider backend={HTML5Backend}>
           <Route exact path="/" component={HomePage} />

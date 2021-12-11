@@ -7,15 +7,25 @@ import {
   Pinterest,
   Person,
 } from "@material-ui/icons";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import styles from "../App.module.css";
 import { mobile } from "../responsiveMobile";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import { Container, Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import {
+  Container,
+  Navbar,
+  Nav,
+  NavDropdown,
+  Button,
+  Row,
+  Col,
+  Modal,
+} from "react-bootstrap";
 import { actions } from "../redux/userSlice";
 import { useHistory } from "react-router";
+import { createShop } from "../redux/apiShop";
 
 const NavBarStyle = {
   position: "sticky",
@@ -81,11 +91,30 @@ const NavBar = () => {
   // console.log(userInfo);
   const history = useHistory();
   const dispatch = useDispatch();
+
   const shop = false;
-  const seller = true;
+
+  // useEffect(() => {
+  //   dispatch(getProducts());
+  // }, [dispatch]);
+
   const logOutHandler = () => {
     dispatch(actions.logOut());
     history.push("/login");
+  };
+  const [popOut, setPopOut] = useState(false);
+
+  const handleClose = () => {
+    setPopOut(false);
+  };
+  const handlePopOut = () => {
+    setPopOut(true);
+  };
+
+  const handleCreateShop = (e) => {
+    e.preventDefault();
+    // dispatch(createShop());
+    history.push(`/seller/shop`);
   };
 
   return (
@@ -141,20 +170,25 @@ const NavBar = () => {
                       className={styles.nav_dropdown}
                     >
                       <LinkContainer to="/profile">
-                        <NavDropdown.Item>My Profile</NavDropdown.Item>
+                        <NavDropdown.Item>
+                          My Profile
+                          <i className="fas fa-user px-2" />
+                        </NavDropdown.Item>
                       </LinkContainer>
                       {/* <LinkContainer to="/seller/:id/shop"> */}
                       {shop ? (
                         <LinkContainer to="/seller/shop">
-                          <NavDropdown.Item>My Shop</NavDropdown.Item>
+                          <NavDropdown.Item>
+                            My Shop <i className="fas fa-store px-2" />
+                          </NavDropdown.Item>
                         </LinkContainer>
                       ) : (
-                        <LinkContainer to="/seller/shop">
-                          <NavDropdown.Item>Create Shop</NavDropdown.Item>
-                        </LinkContainer>
+                        <NavDropdown.Item onClick={handlePopOut}>
+                          Create Shop <i className="fas fa-store px-2" />
+                        </NavDropdown.Item>
                       )}
                       <NavDropdown.Item onClick={logOutHandler}>
-                        Logout
+                        Logout <i className="fas fa-sign-out-alt px-2" />
                       </NavDropdown.Item>
                     </NavDropdown>
                   ) : (
@@ -200,11 +234,15 @@ const NavBar = () => {
                   className={styles.nav_dropdown}
                 >
                   <LinkContainer to="/seller/allbuyers">
-                    <NavDropdown.Item>My Buyers</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      My Buyers <i className="fas fa-money-bill px-2" />
+                    </NavDropdown.Item>
                   </LinkContainer>
 
                   <LinkContainer to="/seller/productlist">
-                    <NavDropdown.Item>My Products</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      My Products <i className="fas fa-tshirt px-2" />
+                    </NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
               )}
@@ -216,21 +254,56 @@ const NavBar = () => {
                   className={styles.nav_dropdown}
                 >
                   <LinkContainer to="/admin/allusers">
-                    <NavDropdown.Item>All Users</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      All Users <i className="fas fa-users-cog px-2" />
+                    </NavDropdown.Item>
                   </LinkContainer>
 
                   <LinkContainer to="/admin/productlist">
-                    <NavDropdown.Item>All Products</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      All Products <i className="fas fa-tshirt px-2" />
+                    </NavDropdown.Item>
                   </LinkContainer>
 
                   <LinkContainer to="/admin/orderlist">
-                    <NavDropdown.Item>All Orders</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      All Orders
+                      <i className="fas fa-shopping-basket px-2" />
+                    </NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
               )}
             </Right>
           </Nav>
         </Navbar.Collapse>
+
+        {userInfo && userInfo.usertype.is_seller ? (
+          <Modal show={popOut} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>
+                Hello{" "}
+                <strong style={{ color: "#945047" }}>{userInfo.name}!</strong>
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Feeling excited to start your online business with us?
+            </Modal.Body>
+            <Modal.Footer>
+              <Row>
+                <Col>
+                  <button
+                    className={styles.loginBtn}
+                    onClick={handleCreateShop}
+                  >
+                    Create Your Shop Now!
+                  </button>
+                </Col>
+              </Row>
+            </Modal.Footer>
+          </Modal>
+        ) : (
+          <div></div>
+        )}
       </Container>
     </Navbar>
   );

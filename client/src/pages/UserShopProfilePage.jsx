@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import styled from "styled-components";
 import styles from "../App.module.css";
-import { getUserDetails, updateUserProfile } from "../redux/apiUser";
+import { createShop, updateShop } from "../redux/apiShop";
 import { useHistory } from "react-router";
 
 const ProfileContainer = styled.div`
@@ -49,8 +49,8 @@ const Follower = styled.div`
 
 const UserShopPage = () => {
   const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
   const [contact, setContact] = useState("");
+  const [desc, setDesc] = useState("");
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
@@ -58,6 +58,16 @@ const UserShopPage = () => {
   const { status, userInfo, profileDetails, error } = useSelector(
     (state) => state.user
   );
+
+  // useEffect(() => {
+  //   dispatch(getShop());
+  // }, []);
+
+  const {
+    shop,
+    status: shopStatus,
+    error: shopError,
+  } = useSelector((state) => state.shop);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -70,8 +80,8 @@ const UserShopPage = () => {
   return (
     <>
       <NavBar />
-      {status === "loading" && <Loader />}
-      {error && <Message variant="danger">{error}</Message>}
+      {status === "loading" && shopStatus === "loading" && <Loader />}
+      {error && shopError && <Message variant="danger">{error}</Message>}
       {message && <Message variant="danger">{message}</Message>}
       <ProfileContainer>
         <UserCoverImg src="../images/coverImage.jpg" alt="" />
@@ -79,8 +89,15 @@ const UserShopPage = () => {
       </ProfileContainer>
 
       <Row style={{ margin: "20px" }}>
-        <Col md={3} className="p-4" style={{ backgroundColor: "#fcf5f5" }}>
-          <h2 style={{ textAlign: "center" }}>MerryK Shop </h2>
+        <Col
+          md={3}
+          className="p-4"
+          style={{ backgroundColor: "#fcf5f5" }}
+          className={styles.scrollbar_v2}
+        >
+          <h2 style={{ textAlign: "center" }} className="mt-5">
+            {shop.name.length === 0 ? "Sample Shop" : shop.name}
+          </h2>
           <div style={{ display: "flex" }}>
             <Following>2</Following>
             <Follower>20</Follower>
@@ -91,15 +108,12 @@ const UserShopPage = () => {
           </div>
           <h4 style={{ textAlign: "center" }}> Shop Information </h4>
           <hr />
-          <span>
-            Official shop selling authentic MaryLamb products exclusively from
-            Argentina.
+          <span style={{ textAlign: "center" }}>
+            {shop.description.length === 0
+              ? "Sample description"
+              : shop.description}
           </span>
-          <h4 className="mt-3" style={{ textAlign: "center" }}>
-            Joined
-          </h4>
-          <hr />
-          <span>{userInfo.date_joined}</span>
+
           <h4 className="mt-3" style={{ textAlign: "center" }}>
             Edit Shop Profile
           </h4>
@@ -118,18 +132,6 @@ const UserShopPage = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="description">
-              <Form.Label>Shop Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                className="mb-3"
-                required
-                placeholder="Enter Description"
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
             <Form.Group controlId="contact">
               <Form.Label>Shop Contact Number</Form.Label>
               <Form.Control
@@ -139,6 +141,19 @@ const UserShopPage = () => {
                 placeholder="Enter Contact Number"
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="description">
+              <Form.Label>Shop Information</Form.Label>
+              <Form.Control
+                as="textarea"
+                className="mb-3"
+                rows={4}
+                required
+                placeholder="Enter Description"
+                value={desc}
+                onChange={(e) => setDesc(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
@@ -155,22 +170,54 @@ const UserShopPage = () => {
               <h2 style={{ color: "#945047" }} className="mb-3">
                 My Products
               </h2>
-              <Row>{/* Map seller product here */}</Row>
-              <Row>
+              <Row className="mb-2">
                 <Col md={3}>
                   <button
                     className={styles.loginBtn}
                     onClick={handleCreateProduct}
                   >
-                    <i className="fas fa-plus px-2"> </i> Add more Product
+                    <i className="fas fa-plus px-2" /> Add more Product
                   </button>
                 </Col>
-                <Col></Col>
+              </Row>
+              <Row className="mb-3">
+                <div className={styles.customized_scrollbar}>
+                  <Table striped responsive className="table-sm">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Paid</th>
+                        <th>Delivered</th>
+                      </tr>
+                    </thead>
+                  </Table>
+                </div>
+              </Row>
+              <Row>
+                <Col md={3}>
+                  <button className={styles.loginBtn}>
+                    <i className="fas fa-store px-2" /> View Your Shop
+                  </button>
+                </Col>
               </Row>
             </>
           ) : (
             <Row>
-              <h3 className="mb-4">Congrats for starting your own Shop! </h3>
+              <div className="mb-3">
+                <h3 className="mb-4">Congrats on starting your Shop! </h3>
+
+                <p>
+                  <i className="fas fa-hand-point-left px-2" />
+                  Step 1: Start by updating your Shop profile on the side bar.
+                </p>
+                <p>
+                  <i className="fas fa-hand-point-down px-2" />
+                  Step 2: Create your first product by clicking the button
+                  below!
+                </p>
+              </div>
               <Col md={3}>
                 <button
                   className={styles.loginBtn}

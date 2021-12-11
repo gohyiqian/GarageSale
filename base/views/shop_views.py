@@ -8,15 +8,15 @@ from datetime import datetime
 
 # POST/CREATE Shop (Admin/Seller)
 @api_view(['POST'])
-@permission_classes([IsAdminUser])
+# @permission_classes([IsAdminUser])
 def createShop(request):
     user = request.user
 
     shop = Shop.objects.create(
         user=user,
-        name='',
-        description='',
-        contact =''
+        name='default shop name',
+        description='default description',
+        contact ='123'
     )
     shop.save()
 
@@ -40,15 +40,14 @@ def getShop(request, pk):
 
 # EDIT shop
 @api_view(['PATCH'])
-@permission_classes([IsAdminUser])
+# @permission_classes([IsAdminUser])
 def updateShop(request, pk):
     data = request.data
     shop = Shop.objects.get(shop_id=pk)
 
     shop.name = data['name']
-    shop.description = data['description']
     shop.contact = data['contact']
-
+    shop.description = data['description']
     shop.save()
 
     serializer = ShopSerializer(shop, many=False)
@@ -57,7 +56,7 @@ def updateShop(request, pk):
 
 # DELETE Shop (Admin/Seller)
 @api_view(['DELETE'])
-# @permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def deleteShop(request, pk):
     shop = Shop.objects.get(shop_id=pk)
     shop.delete()

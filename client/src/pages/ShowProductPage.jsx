@@ -40,7 +40,7 @@ const Amount = styled.span`
   margin: 0px 10px;
 `;
 
-const ShowProductPage = ({ match, history }) => {
+const ShowProductPage = ({ match }) => {
   const [qty, setQty] = useState(0);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");

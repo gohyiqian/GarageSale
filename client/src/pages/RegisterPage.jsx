@@ -84,6 +84,10 @@ const RegisterPage = () => {
     history.push("/login");
   };
 
+  const handleClose = () => {
+    setPopOut(false);
+  };
+
   // Fetch() Method
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -206,7 +210,7 @@ const RegisterPage = () => {
         </div>
       </div>
       {userInfo ? (
-        <Modal show={popOut}>
+        <Modal show={popOut} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>
               Welcome{" "}
@@ -246,12 +250,6 @@ const RegisterPage = () => {
                 </Col>
               </Row>
             </Form>
-            {/* <button className={styles.loginBtn} onClick={handleBuyer}>
-              I just want to Shop!
-            </button>
-            <button className={styles.loginBtn} onClick={handleSeller}>
-              I want to start my Shop too!
-            </button> */}
           </Modal.Footer>
         </Modal>
       ) : (
