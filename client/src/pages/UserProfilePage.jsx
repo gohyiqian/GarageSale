@@ -12,6 +12,7 @@ import styles from "../App.module.css";
 import { getUserDetails, updateUserProfile } from "../redux/apiUser";
 import { getMyOrders } from "../redux/apiOrder";
 import { useHistory } from "react-router";
+import axios from "axios";
 
 const ProfileContainer = styled.div`
   height: 280px;
@@ -43,13 +44,18 @@ const UserProfilePage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [profileImage, setProfileImage] = useState("");
+  const [coverImage, setCoverImage] = useState("");
   const [bio, setBio] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
+  const [upload, setUpload] = useState(false);
 
-  const { status, userInfo, profileDetails, error } = useSelector(
-    (state) => state.user
-  );
+  const {
+    status: userStatus,
+    userInfo,
+    profileDetails,
+    error,
+  } = useSelector((state) => state.user);
 
   const isBuyer = userInfo.usertype.is_buyer;
   const isSeller = userInfo.usertype.is_seller;
@@ -81,6 +87,7 @@ const UserProfilePage = () => {
         setPassword(profileDetails.password);
         setConfirmPassword(profileDetails.password);
         setBio(profileDetails.usertype.bio);
+        setProfileImage(profileDetails.usertype.profile_image);
       }
     }
   }, [dispatch, history, userInfo, profileDetails, orderList]);
@@ -106,15 +113,67 @@ const UserProfilePage = () => {
     }
   };
 
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("userId", profileDetails.id);
+    setUpload(true);
+    try {
+      const { data } = await axios.post("/api/users/upload/", formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      setProfileImage(data);
+      setUpload(false);
+    } catch (error) {
+      setUpload(false);
+    }
+  };
+
+  const handleCoverImgUpload = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("userId", profileDetails.id);
+    setUpload(true);
+    try {
+      const { data } = await axios.post("/api/users/upload/cover/", formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      setCoverImage(data);
+      setUpload(false);
+    } catch (error) {
+      setUpload(false);
+    }
+  };
+
   return (
     <>
       <NavBar />
-      {status === "loading" && <Loader />}
+      {!profileDetails && userStatus === "loading" && <Loader />}
       {message && <Message variant="danger">{message}</Message>}
-      <ProfileContainer>
-        <UserCoverImg src="images/userCoverImage.jpg" alt="" />
-        <UserProfileImg src="images/merrykim.jpg" alt="" />
-      </ProfileContainer>
+      {/* <ProfileContainer>
+        <UserCoverImg
+          src={
+            profileDetails
+              ? profileDetails.usertype.cover_image
+              : "images/userCoverImage.jpg"
+          }
+          alt=""
+        />
+        <UserProfileImg
+          src={
+            profileDetails
+              ? profileDetails.usertype.profile_image
+              : "images/noAvatar.png"
+          }
+          alt=""
+        />
+      </ProfileContainer> */}
 
       <Row style={{ margin: "20px" }}>
         <Col
@@ -186,15 +245,25 @@ const UserProfilePage = () => {
               ></Form.Control>
             </Form.Group>
 
-            {/* <Form.Group controlId="Image" className="mb-3">
-              <Form.Label>Profile Picture</Form.Label>
+            <Form.Group className="mb-4" controlId="image">
+              <Form.Label>Profile Image</Form.Label>
               <Form.Control
-                type="file"
-                placeholder="Upload Profile Image"
+                type="text"
+                rows={3}
+                placeholder="Enter image"
                 value={profileImage}
                 onChange={(e) => setProfileImage(e.target.value)}
               ></Form.Control>
-            </Form.Group> */}
+
+              <Form.Control
+                type="file"
+                id="image-file"
+                accept="image/png, image/jpeg"
+                placeholder="Enter image"
+                onChange={handleFileUpload}
+              />
+              {upload && <Loader />}
+            </Form.Group>
 
             <Form.Group controlId="Bio" className="mb-3">
               <Form.Label>Update Biography</Form.Label>
@@ -215,6 +284,15 @@ const UserProfilePage = () => {
         </Col>
 
         <Col md={9} className="p-4">
+          <Form.Group className="mb-4" controlId="image">
+            <Form.Control
+              type="file"
+              id="image-file"
+              accept="image/png, image/jpeg"
+              onChange={handleCoverImgUpload}
+            />
+            {upload && <Loader />}
+          </Form.Group>
           <h2 style={{ color: "#945047" }} className="mb-3">
             My Purchase Order
           </h2>
@@ -224,17 +302,6 @@ const UserProfilePage = () => {
             <Message variant="danger">{orderError}</Message>
           ) : (
             <>
-              {/* <Table striped responsive className="table-sm">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th>Paid</th>
-                    <th>Delivered</th>
-                  </tr>
-                </thead>
-              </Table> */}
               <div className={styles.customized_scrollbar}>
                 <Table striped responsive className="table-sm">
                   <thead>

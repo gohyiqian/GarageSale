@@ -44,11 +44,13 @@ export const productSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
+    productsByCat: [],
     product: { reviews: [] },
     page: 1,
     pages: 1,
     nfts: [],
     status: "idle",
+    catStatus: "idle",
     createStatus: "idle",
     updateStatus: "idle",
     reviewStatus: "idle",
@@ -78,6 +80,31 @@ export const productSlice = createSlice({
     listProductsByKeywordFailure: (state, action) => {
       state.status = "failure";
       state.error = action.payload;
+    },
+    listProductsByKeywordReset: (state) => {
+      state.status = "reset";
+      state.products = {};
+    },
+    listProductsByCatStart: (state) => {
+      state.catStatus = "loading";
+    },
+
+    listProductsByCatSuccess(state, action) {
+      return {
+        ...state,
+        catStatus: "success",
+        productsByCat: action.payload.products,
+        page: action.payload.page,
+        pages: action.payload.pages,
+      };
+    },
+    listProductsByCatFailure: (state, action) => {
+      state.catStatus = "failure";
+      state.error = action.payload;
+    },
+    listProductsByCatReset: (state) => {
+      state.catStatus = "reset";
+      state.productsByCat = {};
     },
     productTopStart: (state) => {
       state.status = "loading";

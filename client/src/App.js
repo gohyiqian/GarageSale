@@ -1,3 +1,10 @@
+// import {
+//   HashRouter as Router,
+//   Switch,
+//   Route,
+//   Redirect,
+// } from "react-router-dom";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -40,7 +47,7 @@ const App = () => {
         <Route path="/register">
           {user ? <Redirect to="/" /> : <RegisterPage />}
         </Route>
-
+        <Route exact path="/" component={HomePage} />
         <Route path="/profile" component={UserProfilePage} />
         <Route path="/shipping" component={CheckOutPage} />
         <Route path="/order/:id" component={OrderCompletePage} />
@@ -61,10 +68,12 @@ const App = () => {
         />
         <Route path="/seller/shop" component={UserShopProfilePage} />
         <Route path="/admin/orderlist" component={AdminOrderListsPage} />
+
+        <Route path="/:category" component={CategoryPage} />
         <DndProvider backend={HTML5Backend}>
-          <Route exact path="/" component={HomePage} />
+          {/* <Route exact path="/" component={HomePage} /> */}
           {/* <Route path="/nftcart" component={ShopNFTCartPage} /> */}
-          <Route path="/products/:category" component={CategoryPage} />
+          {/* <Route path="/:category" component={CategoryPage} /> */}
         </DndProvider>
       </Switch>
     </Router>

@@ -12,8 +12,8 @@ const HomePage = () => {
       <NavBar />
       {/* <Banner /> */}
       <Carousel />
-      <Categories />
       <ProductsList />
+      <Categories />
       <Newsletter />
       <Footer />
     </div>

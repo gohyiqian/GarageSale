@@ -26,6 +26,7 @@ import {
 import { actions } from "../redux/userSlice";
 import { useHistory } from "react-router";
 import { createShop } from "../redux/apiShop";
+import { actions as productActions } from "../redux/productSlice";
 
 const NavBarStyle = {
   position: "sticky",
@@ -88,15 +89,12 @@ const SocialIcon = styled.div`
 const NavBar = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
+  const { productsByCat, catStatus } = useSelector((state) => state.products);
   // console.log(userInfo);
   const history = useHistory();
   const dispatch = useDispatch();
 
   const shop = false;
-
-  // useEffect(() => {
-  //   dispatch(getProducts());
-  // }, [dispatch]);
 
   const logOutHandler = () => {
     dispatch(actions.logOut());
@@ -116,6 +114,13 @@ const NavBar = () => {
     // dispatch(createShop());
     history.push(`/seller/shop`);
   };
+
+  // useEffect(() => {
+  //   // to prevent reset when the category page loads
+  //   if (catStatus !== "loading") {
+  //     dispatch(productActions.listProductsByCatReset());
+  //   }
+  // }, []);
 
   return (
     <Navbar style={NavBarStyle} variant="light" expand="lg" collapseOnSelect>

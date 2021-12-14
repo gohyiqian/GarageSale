@@ -1,6 +1,6 @@
 import React from "react";
-import { ItemTypes } from "../utilities/itemTypes";
-import { useDrag } from "react-dnd";
+// import { ItemTypes } from "../utilities/itemTypes";
+// import { useDrag } from "react-dnd";
 import RatingStar from "./RatingStar";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -8,16 +8,17 @@ import styles from "../App.module.css";
 import { LinkContainer } from "react-router-bootstrap";
 
 const ProductCard = ({ product }) => {
-  const [{ isDragging }, drag] = useDrag({
-    type: ItemTypes.CARD,
-    product: product,
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  });
+  // const [{ isDragging }, drag] = useDrag({
+  //   type: ItemTypes.CARD,
+  //   product: product,
+  //   collect: (monitor) => ({
+  //     isDragging: !!monitor.isDragging(),
+  //   }),
+  // });
 
   return (
-    <div ref={drag} className="m-2 py-3">
+    // <div ref={drag} className="m-2 py-3">
+    <div className="m-2 py-3">
       <Card key={product.id} className={styles.card_effect}>
         <Link to={`/product/${product.id}`}>
           <Card.Img

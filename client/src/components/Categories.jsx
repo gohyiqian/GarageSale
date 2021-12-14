@@ -12,13 +12,12 @@ const Container = styled.div`
   ${mobile({ padding: "0px", flexDirection: "column" })}
 `;
 
-const Title = styled.span`
+const Title = styled.h1`
   display: flex;
-  font-size: 18px;
+  font-size: 22px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 25px;
   padding: 15px;
   background-color: #fcf5f5;
 `;

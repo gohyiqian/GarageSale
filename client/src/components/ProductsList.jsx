@@ -5,7 +5,9 @@ import { useState, useEffect } from "react";
 import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
 // import { dummyProducts } from "../dummyData";
-import { getProducts } from "../redux/productSlice";
+import { getProductsByKeyword } from "../redux/apiProduct";
+import { useHistory } from "react-router";
+import Paginate from "../components/Paginate";
 
 const Container = styled.div`
   display: flex;
@@ -25,18 +27,21 @@ const Title = styled.h1`
   background-color: #fcf5f5;
 `;
 
-const ProductsList = ({ cat, filters, sort }) => {
-  // (cat, filters, sort) props passed from ProductCategoryPage
-  console.log(filters);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+const ProductsList = () => {
   const dispatch = useDispatch();
-  const { products, status } = useSelector((state) => state.products);
-  // products.map();
-  // console.log(products);
+  const history = useHistory();
+  const { products, status, page, pages } = useSelector(
+    (state) => state.products
+  );
+  console.log(products);
 
+  let keyword = history.location.search; //search keywords
+  // console.log(keyword);
+
+  // ?keyword=coat&page=1
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    dispatch(getProductsByKeyword(keyword));
+  }, [dispatch, keyword]);
 
   // getProducts by category
   // useEffect activated when [cat] changes
@@ -58,65 +63,21 @@ const ProductsList = ({ cat, filters, sort }) => {
   //   getProducts();
   // }, [cat]);
 
-  // filter products to find those that matches the category
-  // useEffect activated when [products,cat,filters] changes
-  useEffect(() => {
-    if (cat) {
-      if (filters.color === "All" || filters.size === "All") {
-        setFilteredProducts(products);
-      } else {
-        const filterOption = products.filter((item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value)
-          )
-        );
-        // console.log(filterOption);
-        setFilteredProducts(filterOption);
-        // console.log(filteredProducts);
-      }
-    }
-  }, []);
-
-  // Sorting by Prices & CreatedDate
-  useEffect(() => {
-    if (sort === "latest") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.createdAt - b.createdAt)
-      );
-    } else if (sort === "asc") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.price - b.price)
-      );
-    } else {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => b.price - a.price)
-      );
-    }
-  }, [sort]);
-
-  // if (status === "loading") {
-  //   return (
-  //     <div>
-  //       <div className={styles.loader} />
-  //     </div>
-  //   );
-  // }
-
   return (
     <>
-      <Title>TOP PRODUCTS</Title>
+      <Title className="mt-3">SHOP BY PRODUCTS</Title>
       {status === "loading" ? (
         <Loader />
       ) : (
-        <Container>
-          {cat
-            ? filteredProducts.map((product) => (
-                <ProductCard product={product} key={product.id} />
-              ))
-            : products.map((product) => (
-                <ProductCard product={product} key={product.id} />
-              ))}
-        </Container>
+        <>
+          <Paginate pages={pages} page={page} keyword={keyword} />
+          <Container>
+            {products.map((product) => (
+              <ProductCard product={product} key={product.id} />
+            ))}
+          </Container>
+          <Paginate pages={pages} page={page} keyword={keyword} />
+        </>
       )}
     </>
   );

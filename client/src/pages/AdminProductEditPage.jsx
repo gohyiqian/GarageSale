@@ -42,9 +42,10 @@ const ProductEditPage = ({ match }) => {
       setPrice(product.price);
       setImage(product.image);
       setBrand(product.brand);
-      setCategory(product.category);
-      setColor(product.color);
       setSize(product.size);
+      setCategory(product.category);
+      setGender(product.gender);
+      setColor(product.color);
       setStockCount(product.stockCount);
       setDescription(product.description);
     }
@@ -205,13 +206,6 @@ const ProductEditPage = ({ match }) => {
                         onChange={handleFileUpload}
                       />
                       {upload && <Loader />}
-                      {/* <input type="file" onChange={handleFileUpload} /> */}
-                      {/* <Form.File
-                        id="image-file"
-                        label="Choose File"
-                        custom
-                        onChange={handleFileUpload}
-                      ></Form.File> */}
                     </Form.Group>
 
                     <Form.Group className="mb-4" controlId="description">

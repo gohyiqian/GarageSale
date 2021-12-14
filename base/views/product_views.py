@@ -14,17 +14,23 @@ def getProducts(request):
     if query == None:
         query = ''
 
+    # Case-insensitive containment test - icontains
+    # filter by product names
     products = Product.objects.filter(
         name__icontains=query).order_by('-createdAt')
         
-    # category = request.query_params.get('category')
+    
     page = request.query_params.get('page')
-    paginator = Paginator(products, 24)
+
+    # set number of products to return
+    paginator = Paginator(products, 8)
 
     try:
         products = paginator.page(page)
+    # return 1st page if not integer
     except PageNotAnInteger:
         products = paginator.page(1)
+    # return last page if empty page
     except EmptyPage:
         products = paginator.page(paginator.num_pages)
 
@@ -48,9 +54,40 @@ def getProduct(request, pk):
 # GET top few products for Homepage
 @api_view(['GET'])
 def getTopProducts(request):
-    products = Product.objects.filter(rating__gte=4).order_by('-rating')[0:5]
+    #filter top 8 products with rating >= 4 and ordered by ratings
+    products = Product.objects.filter(rating__gte=4).order_by('-rating')[0:8]
     serializer = ProductSerializer(instance=products, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+#  GET products by Category
+@api_view(['GET'])
+def getProductsByCat( request):
+    query = request.query_params.get('category')
+    if query == None:
+        query = ''
+
+    # filter by categories
+    products = Product.objects.filter(category__icontains=query)
+
+    page = request.query_params.get('page')
+    # set number of products to return
+    paginator = Paginator(products, 8)
+    try:
+        products = paginator.page(page)
+    # return 1st page if not integer
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    # return last page if empty page
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
+    if page == None:
+        page = 1
+    page = int(page)
+    print('Page:', page)
+    serializer = ProductSerializer(instance=products, many=True)
+    return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
 
 
 # Admin POST Product (Admin/Seller)
@@ -71,8 +108,6 @@ def createProduct(request):
 
     serializer = ProductSerializer(instance=product, many=False)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
 
 
 @api_view(['POST'])

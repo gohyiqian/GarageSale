@@ -1,10 +1,16 @@
 import styled from "styled-components";
 import NavBar from "../components/NavBar";
-import ProductsList from "../components/ProductsList";
+import ProductsListByCat from "../components/ProductsListByCat";
 import Footer from "../components/Footer";
 import { mobile } from "../responsiveMobile.js";
 import { useLocation } from "react-router";
 import { useState } from "react";
+import { useEffect } from "react";
+import { actions } from "../redux/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsByCategory } from "../redux/apiProduct";
+import { useHistory } from "react-router";
+import Loader from "../components/Loader";
 
 const FilterContainer = styled.div`
   display: flex;
@@ -30,16 +36,23 @@ const Select = styled.select`
   ${mobile({ margin: "10px 0px" })}
 `;
 
-const ProductCategoryPage = () => {
-  const location = useLocation();
+const CategoryPage = () => {
+  // const location = useLocation();
   // get the category type from path
-  console.log(location.pathname.split("/")[2]);
-  const cat = location.pathname.split("/")[2];
-
+  // console.log(location.pathname.split("/"));
+  // const category = location.pathname.split("/")[1];
+  // console.log(category);
   // sort & filter state
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");
+  const dispatch = useDispatch();
+  const history = useHistory();
 
+  let category = history.location.search; //to pass to backend
+  // console.log(category); //?category=shirt&page=1
+
+  const { catStatus } = useSelector((state) => state.products);
+  console.log(catStatus);
   // handle filters onChange
   const handleFilters = (e) => {
     const value = e.target.value;
@@ -50,52 +63,73 @@ const ProductCategoryPage = () => {
     });
   };
 
-  console.log(filters);
   return (
     <>
-      <NavBar />
+      {catStatus === "loading" ? (
+        <Loader />
+      ) : (
+        <>
+          <NavBar />
+          <div className="p-4">
+            <h2 className="m-3">
+              Category: {category.split("?category=")[1].split("&")[0]}
+            </h2>
+            <FilterContainer>
+              <Filter>
+                <FilterText>Color:</FilterText>
+                <Select name="color" onChange={handleFilters}>
+                  <option defaultValue="true">All</option>
+                  <option>white</option>
+                  <option>black</option>
+                  <option>red</option>
+                  <option>blue</option>
+                  <option>yellow</option>
+                  <option>green</option>
+                  <option>orange</option>
+                  <option>pink</option>
+                  <option>brown</option>
+                  <option>mixed</option>
+                </Select>
 
-      <div className="p-4">
-        <h2 className="m-3">Category: {cat}</h2>
-        <FilterContainer>
-          <Filter>
-            <FilterText>Color:</FilterText>
-            <Select name="color" onChange={handleFilters}>
-              <option selected="true">All</option>
-              <option>white</option>
-              <option>black</option>
-              <option>red</option>
-              <option>blue</option>
-              <option>yellow</option>
-              <option>green</option>
-              <option>orange</option>
-            </Select>
+                <FilterText>Size:</FilterText>
+                <Select name="size" onChange={handleFilters}>
+                  <option defaultValue="true">All</option>
+                  <option>XS</option>
+                  <option>S</option>
+                  <option>M</option>
+                  <option>L</option>
+                  <option>XL</option>
+                </Select>
 
-            <FilterText>Size:</FilterText>
-            <Select name="size" onChange={handleFilters}>
-              <option selected="true">All</option>
-              <option>XS</option>
-              <option>S</option>
-              <option>M</option>
-              <option>L</option>
-              <option>XL</option>
-            </Select>
-          </Filter>
-          <Filter>
-            <FilterText>Sort options:</FilterText>
-            <Select onChange={(e) => setSort(e.target.value)}>
-              <option value="latest">Latest</option>
-              <option value="asc">Prices (low to high)</option>
-              <option value="desc">Prices (high to low)</option>
-            </Select>
-          </Filter>
-        </FilterContainer>
-        {/* pass filtering props to productsList component */}
-        <ProductsList cat={cat} filters={filters} sort={sort} />
-      </div>
-      <Footer />
+                {/* <FilterText>Gender:</FilterText>
+                <Select name="gender" onChange={handleFilters}>
+                  <option defaultValue="true">All</option>
+                  <option>man</option>
+                  <option>women</option>
+                  <option>unisex</option>
+                </Select> */}
+              </Filter>
+              <Filter>
+                <FilterText>Sort options:</FilterText>
+                <Select onChange={(e) => setSort(e.target.value)}>
+                  <option value="prices">Sort by Price</option>
+                  <option value="asc">Prices (low to high)</option>
+                  <option value="desc">Prices (high to low)</option>
+                </Select>
+              </Filter>
+            </FilterContainer>
+            {/* pass filtering props to productsList component */}
+            <ProductsListByCat
+              category={category}
+              filters={filters}
+              sort={sort}
+            />
+          </div>
+          <Footer />
+        </>
+      )}
     </>
   );
 };
 
-export default ProductCategoryPage;
+export default CategoryPage;

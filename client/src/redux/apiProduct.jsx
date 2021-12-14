@@ -22,14 +22,14 @@ export const getProduct = (id) => async (dispatch) => {
 export const getTopProduct = () => async (dispatch) => {
   try {
     dispatch(actions.productTopStart());
-    const { data } = await axios.get(`/api/products/top`);
+    const { data } = await axios.get(`/api/products/top/`);
     dispatch(actions.productTopSuccess(data));
   } catch (err) {
     dispatch(actions.productTopFailure(err.message));
   }
 };
 
-//  ADMIN GET PRODUCTS BY KEYWORDS
+//  ADMIN GET PRODUCTS BY KEYWORDS SEARCH ON PRODUCT NAMES
 export const getProductsByKeyword =
   (keyword = "") =>
   async (dispatch) => {
@@ -39,6 +39,19 @@ export const getProductsByKeyword =
       dispatch(actions.listProductsByKeywordSuccess(data));
     } catch (err) {
       dispatch(actions.listProductsByKeywordFailure(err.message));
+    }
+  };
+
+//  ADMIN GET PRODUCTS BY CATEGORY SEARCH ON CLICK
+export const getProductsByCategory =
+  (category = "") =>
+  async (dispatch) => {
+    try {
+      dispatch(actions.listProductsByCatStart());
+      const { data } = await axios.get(`/api/products/category/${category}`);
+      dispatch(actions.listProductsByCatSuccess(data));
+    } catch (err) {
+      dispatch(actions.listProductsByCatFailure(err.message));
     }
   };
 

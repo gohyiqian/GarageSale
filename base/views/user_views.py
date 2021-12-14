@@ -86,6 +86,29 @@ def updateUser(request, pk):
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+#  User POST profile image
+@api_view(['POST'])
+def uploadImage(request):
+    data = request.data
+    print(data)
+    userId = data['userId']
+    user = User.objects.get(id=userId)
+    user.usertype.profile_image = request.FILES.get('image')
+    user.save()
+    return Response('Profile Image was uploaded', status=status.HTTP_201_CREATED)
+
+#  User POST cover image
+@api_view(['POST'])
+def uploadCoverImage(request):
+    data = request.data
+    print(data)
+    userId = data['userId']
+    user = User.objects.get(id=userId)
+    user.usertype.cover_image = request.FILES.get('image')
+    user.save()
+    return Response('Profile Image was uploaded', status=status.HTTP_201_CREATED)
+
+
 # Admin DELETE userById
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])

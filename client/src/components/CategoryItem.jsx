@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { mobile } from "../responsiveMobile";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
+import { getProductsByCategory } from "../redux/apiProduct";
+import { useDispatch } from "react-redux";
 
 const Info = styled.div`
   display: flex;
@@ -43,6 +46,7 @@ const Container = styled.div`
   margin: 10px;
   position: relative;
   justify-content: center;
+  cursor: pointer;
 
   &:hover ${Image} {
     opacity: 0.5;
@@ -56,15 +60,22 @@ const Container = styled.div`
 `;
 
 const CategoryItem = ({ item }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(getProductsByCategory(`?category=${item.category}&page=1`));
+    history.push(`/${item.category}?category=${item.category}&page=1`);
+  };
   return (
-    <Container>
-      <Link to={`/products/${item.category}`}>
-        <Image src={item.image} />
-        <Info>
-          <Title>{item.category.toUpperCase()}</Title>
-          <Button>SHOP NOW</Button>
-        </Info>
-      </Link>
+    <Container onClick={handleClick}>
+      {/* <Link to={`/${item.category}?category=${item.category}&page=1`}> */}
+      <Image src={item.image} />
+      <Info>
+        <Title>{item.category.toUpperCase()}</Title>
+        <Button>SHOP NOW</Button>
+      </Info>
+      {/* </Link> */}
     </Container>
   );
 };

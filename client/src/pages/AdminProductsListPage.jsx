@@ -29,6 +29,7 @@ const ProductsListPage = () => {
 
   let keyword = history.location.search;
   console.log(keyword);
+
   useEffect(() => {
     dispatch(actions.productCreateReset());
     if (!userInfo && !userInfo.isAdmin) {
@@ -57,7 +58,7 @@ const ProductsListPage = () => {
         <div>
           <h2>All Products in Database</h2>
           <h5 className="mb-4" style={{ color: "grey" }}>
-            Number of Product Type: {products.length}
+            Total Number of Products: {products.length * pages}
           </h5>
           <Row>
             <Col md={3} className="mb-4">

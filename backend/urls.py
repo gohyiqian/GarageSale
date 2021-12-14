@@ -18,9 +18,11 @@ from django.urls import path, include
 from backend import views
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', views.home),
+    # path('', TemplateView.as_views(template_name='index.html'))
     path('admin/', admin.site.urls),
     path('api/users/', include('base.urls.user_urls')),
     path('api/products/', include('base.urls.product_urls')),
