@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ProductCard from "./ProductCard";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 // import axios from "axios";
 import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,7 +33,7 @@ const ProductsList = () => {
   const { products, status, page, pages } = useSelector(
     (state) => state.products
   );
-  console.log(products);
+  // console.log(products);
 
   let keyword = history.location.search; //search keywords
   // console.log(keyword);

@@ -24,8 +24,8 @@ export const createShop = () => async (dispatch, getState) => {
   }
 };
 
-// EDIT SHOP
-export const updateShop = (shop) => async (dispatch, getState) => {
+// UPDATE/EDIT SHOP
+export const updateShop = (shop, id) => async (dispatch, getState) => {
   try {
     dispatch(shopActions.updateShopStart());
 
@@ -41,7 +41,7 @@ export const updateShop = (shop) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.patch(
-      `/api/shops/update/${shop.shop_id}`,
+      `/api/shops/update/${shop.id}/`,
       shop,
       authConfig
     );
@@ -51,13 +51,66 @@ export const updateShop = (shop) => async (dispatch, getState) => {
   }
 };
 
-// GET A SHOP
-export const getShop = (id) => async (dispatch) => {
+// GET SHOP BY SHOP ID
+export const getShopByShopId = (id) => async (dispatch) => {
   try {
     dispatch(shopActions.shopDetailStart());
-    const { data } = await axios.get(`/api/shops/${id}`);
+    const { data } = await axios.get(`/api/shops/${id}/`);
     dispatch(shopActions.shopDetailSuccess(data));
   } catch (err) {
     dispatch(shopActions.shopDetailFailure(err.message));
+  }
+};
+
+// GET SHOP BY USER ID
+export const getShopByUserId = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(shopActions.shopDetailStart());
+    const {
+      user: { userInfo },
+    } = getState();
+
+    const authConfig = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/shops/user/${id}/`, authConfig);
+    dispatch(shopActions.shopDetailSuccess(data));
+  } catch (err) {
+    dispatch(shopActions.shopDetailFailure(err.message));
+  }
+};
+
+//  GET ALL SHOPS
+export const getAllShops = (id) => async (dispatch) => {
+  try {
+    dispatch(shopActions.shopDetailStart());
+    const { data } = await axios.get(`/api/shops/all/`);
+    dispatch(shopActions.shopDetailSuccess(data));
+  } catch (err) {
+    dispatch(shopActions.shopDetailFailure(err.message));
+  }
+};
+
+// DELETE SHOP
+export const deleteShop = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(shopActions.shopDeleteStart());
+    const {
+      user: { userInfo },
+    } = getState();
+
+    const authConfig = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.delete(`/api/shops/delete/${id}/`, authConfig);
+    dispatch(shopActions.shopDeleteSuccess(data));
+  } catch (err) {
+    dispatch(shopActions.shopDeleteFailure(err.message));
   }
 };

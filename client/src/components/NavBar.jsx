@@ -7,7 +7,7 @@ import {
   Pinterest,
   Person,
 } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import styles from "../App.module.css";
 import { mobile } from "../responsiveMobile";
@@ -26,7 +26,7 @@ import {
 import { actions } from "../redux/userSlice";
 import { useHistory } from "react-router";
 import { createShop } from "../redux/apiShop";
-import { actions as productActions } from "../redux/productSlice";
+// import { actions as productActions } from "../redux/productSlice";
 
 const NavBarStyle = {
   position: "sticky",
@@ -86,15 +86,13 @@ const SocialIcon = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-const NavBar = () => {
+const NavBar = ({ shop }) => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
-  const { productsByCat, catStatus } = useSelector((state) => state.products);
+  // const { productsByCat, catStatus } = useSelector((state) => state.products);
   // console.log(userInfo);
   const history = useHistory();
   const dispatch = useDispatch();
-
-  const shop = false;
 
   const logOutHandler = () => {
     dispatch(actions.logOut());
@@ -111,7 +109,7 @@ const NavBar = () => {
 
   const handleCreateShop = (e) => {
     e.preventDefault();
-    // dispatch(createShop());
+    dispatch(createShop());
     history.push(`/seller/shop`);
   };
 

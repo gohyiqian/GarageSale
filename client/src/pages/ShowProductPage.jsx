@@ -231,17 +231,22 @@ const ShowProductPage = ({ match }) => {
                   )}
                 </ListGroup.Item>
               </ListGroup>
+
               <ListGroup variant="flush">
-                {product.reviews.map((review) => (
-                  <ListGroup.Item key={review._id}>
-                    <strong>{review.name}</strong>
-                    <RatingStar value={review.rating} color={"#945047"} />
-                    <p style={{ fontSize: "12px" }}>
-                      Reviewed On: {review.createdAt.substring(0, 10)}
-                    </p>
-                    <p>{review.comment}</p>
-                  </ListGroup.Item>
-                ))}
+                {product.reviews ? (
+                  product.reviews.map((review) => (
+                    <ListGroup.Item key={review._id}>
+                      <strong>{review.name}</strong>
+                      <RatingStar value={review.rating} color={"#945047"} />
+                      <p style={{ fontSize: "12px" }}>
+                        Reviewed On: {review.createdAt.substring(0, 10)}
+                      </p>
+                      <p>{review.comment}</p>
+                    </ListGroup.Item>
+                  ))
+                ) : (
+                  <Loader />
+                )}
 
                 <ListGroup.Item>
                   <h4>Write a review</h4>

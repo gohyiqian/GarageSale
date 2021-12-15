@@ -3,12 +3,12 @@ import NavBar from "../components/NavBar";
 import ProductsListByCat from "../components/ProductsListByCat";
 import Footer from "../components/Footer";
 import { mobile } from "../responsiveMobile.js";
-import { useLocation } from "react-router";
+// import { useLocation } from "react-router";
 import { useState } from "react";
-import { useEffect } from "react";
-import { actions } from "../redux/productSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { getProductsByCategory } from "../redux/apiProduct";
+// import { useEffect } from "react";
+// import { actions } from "../redux/productSlice";
+import { useSelector } from "react-redux";
+// import { getProductsByCategory } from "../redux/apiProduct";
 import { useHistory } from "react-router";
 import Loader from "../components/Loader";
 
@@ -45,14 +45,14 @@ const CategoryPage = () => {
   // sort & filter state
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
 
   let category = history.location.search; //to pass to backend
   // console.log(category); //?category=shirt&page=1
 
   const { catStatus } = useSelector((state) => state.products);
-  console.log(catStatus);
+  // console.log(catStatus);
   // handle filters onChange
   const handleFilters = (e) => {
     const value = e.target.value;
@@ -62,6 +62,18 @@ const CategoryPage = () => {
       [e.target.name]: value,
     });
   };
+
+  // const getDistinctColor = async (e) => {
+  //   try {
+  //     const { data } = await axios.get("/api/products/colors/", {
+  //       headers: {
+  //         "Content-type": "application/json",
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>

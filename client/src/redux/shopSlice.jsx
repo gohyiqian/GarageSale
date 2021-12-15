@@ -32,7 +32,7 @@ const shopSlice = createSlice({
       state.status = "failed";
       state.error = action.payload;
     },
-    // GET A SHOP
+    // GET SHOP BY SHOP ID
     shopDetailStart: (state) => {
       state.status = "loading";
     },
@@ -41,6 +41,16 @@ const shopSlice = createSlice({
       state.shop = action.payload;
     },
     shopDetailFailure: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    },
+    shopDeleteStart: (state) => {
+      state.status = "loading";
+    },
+    shopDeleteSuccess: (state) => {
+      state.status = "success";
+    },
+    shopDeleteFailure: (state, action) => {
       state.status = "failed";
       state.error = action.payload;
     },

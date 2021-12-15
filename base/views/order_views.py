@@ -70,7 +70,6 @@ def getUserOrders(request):
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
 
-
 # ADMIN GET all orders
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
@@ -78,7 +77,6 @@ def getAllOrders(request):
     orders = Order.objects.all()
     serializer = OrderSerializer(orders, many=True)
     return Response(serializer.data)
-
 
 # USER GET order BY ID
 @api_view(['GET'])

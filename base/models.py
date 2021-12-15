@@ -23,7 +23,6 @@ class UserType(models.Model):
     profile_image = models.ImageField(default='/placeholder.png',null=True, blank=True)
     cover_image = models.ImageField(default='/placeholder.png',null=True, blank=True)
 
-
     @receiver(post_save, sender=User)
     def create_user_type(sender, instance, created, **kwargs):
         if created:
@@ -37,10 +36,22 @@ class UserType(models.Model):
     def __str__(self):
         return str(self.user)
 
+class Shop(models.Model):
+    # shop_id = models.UUIDField(default=uuid.uuid4, unique=True)
+    shop_id = models.AutoField(primary_key=True, editable=False)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    image = models.ImageField(default='/placeholder.png',null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    contact = models.CharField(max_length=20, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.name)
 
 # Create your models here.
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True) #relationship to user
+    shop = models.ForeignKey(Shop, on_delete=models.SET_NULL, null=True) #relationship to Shop
     name = models.CharField(max_length=200, null=True, blank=True)
     image = models.ImageField(default='/placeholder.png',null=True, blank=True)
     brand = models.CharField(max_length=200, null=True, blank=True)
@@ -138,14 +149,3 @@ class Message(models.Model):
     def __str__(self):
         return str(self.sender)
 
-class Shop(models.Model):
-    # shop_id = models.UUIDField(default=uuid.uuid4, unique=True)
-    shop_id = models.AutoField(primary_key=True, editable=False)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    name = models.CharField(max_length=200, null=True, blank=True)
-    image = models.ImageField(default='/placeholder.png',null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    contact = models.CharField(max_length=20, null=True, blank=True)
-
-    def __str__(self):
-        return str(self.name)

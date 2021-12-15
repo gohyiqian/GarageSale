@@ -156,24 +156,28 @@ const UserProfilePage = () => {
       <NavBar />
       {!profileDetails && userStatus === "loading" && <Loader />}
       {message && <Message variant="danger">{message}</Message>}
-      {/* <ProfileContainer>
-        <UserCoverImg
-          src={
-            profileDetails
-              ? profileDetails.usertype.cover_image
-              : "images/userCoverImage.jpg"
-          }
-          alt=""
-        />
-        <UserProfileImg
-          src={
-            profileDetails
-              ? profileDetails.usertype.profile_image
-              : "images/noAvatar.png"
-          }
-          alt=""
-        />
-      </ProfileContainer> */}
+      {/* {profileDetails ? (
+        <ProfileContainer>
+          <UserCoverImg
+            src={
+              profileDetails
+                ? profileDetails.usertype.cover_image
+                : "images/userCoverImage.jpg"
+            }
+            alt=""
+          />
+          <UserProfileImg
+            src={
+              profileDetails
+                ? profileDetails.usertype.profile_image
+                : "images/noAvatar.png"
+            }
+            alt=""
+          />
+        </ProfileContainer>
+      ) : (
+        <Loader />
+      )} */}
 
       <Row style={{ margin: "20px" }}>
         <Col
@@ -245,7 +249,7 @@ const UserProfilePage = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group className="mb-4" controlId="image">
+            <Form.Group className="mb-4">
               <Form.Label>Profile Image</Form.Label>
               <Form.Control
                 type="text"
@@ -283,8 +287,8 @@ const UserProfilePage = () => {
           </Form>
         </Col>
 
-        <Col md={9} className="p-4">
-          <Form.Group className="mb-4" controlId="image">
+        <Col md={9} className="px-4">
+          <Form.Group className="mb-4">
             <Form.Control
               type="file"
               id="image-file"

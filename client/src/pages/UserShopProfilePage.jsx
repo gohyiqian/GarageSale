@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Button, Row, Col, Table } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Form, Row, Col, Table } from "react-bootstrap";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import styled from "styled-components";
 import styles from "../App.module.css";
-import { createShop, updateShop } from "../redux/apiShop";
+import { updateShop, getShopByUserId } from "../redux/apiShop";
 import { useHistory } from "react-router";
 
 const ProfileContainer = styled.div`
@@ -55,22 +54,37 @@ const UserShopPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { status, userInfo, profileDetails, error } = useSelector(
-    (state) => state.user
-  );
-
-  // useEffect(() => {
-  //   dispatch(getShop());
-  // }, []);
-
+  const { status, userInfo, error } = useSelector((state) => state.user);
   const {
     shop,
     status: shopStatus,
     error: shopError,
   } = useSelector((state) => state.shop);
 
+  useEffect(() => {
+    dispatch(getShopByUserId(userInfo.id));
+    setName(shop.name);
+    setContact(shop.contact);
+    setDesc(shop.description);
+  }, [userInfo]);
+
+  // useEffect(() => {
+  //   dispatch();
+  // });
+
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(
+      updateShop({
+        id: shop.shop_id,
+        name: name,
+        contact: contact,
+        description: desc,
+      })
+    );
+    setName("");
+    setContact("");
+    setDesc("");
   };
 
   const handleCreateProduct = (e) => {};
@@ -79,7 +93,7 @@ const UserShopPage = () => {
 
   return (
     <>
-      <NavBar />
+      <NavBar shop={shop} />
       {status === "loading" && shopStatus === "loading" && <Loader />}
       {error && shopError && <Message variant="danger">{error}</Message>}
       {message && <Message variant="danger">{message}</Message>}
@@ -96,7 +110,7 @@ const UserShopPage = () => {
           className={styles.scrollbar_v2}
         >
           <h2 style={{ textAlign: "center" }} className="mt-5">
-            {shop.name.length === 0 ? "Sample Shop" : shop.name}
+            {!shop ? "Sample Shop" : shop.name}
           </h2>
           <div style={{ display: "flex" }}>
             <Following>2</Following>
@@ -109,9 +123,7 @@ const UserShopPage = () => {
           <h4 style={{ textAlign: "center" }}> Shop Information </h4>
           <hr />
           <span style={{ textAlign: "center" }}>
-            {shop.description.length === 0
-              ? "Sample description"
-              : shop.description}
+            {!shop ? "Sample description" : shop.description}
           </span>
 
           <h4 className="mt-3" style={{ textAlign: "center" }}>

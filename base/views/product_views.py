@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from base.models import Product, Review
+from base.models import Product, Review, Shop
 from base.serializers import ProductSerializer
 from rest_framework import status
 
@@ -72,7 +72,7 @@ def getProductsByCat( request):
 
     page = request.query_params.get('page')
     # set number of products to return
-    paginator = Paginator(products, 8)
+    paginator = Paginator(products, 12)
     try:
         products = paginator.page(page)
     # return 1st page if not integer
@@ -89,8 +89,22 @@ def getProductsByCat( request):
     serializer = ProductSerializer(instance=products, many=True)
     return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
 
+# GET distinct product categories
+@api_view(['GET'])
+def getDistinctCat(request):
+    category = Product.objects.values('category').distinct()
+    print(category)
+    return Response(category)
 
-# Admin POST Product (Admin/Seller)
+# GET distinct product colors
+@api_view(['GET'])
+def getDistinctColor(request):
+    color = Product.objects.values('color').distinct()
+    print(color)
+    # serializer = ProductSerializer(instance=color, many=True)
+    return Response(color)
+
+# Admin POST Product (Admin)
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createProduct(request):
@@ -196,3 +210,55 @@ def createProductReview(request, pk):
         product.save()
 
         return Response('Review Added', status=status.HTTP_201_CREATED)
+
+#  GET products by Shop
+@api_view(['GET'])
+def getProductsByShop( request):
+    query = request.query_params.get('shop')
+    if query == None:
+        query = ''
+
+    # filter by categories
+    products = Product.objects.filter(shop=query)
+
+    page = request.query_params.get('page')
+    # set number of products to return
+    paginator = Paginator(products, 8)
+    try:
+        products = paginator.page(page)
+    # return 1st page if not integer
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    # return last page if empty page
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
+    if page == None:
+        page = 1
+    page = int(page)
+    print('Page:', page)
+    serializer = ProductSerializer(instance=products, many=True)
+    return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
+
+# Seller POST/create Product (Seller)
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createShopProduct(request,pk):
+    user = request.user
+    shop = Shop.objects.get(shop_id=pk)
+    try:
+        if user.usertype.is_seller or shop.user == user:
+            product = Product.objects.create(
+                user=user,
+                name='Sample Name',
+                price=0,
+                brand='Sample Brand',
+                stockCount=0,
+                category='Sample Category',
+                description=''
+            )
+
+            serializer = ProductSerializer(instance=product, many=False)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except:
+        return Response({'detail': 'You do not own this Shop'}, status=status.HTTP_400_BAD_REQUEST)

@@ -45,11 +45,23 @@ const Categories = () => {
   //     getProductCategories();
   //   }, []);
 
+  // const getDistinctCat = async (e) => {
+  //   try {
+  //     const { data } = await axios.get("/api/products/distinct/category/", {
+  //       headers: {
+  //         "Content-type": "application/json",
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   return (
     <>
       <Title>SHOP BY CATEGORIES</Title>
       <Container className="p-4">
-        {/* using dummyData */}
+        {/* using image from dummyData for category cards on HomePage*/}
         {dummyProducts.map((item) => (
           <CategoryItem item={item} key={item.id} />
         ))}

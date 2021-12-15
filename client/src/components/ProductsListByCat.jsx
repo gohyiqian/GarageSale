@@ -6,7 +6,7 @@ import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
 // import { dummyProducts } from "../dummyData";
 import { getProductsByCategory } from "../redux/apiProduct";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import Paginate from "./Paginate";
 
 const Container = styled.div`
@@ -17,22 +17,12 @@ const Container = styled.div`
   background-color: #fcf5f5;
 `;
 
-const Title = styled.h1`
-  display: flex;
-  font-size: 22px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  background-color: #fcf5f5;
-`;
-
 const ProductsListByCat = ({ category, filters, sort }) => {
   // (cat, filters, sort) props passed from ProductCategoryPage
   // console.log(filters);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
 
   // let category = history.location.search; //to pass to backend
   // console.log(category);
@@ -44,37 +34,37 @@ const ProductsListByCat = ({ category, filters, sort }) => {
   console.log(productsByCat);
 
   useEffect(() => {
-    console.log("useEffect: getting category");
+    console.log("useEffect 01: Getting Products by Category");
     if (catStatus === "idle") {
       dispatch(getProductsByCategory(category));
     }
-  }, [category]);
+  }, [category, catStatus, dispatch]);
 
   // filter products to find those that matches the category
   // useEffect activated when [products,filters] changes
   useEffect(() => {
     if (productsByCat) {
-      console.log("Fire Filtering");
-      console.log(filters);
+      console.log("useEffect 02: Filtering");
+      // console.log(filters);
       if (filters.color === "All" || filters.size === "All") {
         setFilteredProducts(productsByCat);
-        console.log(filteredProducts);
+        // console.log(filteredProducts);
       } else {
         const filterOption = productsByCat.filter((item) =>
           Object.entries(filters).every(([key, value]) =>
             item[key].includes(value)
           )
         );
-        console.log(filterOption);
+        // console.log(filterOption);
         setFilteredProducts(filterOption);
-        console.log(filteredProducts);
+        // console.log(filteredProducts);
       }
     }
-  }, [filters]);
+  }, [filters, productsByCat]);
 
   // Sorting by Prices
   useEffect(() => {
-    console.log("Fire Sorting");
+    console.log("useEffect 03: Sorting");
     if (sort === "asc") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => a.price - b.price)
@@ -88,8 +78,7 @@ const ProductsListByCat = ({ category, filters, sort }) => {
 
   return (
     <>
-      {console.log("rendering")}
-      {/* <Title>TOP 8 PRODUCTS</Title> */}
+      {console.log("Rendering first")}
 
       {!productsByCat || catStatus === "loading" || status === "loading" ? (
         <Loader />

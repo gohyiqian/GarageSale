@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../responsiveMobile";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
 import { getProductsByCategory } from "../redux/apiProduct";
 import { useDispatch } from "react-redux";
@@ -67,6 +67,7 @@ const CategoryItem = ({ item }) => {
     dispatch(getProductsByCategory(`?category=${item.category}&page=1`));
     history.push(`/${item.category}?category=${item.category}&page=1`);
   };
+
   return (
     <Container onClick={handleClick}>
       {/* <Link to={`/${item.category}?category=${item.category}&page=1`}> */}
