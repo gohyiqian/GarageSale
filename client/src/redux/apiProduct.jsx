@@ -35,7 +35,7 @@ export const getProductsByKeyword =
   async (dispatch) => {
     try {
       dispatch(actions.listProductsByKeywordStart());
-      const { data } = await axios.get(`/api/products${keyword}`);
+      const { data } = await axios.get(`/api/products${keyword}`); //?keyword=shirt&page=1
       dispatch(actions.listProductsByKeywordSuccess(data));
     } catch (err) {
       dispatch(actions.listProductsByKeywordFailure(err.message));
@@ -48,12 +48,23 @@ export const getProductsByCategory =
   async (dispatch) => {
     try {
       dispatch(actions.listProductsByCatStart());
-      const { data } = await axios.get(`/api/products/category/${category}`);
+      const { data } = await axios.get(`/api/products/category/${category}`); //?category=shirt&page=1
       dispatch(actions.listProductsByCatSuccess(data));
     } catch (err) {
       dispatch(actions.listProductsByCatFailure(err.message));
     }
   };
+
+//  ADMIN GET PRODUCTS BY SHOP
+export const getProductsByShop = (id) => async (dispatch) => {
+  try {
+    dispatch(actions.listProductsByKeywordStart());
+    const { data } = await axios.get(`/api/products/shop/?shop=${id}`);
+    dispatch(actions.listProductsByKeywordSuccess(data));
+  } catch (err) {
+    dispatch(actions.listProductsByKeywordFailure(err.message));
+  }
+};
 
 // ADMIN - CREATE PRODUCT
 export const createProduct = () => async (dispatch, getState) => {

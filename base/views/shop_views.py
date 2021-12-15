@@ -31,7 +31,7 @@ def createShop(request):
 # GET all shops of a Seller (User Auth)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def getAllShopsByUser(request):
+def getShop(request):
     user = request.user
     shop = user.shop_set.all()
     serializer = ShopSerializer(shop, many=True) #many=True

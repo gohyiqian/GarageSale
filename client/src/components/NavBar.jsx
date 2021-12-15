@@ -7,7 +7,7 @@ import {
   Pinterest,
   Person,
 } from "@material-ui/icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import styles from "../App.module.css";
 import { mobile } from "../responsiveMobile";
@@ -26,7 +26,7 @@ import {
 import { actions } from "../redux/userSlice";
 import { useHistory } from "react-router";
 import { createShop } from "../redux/apiShop";
-// import { actions as productActions } from "../redux/productSlice";
+import { getShop } from "../redux/apiShop";
 
 const NavBarStyle = {
   position: "sticky",
@@ -38,6 +38,7 @@ const NavBarStyle = {
 
 const Center = styled.div`
   flex: 2;
+  padding: 0 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,7 +54,7 @@ const Left = styled.div`
 
 const Logo = styled.h1`
   display: flex;
-  margin: 3px 20px;
+  margin: 3px 15px;
   cursor: pointer;
   align-items: center;
 `;
@@ -62,7 +63,7 @@ const Right = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 0 100px;
+  padding: 0 50px;
   justify-content: flex-end;
   ${mobile({ flex: 2, justifyContent: "center" })}
 `;
@@ -86,9 +87,10 @@ const SocialIcon = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
-const NavBar = ({ shop }) => {
+const NavBar = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
+  const { shop } = useSelector((state) => state.shop);
   // const { productsByCat, catStatus } = useSelector((state) => state.products);
   // console.log(userInfo);
   const history = useHistory();
@@ -113,12 +115,12 @@ const NavBar = ({ shop }) => {
     history.push(`/seller/shop`);
   };
 
-  // useEffect(() => {
-  //   // to prevent reset when the category page loads
-  //   if (catStatus !== "loading") {
-  //     dispatch(productActions.listProductsByCatReset());
-  //   }
-  // }, []);
+  // check if shop exist
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(getShop());
+    }
+  }, [userInfo]);
 
   return (
     <Navbar style={NavBarStyle} variant="light" expand="lg" collapseOnSelect>
@@ -179,7 +181,7 @@ const NavBar = ({ shop }) => {
                         </NavDropdown.Item>
                       </LinkContainer>
                       {/* <LinkContainer to="/seller/:id/shop"> */}
-                      {shop ? (
+                      {shop.length !== 0 ? (
                         <LinkContainer to="/seller/shop">
                           <NavDropdown.Item>
                             My Shop <i className="fas fa-store px-2" />
@@ -230,7 +232,7 @@ const NavBar = ({ shop }) => {
                 </>
               )}
 
-              {userInfo && userInfo.usertype.is_seller && shop && (
+              {userInfo && userInfo.usertype.is_seller && shop.length !== 0 && (
                 <NavDropdown
                   title="Manage Shop"
                   id="seller"

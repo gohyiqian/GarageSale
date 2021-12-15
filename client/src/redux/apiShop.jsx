@@ -24,6 +24,27 @@ export const createShop = () => async (dispatch, getState) => {
   }
 };
 
+// GET SHOP
+export const getShop = () => async (dispatch, getState) => {
+  try {
+    dispatch(shopActions.shopDetailStart());
+    const {
+      user: { userInfo },
+    } = getState();
+
+    const authConfig = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/shops/`, authConfig);
+    dispatch(shopActions.shopDetailSuccess(data));
+  } catch (err) {
+    dispatch(shopActions.shopDetailFailure(err.message));
+  }
+};
+
 // UPDATE/EDIT SHOP
 export const updateShop = (shop, id) => async (dispatch, getState) => {
   try {

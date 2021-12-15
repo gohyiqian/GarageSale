@@ -13,6 +13,7 @@ import { getUserDetails, updateUserProfile } from "../redux/apiUser";
 import { getMyOrders } from "../redux/apiOrder";
 import { useHistory } from "react-router";
 import axios from "axios";
+import { mobile } from "../responsiveMobile";
 
 const ProfileContainer = styled.div`
   height: 280px;
@@ -32,9 +33,10 @@ const UserProfileImg = styled.img`
   position: absolute;
   left: 0;
   right: 0;
-  margin: 50px 0 50px 120px;
+  margin: 10vh 0 10vh 16vh;
   top: 100px;
   border: 5px solid white;
+  ${mobile({ width: "25vh", height: "25vh", margin: "auto" })}
 `;
 
 const UserProfilePage = () => {
@@ -130,6 +132,7 @@ const UserProfilePage = () => {
     } catch (error) {
       setUpload(false);
     }
+    dispatch(getUserDetails("profile"));
   };
 
   const handleCoverImgUpload = async (e) => {
@@ -149,37 +152,50 @@ const UserProfilePage = () => {
     } catch (error) {
       setUpload(false);
     }
+    dispatch(getUserDetails("profile"));
   };
+
+  // Split out amazon url
+  // console.log(
+  //   profileDetails.usertype.cover_image.split("com/")[1].split("?")[0]
+  // );
+  // console.log(
+  //   profileDetails.usertype.profile_image.split("com/")[1].split("?")[0]
+  // );
 
   return (
     <>
       <NavBar />
       {!profileDetails && userStatus === "loading" && <Loader />}
       {message && <Message variant="danger">{message}</Message>}
-      {/* {profileDetails ? (
+      {Object.keys(profileDetails).length !== 0 && userStatus === "success" ? (
         <ProfileContainer>
           <UserCoverImg
             src={
-              profileDetails
+              Object.keys(profileDetails).length !== 0
                 ? profileDetails.usertype.cover_image
-                : "images/userCoverImage.jpg"
+                : // .split("com/")[1]
+                  // .split("?")[0]
+                  profileDetails.usertype.cover_image
             }
             alt=""
           />
           <UserProfileImg
             src={
-              profileDetails
+              Object.keys(profileDetails).length !== 0
                 ? profileDetails.usertype.profile_image
-                : "images/noAvatar.png"
+                : // .split("com/")[1]
+                  // .split("?")[0]
+                  profileDetails.usertype.profile_image
             }
             alt=""
           />
         </ProfileContainer>
       ) : (
         <Loader />
-      )} */}
+      )}
 
-      <Row style={{ margin: "20px" }}>
+      <Row style={{ margin: "40px" }}>
         <Col
           md={3}
           className="p-4"
@@ -264,6 +280,7 @@ const UserProfilePage = () => {
                 id="image-file"
                 accept="image/png, image/jpeg"
                 placeholder="Enter image"
+                onFocus={coverImage}
                 onChange={handleFileUpload}
               />
               {upload && <Loader />}

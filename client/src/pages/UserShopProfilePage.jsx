@@ -8,7 +8,9 @@ import Message from "../components/Message";
 import styled from "styled-components";
 import styles from "../App.module.css";
 import { updateShop, getShopByUserId } from "../redux/apiShop";
+import { getProductsByShop } from "../redux/apiProduct";
 import { useHistory } from "react-router";
+import { mobile } from "../responsiveMobile";
 
 const ProfileContainer = styled.div`
   height: 280px;
@@ -21,16 +23,17 @@ const UserCoverImg = styled.img`
 `;
 
 const UserProfileImg = styled.img`
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   object-fit: cover;
   position: absolute;
   left: 0;
   right: 0;
-  margin: 50px 0 50px 120px;
+  margin: 10vh 0 10vh 16vh;
   top: 100px;
   border: 5px solid white;
+  ${mobile({ width: "25vh", height: "25vh", margin: "auto" })}
 `;
 
 const Following = styled.div`
@@ -61,16 +64,22 @@ const UserShopPage = () => {
     error: shopError,
   } = useSelector((state) => state.shop);
 
+  const { products } = useSelector((state) => state.products);
+
   useEffect(() => {
+    // console.log("userEffect: 01");
     dispatch(getShopByUserId(userInfo.id));
     setName(shop.name);
     setContact(shop.contact);
     setDesc(shop.description);
   }, [userInfo]);
 
-  // useEffect(() => {
-  //   dispatch();
-  // });
+  useEffect(() => {
+    // console.log("userEffect: 02");
+    if (shop.shop_id) {
+      dispatch(getProductsByShop(shop.shop_id));
+    }
+  }, [shop.shop_id]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -82,18 +91,18 @@ const UserShopPage = () => {
         description: desc,
       })
     );
+    // clear inputs
     setName("");
     setContact("");
     setDesc("");
   };
 
+  console.log(products);
   const handleCreateProduct = (e) => {};
-
-  const product = false;
 
   return (
     <>
-      <NavBar shop={shop} />
+      <NavBar />
       {status === "loading" && shopStatus === "loading" && <Loader />}
       {error && shopError && <Message variant="danger">{error}</Message>}
       {message && <Message variant="danger">{message}</Message>}
@@ -102,7 +111,7 @@ const UserShopPage = () => {
         <UserProfileImg src="../images/shopAvatar.jpg" alt="" />
       </ProfileContainer>
 
-      <Row style={{ margin: "20px" }}>
+      <Row style={{ margin: "40px" }}>
         <Col
           md={3}
           className="p-4"
@@ -177,7 +186,7 @@ const UserShopPage = () => {
         </Col>
 
         <Col md={9} className="p-4">
-          {product ? (
+          {products.length !== 0 ? (
             <>
               <h2 style={{ color: "#945047" }} className="mb-3">
                 My Products

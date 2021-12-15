@@ -20,8 +20,8 @@ class UserType(models.Model):
     is_seller = models.BooleanField(default=False)
     is_buyer = models.BooleanField(default=False)
     bio = models.TextField(null=True, blank=True)
-    profile_image = models.ImageField(default='/placeholder.png',null=True, blank=True)
-    cover_image = models.ImageField(default='/placeholder.png',null=True, blank=True)
+    profile_image = models.ImageField(default='images/noAvatar.png',null=True, blank=True)
+    cover_image = models.ImageField(default='images/userCoverImage.jpg',null=True, blank=True)
 
     @receiver(post_save, sender=User)
     def create_user_type(sender, instance, created, **kwargs):
