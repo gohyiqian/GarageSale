@@ -32,6 +32,7 @@ import AdminProductsListPage from "./pages/AdminProductsListPage";
 import AdminProductEditPage from "./pages/AdminProductEditPage";
 import AdminOrderListsPage from "./pages/AdminOrderListsPage";
 import UserShopProfilePage from "./pages/UserShopProfilePage";
+import ShopPage from "./pages/ShopPage";
 // import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 
 const App = () => {
@@ -66,6 +67,8 @@ const App = () => {
           path="/admin/product/:id/edit"
           component={AdminProductEditPage}
         />
+
+        <Route path="/seller/shop/:id" component={ShopPage} />
         <Route path="/seller/shop" component={UserShopProfilePage} />
         <Route path="/admin/orderlist" component={AdminOrderListsPage} />
 

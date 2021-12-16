@@ -11,6 +11,7 @@ import { updateShop, getShopByUserId } from "../redux/apiShop";
 import { getProductsByShop } from "../redux/apiProduct";
 import { useHistory } from "react-router";
 import { mobile } from "../responsiveMobile";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ProfileContainer = styled.div`
   height: 280px;
@@ -95,6 +96,10 @@ const UserShopPage = () => {
     setName("");
     setContact("");
     setDesc("");
+  };
+
+  const handleViewShop = () => {
+    history.push(`/seller/shop/${userInfo.id}`);
   };
 
   console.log(products);
@@ -207,18 +212,42 @@ const UserShopPage = () => {
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Paid</th>
-                        <th>Delivered</th>
+                        <th>Product Name</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>Rating</th>
+                        <th>Price</th>
+                        <th>Stock Left</th>
+                        <th>Posted Date</th>
                       </tr>
                     </thead>
+                    <tbody>
+                      {products.map((product) => (
+                        <tr key={product.id}>
+                          <td>{product.id}</td>
+                          <td>{product.name}</td>
+                          <td>{product.brand}</td>
+                          <td>{product.category}</td>
+                          <td>{product.rating}/5.00</td>
+                          <td>${product.price}</td>
+                          <td>{product.stockCount}</td>
+                          <td>{product.createdAt.substring(0, 10)}</td>
+                          <td>
+                            <LinkContainer to={`/products/${product.id}`}>
+                              <button className="btn-sm" variant="secondary">
+                                Details
+                              </button>
+                            </LinkContainer>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
                   </Table>
                 </div>
               </Row>
               <Row>
                 <Col md={3}>
-                  <button className={styles.loginBtn}>
+                  <button className={styles.loginBtn} onClick={handleViewShop}>
                     <i className="fas fa-store px-2" /> View Your Shop
                   </button>
                 </Col>
@@ -251,82 +280,6 @@ const UserShopPage = () => {
               <Col></Col>
             </Row>
           )}
-
-          {/* 
-          {orderStatus === "loading" ? (
-            <Loader />
-          ) : orderError ? (
-            <Message variant="danger">{orderError}</Message>
-          ) : (
-            <> */}
-          {/* <Table striped responsive className="table-sm">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th>Paid</th>
-                    <th>Delivered</th>
-                  </tr>
-                </thead>
-              </Table> */}
-          {/* <div className={styles.customized_scrollbar}>
-                <Table striped responsive className="table-sm">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Date</th>
-                      <th>Order Amount</th>
-                      <th>Payment Status</th>
-                      <th>Delivery Status</th>
-                      <th>Details</th>
-                    </tr>
-                  </thead> */}
-
-          {/* <tbody>
-                    {orderList.map((order) => (
-                      <tr key={order.id}>
-                        <td>{order.id}</td>
-                        <td>{order.createdAt.substring(0, 10)}</td>
-                        <td>${order.totalPrice}</td>
-                        <td>
-                          {order.isPaid ? (
-                            <strong style={{ color: "green" }}>
-                              Paid on {order.paidAt.substring(0, 10)}{" "}
-                            </strong>
-                          ) : (
-                            <i
-                              className="fas fa-times"
-                              style={{ color: "red" }}
-                            ></i>
-                          )}
-                        </td>
-                        <td>
-                          {order.isDelivered ? (
-                            <strong style={{ color: "green" }}>
-                              Sent on {order.paidAt.substring(0, 10)}
-                            </strong>
-                          ) : (
-                            <i
-                              className="fas fa-times"
-                              style={{ color: "red" }}
-                            ></i>
-                          )}
-                        </td>
-                        <td>
-                          <LinkContainer to={`/order/${order.id}`}>
-                            <Button className="btn-sm" variant="secondary">
-                              Details
-                            </Button>
-                          </LinkContainer>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table> */}
-          {/* </div> */}
-          {/* </>
-          )} */}
         </Col>
       </Row>
       <hr />
