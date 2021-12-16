@@ -32,8 +32,10 @@ import AdminProductsListPage from "./pages/AdminProductsListPage";
 import AdminProductEditPage from "./pages/AdminProductEditPage";
 import AdminOrderListsPage from "./pages/AdminOrderListsPage";
 import UserShopProfilePage from "./pages/UserShopProfilePage";
-import ShopPage from "./pages/ShopPage";
-// import ThreeJSProductPage from "./pages/ThreeJSProductPage";
+import UserShopPage from "./pages/UserShopPage";
+import AllShopsPage from "./pages/AllShopsPage";
+import ShopShowPage from "./pages/ShopShowPage";
+import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 
 const App = () => {
   const user = false;
@@ -54,7 +56,7 @@ const App = () => {
         <Route path="/order/:id" component={OrderCompletePage} />
         <Route path="/order" component={OrderPage} />
         <Route path="/payment" component={PaymentPage} />
-        {/* <Route path="/threejs" exact component={ThreeJSProductPage} /> */}
+        <Route path="/threejs" exact component={ThreeJSProductPage} />
         <Route path="/cart" component={CartPage} />
 
         <Route path="/admin/allusers" component={AdminUsersListPage} />
@@ -67,9 +69,10 @@ const App = () => {
           path="/admin/product/:id/edit"
           component={AdminProductEditPage}
         />
-
-        <Route path="/seller/shop/:id" component={ShopPage} />
+        <Route path="/seller/shop/:id" component={ShopShowPage} />
+        <Route path="/seller/myshop/:id" component={UserShopPage} />
         <Route path="/seller/shop" component={UserShopProfilePage} />
+        <Route path="/allshops" component={AllShopsPage} />
         <Route path="/admin/orderlist" component={AdminOrderListsPage} />
 
         <Route path="/:category" component={CategoryPage} />

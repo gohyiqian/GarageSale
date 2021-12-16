@@ -4,6 +4,7 @@ const shopSlice = createSlice({
   name: "shops",
   initialState: {
     shop: {},
+    shops: {},
     status: "idle",
     error: null,
   },
@@ -41,6 +42,18 @@ const shopSlice = createSlice({
       state.shop = action.payload;
     },
     shopDetailFailure: (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    },
+    // GET All Shops
+    allShopStart: (state) => {
+      state.status = "loading";
+    },
+    allShopSuccess: (state, action) => {
+      state.status = "success";
+      state.shops = action.payload;
+    },
+    allShopFailure: (state, action) => {
       state.status = "failed";
       state.error = action.payload;
     },

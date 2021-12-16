@@ -30,7 +30,9 @@ const ProductCard = ({ product }) => {
           />
         </Link>
         <Card.Body>
-          <Card.Title>{product.name}</Card.Title>
+          <Card.Title className={styles.limit_text_length}>
+            {product.name}
+          </Card.Title>
           <Card.Text>${product.price}</Card.Text>
 
           <RatingStar

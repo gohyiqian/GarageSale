@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import styles from "../App.module.css";
 
 const SearchBar = () => {
   const [keyword, setKeyword] = useState("");
@@ -22,10 +23,11 @@ const SearchBar = () => {
         name="q"
         onChange={(e) => setKeyword(e.target.value)}
         className="mr-sm-2 ml-sm-5"
+        placeholder="Start Searching"
       ></Form.Control>
 
       <Button type="submit" variant="light" className="p-1 mx-3">
-        Submit
+        <i className="fas fa-search px-2 mt-1" />
       </Button>
     </Form>
   );

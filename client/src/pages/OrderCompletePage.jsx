@@ -123,12 +123,16 @@ const OrderCompletePage = () => {
                   </Description>
                   <Description>
                     Shipping Address:{" "}
-                    <span style={fontStyle}>
-                      {orders.shippingAddress.country}{" "}
-                      {orders.shippingAddress.city},{" "}
-                      {orders.shippingAddress.postalCode}{" "}
-                      {orders.shippingAddress.address},{" "}
-                    </span>
+                    {Object.keys(orders).length !== 0 ? (
+                      <span style={fontStyle}>
+                        {orders.shippingAddress.country}{" "}
+                        {orders.shippingAddress.city},{" "}
+                        {orders.shippingAddress.postalCode}{" "}
+                        {orders.shippingAddress.address},{" "}
+                      </span>
+                    ) : (
+                      <Loader />
+                    )}
                   </Description>
                   {orders.isDelivered ? (
                     <Message variant="success">
@@ -159,13 +163,17 @@ const OrderCompletePage = () => {
                   <h2 className="mb-3">Order Items</h2>
                   <Description>
                     Total:{" "}
-                    <span style={fontStyle}>
-                      {orders.orderItems.reduce(
-                        (acc, item) => acc + item.qty,
-                        0
-                      )}{" "}
-                      Items{" "}
-                    </span>
+                    {Object.keys(orders) && status === "success" ? (
+                      <span style={fontStyle}>
+                        {orders.orderItems.reduce(
+                          (acc, item) => acc + item.qty,
+                          0
+                        )}{" "}
+                        Items{" "}
+                      </span>
+                    ) : (
+                      <Loader />
+                    )}
                   </Description>
                   {orders.orderItems.length === 0 ? (
                     <Message variant="info">Your cart is empty</Message>

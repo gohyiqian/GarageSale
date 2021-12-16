@@ -6,12 +6,10 @@ import NavBar from "../components/NavBar";
 import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsiveMobile.js";
 import { useLocation } from "react-router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // import { publicRequest } from "../requestMethods";
 // import { addProduct } from "../redux/cartRedux";
 // import { useDispatch } from "react-redux";
-
-const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 50px;
@@ -125,7 +123,7 @@ const Button = styled.button`
   }
 `;
 
-const Product = () => {
+const AllProductPage = () => {
   // use path location
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -164,7 +162,7 @@ const Product = () => {
   };
 
   return (
-    <Container>
+    <div>
       <NavBar />
       <Banner />
 
@@ -215,8 +213,8 @@ const Product = () => {
 
       <Newsletter />
       <Footer />
-    </Container>
+    </div>
   );
 };
 
-export default Product;
+export default AllProductPage;

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
-  height: 30vh;
+  height: 50vh;
   display: flex;
   position: relative;
   overflow: hidden;
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 
 const Slide = styled.div`
   width: 100vw;
-  height: 30vh;
+  height: 50vh;
   display: flex;
   align-items: center;
   background-color: #${(props) => props.bg};
@@ -128,7 +128,7 @@ const Carousel = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.description}</Desc>
-              <Link to={`/posts/product`}>
+              <Link to={`/allshops`}>
                 <Button>SHOP BY SHOPS</Button>
               </Link>
             </InfoContainer>

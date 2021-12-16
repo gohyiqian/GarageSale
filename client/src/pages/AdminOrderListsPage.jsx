@@ -11,7 +11,7 @@ import { actions as userActions } from "../redux/userSlice";
 import { getAllOrders } from "../redux/apiOrder";
 import styles from "../App.module.css";
 
-const AllUsersPage = () => {
+const AdminOrderListsPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { status, userInfo, error, users } = useSelector((state) => state.user);
@@ -111,4 +111,4 @@ const AllUsersPage = () => {
   );
 };
 
-export default AllUsersPage;
+export default AdminOrderListsPage;

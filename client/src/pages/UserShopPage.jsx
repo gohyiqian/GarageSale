@@ -2,10 +2,10 @@ import styled from "styled-components";
 import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
 import { getProductsByShop } from "../redux/apiProduct";
-import { getShopByUserId } from "../redux/apiShop";
+import { getShopByUserId, getShopByShopId } from "../redux/apiShop";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
-import Paginate from "../components/Paginate";
+// import Paginate from "../components/Paginate";
 import Loader from "../components/Loader";
 
 const Container = styled.div`
@@ -29,7 +29,7 @@ const Title = styled.h1`
   justify-content: center;
   padding: 15px;
   background-color: #fcf5f5;
-  color: #ff69b4;
+  // color: #ff69b4;
 `;
 
 const CoverImg = styled.img`
@@ -45,6 +45,7 @@ const ShopPage = () => {
   const { products } = useSelector((state) => state.products);
   const [coverImg, setCoverImg] = useState("");
 
+  // console.log(match.params.id);
   useEffect(() => {
     if (userInfo) {
       setCoverImg(userInfo.usertype.cover_image);
@@ -53,7 +54,7 @@ const ShopPage = () => {
 
   useEffect(() => {
     dispatch(getShopByUserId(userInfo.id));
-  }, [userInfo]);
+  }, [userInfo.id]);
 
   useEffect(() => {
     if (shop.shop_id) {
@@ -77,9 +78,13 @@ const ShopPage = () => {
         <>
           {/* <Paginate pages={pages} page={page} keyword={keyword} /> */}
           <Container>
-            {products.map((product) => (
-              <ProductCard product={product} key={product.id} />
-            ))}
+            {products.length !== 0 ? (
+              products.map((product) => (
+                <ProductCard product={product} key={product.id} />
+              ))
+            ) : (
+              <span>Oops! This Shop has not listed any products yet</span>
+            )}
           </Container>
           {/* <Paginate pages={pages} page={page} keyword={keyword} /> */}
         </>

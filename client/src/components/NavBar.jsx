@@ -97,6 +97,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   const logOutHandler = () => {
+    dispatch(actions.userProfileUpdateReset());
     dispatch(actions.logOut());
     history.push("/login");
   };
@@ -184,7 +185,7 @@ const NavBar = () => {
                       {shop.length !== 0 ? (
                         <LinkContainer to="/seller/shop">
                           <NavDropdown.Item>
-                            My Shop <i className="fas fa-store px-2" />
+                            Shop Profile <i className="fas fa-store px-2" />
                           </NavDropdown.Item>
                         </LinkContainer>
                       ) : (

@@ -159,14 +159,14 @@ const CartPage = ({ match, location, history }) => {
               </ListGroupItem>
             </Card>
 
-            <Card>
+            {/* <Card>
               <ListGroup variant="flush">
                 <ListGroupItem style={{ height: "300px" }}>
                   <h2>Drag Here to Discard:</h2>
                   <hr />
                 </ListGroupItem>
               </ListGroup>
-            </Card>
+            </Card> */}
           </Col>
         </Row>
       </Container>

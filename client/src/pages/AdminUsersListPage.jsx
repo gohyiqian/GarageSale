@@ -10,7 +10,7 @@ import NavBar from "../components/NavBar";
 import { actions as userActions } from "../redux/userSlice";
 import styles from "../App.module.css";
 
-const AllUsersPage = () => {
+const AdminUsersListPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { status, userInfo, error, users } = useSelector((state) => state.user);
@@ -132,4 +132,4 @@ const AllUsersPage = () => {
   );
 };
 
-export default AllUsersPage;
+export default AdminUsersListPage;

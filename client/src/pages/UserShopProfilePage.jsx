@@ -99,7 +99,7 @@ const UserShopPage = () => {
   };
 
   const handleViewShop = () => {
-    history.push(`/seller/shop/${userInfo.id}`);
+    history.push(`myshop/${userInfo.id}`);
   };
 
   console.log(products);

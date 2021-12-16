@@ -107,11 +107,11 @@ export const getShopByUserId = (id) => async (dispatch, getState) => {
 //  GET ALL SHOPS
 export const getAllShops = (id) => async (dispatch) => {
   try {
-    dispatch(shopActions.shopDetailStart());
+    dispatch(shopActions.allShopStart());
     const { data } = await axios.get(`/api/shops/all/`);
-    dispatch(shopActions.shopDetailSuccess(data));
+    dispatch(shopActions.allShopSuccess(data));
   } catch (err) {
-    dispatch(shopActions.shopDetailFailure(err.message));
+    dispatch(shopActions.allShopFailure(err.message));
   }
 };
 

@@ -15,7 +15,7 @@ import NavBar from "../components/NavBar";
 import Paginate from "../components/Paginate";
 import { actions } from "../redux/productSlice";
 
-const AdminProductsListPage = () => {
+const SellerProductListPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { userInfo } = useSelector((state) => state.user);
@@ -141,4 +141,4 @@ const AdminProductsListPage = () => {
   );
 };
 
-export default AdminProductsListPage;
+export default SellerProductListPage;

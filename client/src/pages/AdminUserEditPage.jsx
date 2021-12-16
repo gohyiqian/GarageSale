@@ -9,7 +9,7 @@ import NavBar from "../components/NavBar";
 import styles from "../App.module.css";
 import { LinkContainer } from "react-router-bootstrap";
 
-const UserEditPage = ({ match }) => {
+const AdminUserEditPage = ({ match }) => {
   const userId = match.params.id;
   // console.log(userId);
   const dispatch = useDispatch();
@@ -159,4 +159,4 @@ const UserEditPage = ({ match }) => {
   );
 };
 
-export default UserEditPage;
+export default AdminUserEditPage;

@@ -27,7 +27,7 @@ const Container = styled.div`
 
 const Banner = () => {
   return (
-    <Container>
+    <Container style={{ overflow: "hidden" }}>
       <MoveLinear>
         Use Promo Code X12HYQ for 5% off all first-time purchases!
       </MoveLinear>

@@ -12,7 +12,7 @@ import { getProduct, updateProduct } from "../redux/apiProduct";
 import { LinkContainer } from "react-router-bootstrap";
 // import { actions } from "../redux/productSlice";
 
-const AdminProductEditPage = ({ match }) => {
+const SellerProductEditPage = ({ match }) => {
   const productId = match.params.id;
   const dispatch = useDispatch();
   // const history = useHistory();
@@ -246,4 +246,4 @@ const AdminProductEditPage = ({ match }) => {
   );
 };
 
-export default AdminProductEditPage;
+export default SellerProductEditPage;

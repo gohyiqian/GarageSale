@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -8,6 +8,7 @@ import {
   ListGroup,
   Card,
   ListGroupItem,
+  Form,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
@@ -31,6 +32,9 @@ const fontStyle = {
 };
 
 const OrderPage = () => {
+  const [promoCode, setPromoCode] = useState("");
+  const [finalPrice, setFinalPrice] = useState("");
+  const [message, setMessage] = useState("");
   const { paymentMethod, cartItems, shippingAddress } = useSelector(
     (state) => state.cart
   );
@@ -41,12 +45,23 @@ const OrderPage = () => {
     .reduce((acc, item) => acc + item.price * item.qty, 0)
     .toFixed(2);
   const shippingPrice = (itemsPrice > 1000 ? 0 : itemsPrice * 0.1).toFixed(2);
+
   const taxPrice = Number(0.082 * itemsPrice).toFixed(2);
   const totalPrice = (
     Number(itemsPrice) +
     Number(shippingPrice) +
     Number(taxPrice)
   ).toFixed(2);
+
+  const promoPrice = (totalPrice * 0.95).toFixed(2);
+
+  const submitPromo = (e) => {
+    // e.preventdefault();
+    if (promoCode === "X12HYQ") {
+      setFinalPrice(promoPrice);
+      setMessage("Promo Code Applied");
+    } else setMessage("Invalid Promo Code");
+  };
 
   const { orders, status, error } = useSelector((state) => state.order);
   // console.log(orders);
@@ -186,8 +201,37 @@ const OrderPage = () => {
 
                 <ListGroupItem>
                   <Row>
+                    <Col>Promo Code</Col>
+                    <Col>
+                      <Form onSubmit={submitPromo}>
+                        <Form.Group controlId="promocode">
+                          <Form.Control
+                            required
+                            type="promocode"
+                            placeholder="Enter Code"
+                            value={promoCode}
+                            onChange={(e) => setPromoCode(e.target.value)}
+                          ></Form.Control>
+                        </Form.Group>
+                        {/* 
+                        <button type="submit" className={styles.loginBtn}>
+                          Submit
+                        </button> */}
+                      </Form>
+                    </Col>
+                  </Row>
+                  {message === "Invalid Promo Code" && (
+                    <Message variant="danger">{message}</Message>
+                  )}
+                  {message === "Promo Code Applied" && (
+                    <Message variant="info">{message}</Message>
+                  )}
+                </ListGroupItem>
+
+                <ListGroupItem>
+                  <Row>
                     <Col>Total:</Col>
-                    <Col>${totalPrice}</Col>
+                    <Col>${finalPrice ? finalPrice : totalPrice}</Col>
                   </Row>
                 </ListGroupItem>
 
