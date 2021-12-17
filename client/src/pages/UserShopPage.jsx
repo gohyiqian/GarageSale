@@ -68,6 +68,7 @@ const ShopPage = () => {
       <ProfileContainer>
         <CoverImg src={coverImg} alt="" />
       </ProfileContainer>
+
       <Title>
         <i className="fas fa-store px-2" />
         {shop.name} <i className="fas fa-store px-2" />

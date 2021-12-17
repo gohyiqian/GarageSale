@@ -17,7 +17,7 @@ export const getNFTs = createAsyncThunk(
       );
       //   console.log(res);
       let data = await res.json();
-      // console.log(data);
+      console.log(data);
       return data["assets"];
     } catch (err) {
       console.log(err);

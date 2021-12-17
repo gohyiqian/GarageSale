@@ -190,10 +190,13 @@ const UserShopPage = () => {
           </Form>
         </Col>
 
-        <Col md={9} className="p-4">
+        <Col md={9} className="px-4">
           {products.length !== 0 ? (
             <>
-              <h2 style={{ color: "#945047" }} className="mb-3">
+              <h2
+                style={{ color: "#945047", backgroundColor: "#fcf5f5" }}
+                className="mb-3 py-1"
+              >
                 My Products
               </h2>
               <Row className="mb-2">
@@ -228,7 +231,11 @@ const UserShopPage = () => {
                           <td>{product.name}</td>
                           <td>{product.brand}</td>
                           <td>{product.category}</td>
-                          <td>{product.rating}/5.00</td>
+                          <td>
+                            {product.rating
+                              ? product.rating / 5.0
+                              : "No Ratings"}
+                          </td>
                           <td>${product.price}</td>
                           <td>{product.stockCount}</td>
                           <td>{product.createdAt.substring(0, 10)}</td>

@@ -6,7 +6,7 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styles from "../App.module.css";
 
-const ProductCardTest = ({ product }) => {
+const NFTCardTest = ({ product }) => {
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.CARD,
     product: product,
@@ -17,7 +17,8 @@ const ProductCardTest = ({ product }) => {
 
   return (
     <div ref={drag} className="m-2 py-3">
-      <Card style={{ width: "18rem" }}>
+      {/* <div className="m-2 py-3"> */}
+      <Card style={{ width: "18rem" }} className={styles.card_effect}>
         <Link to={`/product/${product.id}`}>
           <Card.Img
             className={styles.card_img_top}
@@ -28,7 +29,9 @@ const ProductCardTest = ({ product }) => {
           />
         </Link>
         <Card.Body key={product.id}>
-          <Card.Title>{product.name}</Card.Title>
+          <Card.Title className={styles.limit_text_length}>
+            {product.name}
+          </Card.Title>
           <RatingStar
             value={product.rating}
             text={`${product.numReviews} reviews`}
@@ -43,4 +46,4 @@ const ProductCardTest = ({ product }) => {
   );
 };
 
-export default ProductCardTest;
+export default NFTCardTest;

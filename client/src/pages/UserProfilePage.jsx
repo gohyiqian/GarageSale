@@ -314,7 +314,10 @@ const UserProfilePage = () => {
             />
             {upload && <Loader />}
           </Form.Group>
-          <h2 style={{ color: "#945047" }} className="mb-3">
+          <h2
+            style={{ color: "#945047", backgroundColor: "#fcf5f5" }}
+            className="mb-3 py-1"
+          >
             My Purchase Order
           </h2>
           {orderStatus === "loading" ? (

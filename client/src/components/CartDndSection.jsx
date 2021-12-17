@@ -10,7 +10,7 @@ const Container = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: space-evenly;
-  height: 280px;
+  height: 200px;
   position: sticky;
   bottom: 0;
   z-index: 999;
@@ -21,10 +21,10 @@ const Container = styled.div`
 const CartDiscardBox = styled.div`
   display: flex;
   flex: 1;
-  background: #f5f5f5;
-  margin: 50px;
+  background: #fcf5f5;
+  margin: 30px 150px;
   border-radius: 20px;
-  height: 200px;
+  height: 150px;
   justify-content: center;
   align-items: center;
   box-shadow: inset 0 5px 5px rgb(0 0 0 / 5%);
@@ -33,10 +33,10 @@ const CartDiscardBox = styled.div`
 const CartAddBox = styled.div`
   display: flex;
   flex: 1;
-  background: #f5f5f5;
-  margin: 50px;
+  background: #fcf5f5;
+  margin: 30px 150px;
   border-radius: 20px;
-  height: 200px;
+  height: 150px;
   justify-content: center;
   align-items: center;
   box-shadow: inset 0 5px 5px rgb(0 0 0 / 5%);
@@ -67,36 +67,35 @@ const CartDndSection = () => {
       isOver: !!monitor.isOver(),
     }),
   });
-  const user = false;
+
   return (
     <Container>
-      {user ? (
-        <CartDiscardBox
-          ref={drop}
-          style={{
-            backgroundPosition: "center",
-            backgroundSize: "130% 120%",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: isOver ? "#ffcccb" : "#f5f5f5",
-          }}
-        >
-          {isOver && <div>Drop Here to Discard</div>}
-        </CartDiscardBox>
-      ) : (
-        <CartAddBox
-          ref={drop}
-          style={{
-            backgroundPosition: "center",
-            backgroundSize: "130% 120%",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: isOver ? "#deefc5" : "#f5f5f5",
-          }}
-        >
-          {/* {basket.map()} */}
-          {isOver && <div>Drop Here to Add to Cart</div>}
-        </CartAddBox>
-      )}
-      <CartTable />
+      <CartDiscardBox
+        ref={drop}
+        style={{
+          backgroundPosition: "center",
+          backgroundSize: "130% 120%",
+          backgroundRepeat: "no-repeat",
+          backgroundColor: isOver ? "#ffcccb" : "#f5f5f5",
+        }}
+      >
+        {isOver && <div>Drop Here to Discard</div>}
+      </CartDiscardBox>
+
+      <CartAddBox
+        ref={drop}
+        style={{
+          backgroundPosition: "center",
+          backgroundSize: "130% 120%",
+          backgroundRepeat: "no-repeat",
+          backgroundColor: isOver ? "#deefc5" : "#f5f5f5",
+        }}
+      >
+        {/* {basket.map()} */}
+        {isOver && <div>Drop Here to Add to Cart</div>}
+      </CartAddBox>
+
+      {/* <CartTable /> */}
       {/* <CartStatus>Table of Status</CartStatus> */}
     </Container>
   );

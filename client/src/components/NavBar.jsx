@@ -91,8 +91,6 @@ const NavBar = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.user);
   const { shop } = useSelector((state) => state.shop);
-  // const { productsByCat, catStatus } = useSelector((state) => state.products);
-  // console.log(userInfo);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -225,6 +223,13 @@ const NavBar = () => {
                       <span>3JS</span>
                     </Nav.Link>
                   </LinkContainer>
+
+                  <LinkContainer to="/nftcart">
+                    <Nav.Link>
+                      <span>NFTs</span>
+                    </Nav.Link>
+                  </LinkContainer>
+
                   <LinkContainer to="/nftcart">
                     <Nav.Link>
                       <Button variant="dark">Connect Wallet</Button>

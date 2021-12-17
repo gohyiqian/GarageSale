@@ -11,7 +11,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-// import ShopNFTCartPage from "./pages/ShopNFTCartPage";
+
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 // import AllUserPage from "./pages/AllUserPage";
@@ -36,6 +36,7 @@ import UserShopPage from "./pages/UserShopPage";
 import AllShopsPage from "./pages/AllShopsPage";
 import ShopShowPage from "./pages/ShopShowPage";
 import ThreeJSProductPage from "./pages/ThreeJSProductPage";
+import ShopNFTCartPage from "./pages/ShopNFTCartPage";
 
 const App = () => {
   const user = false;
@@ -74,13 +75,14 @@ const App = () => {
         <Route path="/seller/shop" component={UserShopProfilePage} />
         <Route path="/allshops" component={AllShopsPage} />
         <Route path="/admin/orderlist" component={AdminOrderListsPage} />
-
-        <Route path="/:category" component={CategoryPage} />
+        {/* <Route path="/nftcart" component={ShopNFTCartPage} /> */}
         <DndProvider backend={HTML5Backend}>
           {/* <Route exact path="/" component={HomePage} /> */}
-          {/* <Route path="/nftcart" component={ShopNFTCartPage} /> */}
+          <Route path="/nftcart" component={ShopNFTCartPage} />
           {/* <Route path="/:category" component={CategoryPage} /> */}
         </DndProvider>
+
+        <Route path="/:category" component={CategoryPage} />
       </Switch>
     </Router>
   );
