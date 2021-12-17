@@ -81,7 +81,14 @@ const SellerProductListPage = () => {
                 <i className="fas fa-plus px-2"> </i> Add new Product
               </button>
             </Col>
-            <Col></Col>
+            <Col md={3}>
+              <LinkContainer to="/seller/shop">
+                <button className={styles.loginBtn}>
+                  <i className="fas fa-arrow-alt-circle-left px-2" /> Back to
+                  Shop Profile
+                </button>
+              </LinkContainer>
+            </Col>
           </Row>
 
           {productStatus === "loading" ? (

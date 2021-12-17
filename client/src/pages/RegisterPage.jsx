@@ -63,6 +63,7 @@ const RegisterPage = () => {
     }
     if (username && email && password && confirmPassword) {
       dispatch(register(username, email, password));
+      console.log("pop");
       setPopOut(true);
     }
   };

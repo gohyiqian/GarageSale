@@ -41,18 +41,11 @@ import SellerProductListPage from "./pages/SellerProductListPage";
 import SellerProductEditPage from "./pages/SellerProductEditPage";
 
 const App = () => {
-  const { userInfo } = useSelector((state) => state.user);
-
   return (
     <Router>
       <Switch>
-        <Route path="/login">
-          {userInfo ? <Redirect to="/" /> : <LoginPage />}
-        </Route>
-
-        <Route path="/register">
-          {userInfo ? <Redirect to="/" /> : <RegisterPage />}
-        </Route>
+        <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegisterPage} />
 
         <Route exact path="/" component={HomePage} />
         <Route path="/profile" component={UserProfilePage} />

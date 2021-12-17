@@ -212,19 +212,19 @@ const NavBar = () => {
                 </>
               ) : (
                 <>
-                  <LinkContainer to="/login">
+                  <LinkContainer to="/login" className={styles.nav_dropdown}>
                     <Nav.Link>
                       <span>Login</span>
                     </Nav.Link>
                   </LinkContainer>
 
-                  <LinkContainer to="/threejs">
+                  <LinkContainer to="/threejs" className={styles.nav_dropdown}>
                     <Nav.Link>
                       <span>3JS</span>
                     </Nav.Link>
                   </LinkContainer>
 
-                  <LinkContainer to="/shop/nft">
+                  <LinkContainer to="/shop/nft" className={styles.nav_dropdown}>
                     <Nav.Link>
                       <span>NFTs</span>
                     </Nav.Link>
