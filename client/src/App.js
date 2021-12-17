@@ -14,7 +14,7 @@ import {
 
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
-// import AllUserPage from "./pages/AllUserPage";
+import { useSelector } from "react-redux";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
@@ -37,20 +37,23 @@ import AllShopsPage from "./pages/AllShopsPage";
 import ShopShowPage from "./pages/ShopShowPage";
 import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 import ShopNFTCartPage from "./pages/ShopNFTCartPage";
+import SellerProductListPage from "./pages/SellerProductListPage";
+import SellerProductEditPage from "./pages/SellerProductEditPage"
 
 const App = () => {
-  const user = false;
-  // const cart = true;
+  const { userInfo } = useSelector((state) => state.user);
+
   return (
     <Router>
       <Switch>
         <Route path="/login">
-          {user ? <Redirect to="/" /> : <LoginPage />}
+          {userInfo ? <Redirect to="/" /> : <LoginPage />}
         </Route>
 
         <Route path="/register">
-          {user ? <Redirect to="/" /> : <RegisterPage />}
+          {userInfo ? <Redirect to="/" /> : <RegisterPage />}
         </Route>
+
         <Route exact path="/" component={HomePage} />
         <Route path="/profile" component={UserProfilePage} />
         <Route path="/shipping" component={CheckOutPage} />
@@ -75,14 +78,12 @@ const App = () => {
         <Route path="/seller/shop" component={UserShopProfilePage} />
         <Route path="/allshops" component={AllShopsPage} />
         <Route path="/admin/orderlist" component={AdminOrderListsPage} />
+        <Route path="/:category" component={CategoryPage} />
+
         {/* <Route path="/nftcart" component={ShopNFTCartPage} /> */}
         <DndProvider backend={HTML5Backend}>
-          {/* <Route exact path="/" component={HomePage} /> */}
-          <Route path="/nftcart" component={ShopNFTCartPage} />
-          {/* <Route path="/:category" component={CategoryPage} /> */}
+          <Route exact path="/shop/nft" component={ShopNFTCartPage} />
         </DndProvider>
-
-        <Route path="/:category" component={CategoryPage} />
       </Switch>
     </Router>
   );

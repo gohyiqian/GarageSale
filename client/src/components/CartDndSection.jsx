@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utilities/itemTypes";
-import CartTable from "./CartTable";
+// import CartTable from "./CartTable";
 // import { useDispatch, useSelector } from "react-redux";
 // import { actions, cartSelectors } from "../redux/cartSlice";
 
@@ -91,7 +91,6 @@ const CartDndSection = () => {
           backgroundColor: isOver ? "#deefc5" : "#f5f5f5",
         }}
       >
-        {/* {basket.map()} */}
         {isOver && <div>Drop Here to Add to Cart</div>}
       </CartAddBox>
 

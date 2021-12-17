@@ -197,7 +197,7 @@ const UserShopPage = () => {
                 style={{ color: "#945047", backgroundColor: "#fcf5f5" }}
                 className="mb-3 py-1"
               >
-                My Products
+                Products in My Shop
               </h2>
               <Row className="mb-2">
                 <Col md={3}>

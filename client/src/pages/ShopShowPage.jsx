@@ -2,11 +2,14 @@ import styled from "styled-components";
 import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
 import { getProductsByShop } from "../redux/apiProduct";
-import { getShopByUserId, getShopByShopId } from "../redux/apiShop";
+import { getShopByShopId } from "../redux/apiShop";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/ProductCard";
 // import Paginate from "../components/Paginate";
 import Loader from "../components/Loader";
+import styles from "../App.module.css";
+import { LinkContainer } from "react-router-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 const Container = styled.div`
   display: flex;
@@ -68,10 +71,31 @@ const ShopPage = ({ match }) => {
         <Loader />
       ) : (
         <>
-          <Title>
-            <i className="fas fa-store px-2" />
-            {shop.name} <i className="fas fa-store px-2" />
-          </Title>
+          <Row className="mb-2">
+            <Col></Col>
+            <Col>
+              <LinkContainer to="/seller/shop">
+                <button className={styles.loginBtn}>
+                  <i className="fas fa-arrow-alt-circle-left px-2" /> Back
+                </button>
+              </LinkContainer>
+            </Col>
+            <Col md={4}>
+              {" "}
+              <Title>
+                <i className="fas fa-store px-2" />
+                {shop.name} <i className="fas fa-store px-2" />
+              </Title>
+            </Col>
+            <Col>
+              <LinkContainer to="/allshops">
+                <button className={styles.loginBtn}>
+                  View Other Shops <i className="fas fa-store px-2" />
+                </button>
+              </LinkContainer>
+            </Col>
+            <Col></Col>
+          </Row>
 
           {/* <Paginate pages={pages} page={page} keyword={keyword} /> */}
           <Container>

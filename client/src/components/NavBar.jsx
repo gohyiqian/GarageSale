@@ -224,13 +224,13 @@ const NavBar = () => {
                     </Nav.Link>
                   </LinkContainer>
 
-                  <LinkContainer to="/nftcart">
+                  <LinkContainer to="/shop/nft">
                     <Nav.Link>
                       <span>NFTs</span>
                     </Nav.Link>
                   </LinkContainer>
 
-                  <LinkContainer to="/nftcart">
+                  <LinkContainer to="/shop/nft">
                     <Nav.Link>
                       <Button variant="dark">Connect Wallet</Button>
                     </Nav.Link>

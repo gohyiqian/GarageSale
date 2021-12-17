@@ -90,7 +90,6 @@ const SellerProductListPage = () => {
                     <th>Gender</th>
                     <th>Colors</th>
                     <th>Sizes</th>
-
                     <th>Edit | Delete</th>
                   </tr>
                 </thead>

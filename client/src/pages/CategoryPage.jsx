@@ -4,13 +4,13 @@ import ProductsListByCat from "../components/ProductsListByCat";
 import Footer from "../components/Footer";
 import { mobile } from "../responsiveMobile.js";
 // import { useLocation } from "react-router";
-import { useState } from "react";
-// import { useEffect } from "react";
+import { useState, useEffect } from "react";
 // import { actions } from "../redux/productSlice";
 import { useSelector } from "react-redux";
 // import { getProductsByCategory } from "../redux/apiProduct";
 import { useHistory } from "react-router";
 import Loader from "../components/Loader";
+import axios from "axios";
 
 const FilterContainer = styled.div`
   display: flex;
@@ -45,6 +45,7 @@ const CategoryPage = () => {
   // sort & filter state
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState("newest");
+  const [colors, setColors] = useState("");
   // const dispatch = useDispatch();
   const history = useHistory();
 
@@ -63,17 +64,25 @@ const CategoryPage = () => {
     });
   };
 
-  // const getDistinctColor = async (e) => {
-  //   try {
-  //     const { data } = await axios.get("/api/products/colors/", {
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getDistinctColor = async (e) => {
+    try {
+      const { data } = await axios.get("/api/products/distinct/colors/", {
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      setColors(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getDistinctColor();
+  }, []);
+
+  // colors.forEach((color) => console.log(color["color"]));
+  // colors.map((color) => console.log(color["color"]));
 
   return (
     <>
@@ -82,14 +91,16 @@ const CategoryPage = () => {
       ) : (
         <>
           <NavBar />
+
           <div className="p-4">
             <h2 className="m-3">
               Category: {category.split("?category=")[1].split("&")[0]}
             </h2>
+
             <FilterContainer>
               <Filter>
                 <FilterText>Color:</FilterText>
-                <Select name="color" onChange={handleFilters}>
+                {/* <Select name="color" onChange={handleFilters}>
                   <option defaultValue="true">All</option>
                   <option>white</option>
                   <option>black</option>
@@ -101,7 +112,17 @@ const CategoryPage = () => {
                   <option>pink</option>
                   <option>brown</option>
                   <option>mixed</option>
-                </Select>
+                </Select> */}
+                {colors ? (
+                  <Select name="color" onChange={handleFilters}>
+                    <option defaultValue="true">All</option>
+                    {colors.map((color) => (
+                      <option>{color["color"]}</option>
+                    ))}
+                  </Select>
+                ) : (
+                  <Loader />
+                )}
 
                 <FilterText>Size:</FilterText>
                 <Select name="size" onChange={handleFilters}>
