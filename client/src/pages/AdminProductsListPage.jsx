@@ -56,7 +56,12 @@ const AdminProductsListPage = () => {
       <NavBar />
       <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <div>
-          <h2>All Products in Database</h2>
+          <h2
+            className="mb-3 py-1"
+            style={{ color: "#945047", backgroundColor: "#fcf5f5" }}
+          >
+            All Products in Database
+          </h2>
           <h5 className="mb-4" style={{ color: "grey" }}>
             Total Number of Products: {products.length * pages}
           </h5>

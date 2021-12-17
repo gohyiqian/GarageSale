@@ -1,21 +1,17 @@
 import { useState, useEffect } from "react";
-// import { useHistory } from "react-router";
 import axios from "axios";
-// import { Link } from "react-router-dom";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import styles from "../App.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import NavBar from "../components/NavBar";
-import { getProduct, updateProduct } from "../redux/apiProduct";
+import { getProduct, updateShopProduct } from "../redux/apiProduct";
 import { LinkContainer } from "react-router-bootstrap";
-// import { actions } from "../redux/productSlice";
 
 const SellerProductEditPage = ({ match }) => {
   const productId = match.params.id;
   const dispatch = useDispatch();
-  // const history = useHistory();
   const { product, status, error, updateStatus } = useSelector(
     (state) => state.products
   );
@@ -74,7 +70,7 @@ const SellerProductEditPage = ({ match }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      updateProduct({
+      updateShopProduct({
         id: productId,
         name: name,
         price: price,
@@ -230,7 +226,7 @@ const SellerProductEditPage = ({ match }) => {
                         </button>
                       </Col>
                       <Col>
-                        <LinkContainer to="/admin/productlist">
+                        <LinkContainer to="/seller/productlist">
                           <button className={styles.loginBtn}>Back</button>
                         </LinkContainer>
                       </Col>

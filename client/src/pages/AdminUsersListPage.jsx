@@ -36,7 +36,12 @@ const AdminUsersListPage = () => {
       <NavBar />
       <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <div>
-          <h2 className="mb-4">All Users in Database</h2>
+          <h2
+            className="mb-4 py-1"
+            style={{ color: "#945047", backgroundColor: "#fcf5f5" }}
+          >
+            All Users in Database
+          </h2>
           {status === "loading" ? (
             <Loader />
           ) : error ? (

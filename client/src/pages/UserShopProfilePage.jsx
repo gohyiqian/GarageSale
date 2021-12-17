@@ -8,7 +8,7 @@ import Message from "../components/Message";
 import styled from "styled-components";
 import styles from "../App.module.css";
 import { updateShop, getShopByUserId } from "../redux/apiShop";
-import { getProductsByShop } from "../redux/apiProduct";
+import { getProductsByShop, createShopProduct } from "../redux/apiProduct";
 import { useHistory } from "react-router";
 import { mobile } from "../responsiveMobile";
 import { LinkContainer } from "react-router-bootstrap";
@@ -103,7 +103,10 @@ const UserShopPage = () => {
   };
 
   console.log(products);
-  const handleCreateProduct = (e) => {};
+  const handleCreateProduct = (e) => {
+    dispatch(createShopProduct(shop.shop_id));
+    window.location.reload();
+  };
 
   return (
     <>
@@ -208,6 +211,11 @@ const UserShopPage = () => {
                     <i className="fas fa-plus px-2" /> Add more Product
                   </button>
                 </Col>
+                <Col md={3}>
+                  <button className={styles.loginBtn} onClick={handleViewShop}>
+                    <i className="fas fa-store px-2" /> View Your Shop
+                  </button>
+                </Col>
               </Row>
               <Row className="mb-3">
                 <div className={styles.customized_scrollbar}>
@@ -216,8 +224,6 @@ const UserShopPage = () => {
                       <tr>
                         <th>ID</th>
                         <th>Product Name</th>
-                        <th>Brand</th>
-                        <th>Category</th>
                         <th>Rating</th>
                         <th>Price</th>
                         <th>Stock Left</th>
@@ -229,19 +235,38 @@ const UserShopPage = () => {
                         <tr key={product.id}>
                           <td>{product.id}</td>
                           <td>{product.name}</td>
-                          <td>{product.brand}</td>
-                          <td>{product.category}</td>
                           <td>
-                            {product.rating
-                              ? product.rating / 5.0
-                              : "No Ratings"}
+                            {product.rating ? (
+                              product.rating < 2 ? (
+                                <span style={{ color: "red" }}>
+                                  <strong>{product.rating} / 5.00 </strong>
+                                </span>
+                              ) : (
+                                <span style={{ color: "limegreen" }}>
+                                  <strong>{product.rating} / 5.00 </strong>
+                                </span>
+                              )
+                            ) : (
+                              "No Ratings"
+                            )}
                           </td>
                           <td>${product.price}</td>
-                          <td>{product.stockCount}</td>
+                          <td>
+                            {product.stockCount === 0 ? (
+                              <span style={{ color: "red" }}>
+                                <strong>Out of Stock </strong>
+                              </span>
+                            ) : (
+                              product.stockCount
+                            )}
+                          </td>
                           <td>{product.createdAt.substring(0, 10)}</td>
                           <td>
-                            <LinkContainer to={`/products/${product.id}`}>
-                              <button className="btn-sm" variant="secondary">
+                            <LinkContainer to={`/seller/productlist`}>
+                              <button
+                                className={styles.loginBtn}
+                                variant="secondary"
+                              >
                                 Details
                               </button>
                             </LinkContainer>
@@ -252,13 +277,13 @@ const UserShopPage = () => {
                   </Table>
                 </div>
               </Row>
-              <Row>
+              {/* <Row>
                 <Col md={3}>
                   <button className={styles.loginBtn} onClick={handleViewShop}>
                     <i className="fas fa-store px-2" /> View Your Shop
                   </button>
                 </Col>
-              </Row>
+              </Row> */}
             </>
           ) : (
             <Row>
@@ -275,7 +300,7 @@ const UserShopPage = () => {
                   below!
                 </p>
               </div>
-              <Col md={3}>
+              <Col md={4}>
                 <button
                   className={styles.loginBtn}
                   onClick={handleCreateProduct}

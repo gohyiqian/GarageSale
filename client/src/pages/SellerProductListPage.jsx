@@ -6,19 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "../App.module.css";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import {
-  getProductsByKeyword,
-  createProduct,
-  deleteProduct,
-} from "../redux/apiProduct";
+import { createShopProduct, deleteProduct } from "../redux/apiProduct";
 import NavBar from "../components/NavBar";
 import Paginate from "../components/Paginate";
 import { actions } from "../redux/productSlice";
+import { getProductsByShop } from "../redux/apiProduct";
+import { getShopByUserId } from "../redux/apiShop";
 
 const SellerProductListPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { userInfo } = useSelector((state) => state.user);
+
   const {
     status: productStatus,
     error: productError,
@@ -27,20 +26,31 @@ const SellerProductListPage = () => {
     pages,
   } = useSelector((state) => state.products);
 
+  const {
+    shop,
+    status: shopStatus,
+    error: shopError,
+  } = useSelector((state) => state.shop);
+
   let keyword = history.location.search;
   console.log(keyword);
 
   useEffect(() => {
+    dispatch(getShopByUserId(userInfo.id));
+  }, [userInfo]);
+
+  useEffect(() => {
     dispatch(actions.productCreateReset());
-    if (!userInfo && !userInfo.isAdmin) {
+    if (!userInfo && !shop) {
       history.push("/login");
-    } else {
-      dispatch(getProductsByKeyword(keyword));
     }
-  }, [dispatch, keyword, history, userInfo]);
+    if (shop.shop_id) {
+      dispatch(getProductsByShop(shop.shop_id));
+    }
+  }, [dispatch, keyword, history, userInfo, shop.shop_id]);
 
   const handleCreate = () => {
-    dispatch(createProduct());
+    dispatch(createShopProduct(shop.shop_id));
     window.location.reload();
   };
 
@@ -56,7 +66,12 @@ const SellerProductListPage = () => {
       <NavBar />
       <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <div>
-          <h2>All Products in Database</h2>
+          <h2
+            className="mb-3 py-1"
+            style={{ color: "#945047", backgroundColor: "#fcf5f5" }}
+          >
+            {shop.name}'s Products
+          </h2>
           <h5 className="mb-4" style={{ color: "grey" }}>
             Total Number of Products: {products.length * pages}
           </h5>
@@ -113,7 +128,7 @@ const SellerProductListPage = () => {
                       <td>{item.color}</td>
                       <td>{item.size}</td>
                       <td className="py-2">
-                        <LinkContainer to={`/admin/product/${item.id}/edit`}>
+                        <LinkContainer to={`/seller/product/${item.id}/edit`}>
                           <Button variant="light" className="btn-sm">
                             <i className="fas fa-edit"></i>
                           </Button>

@@ -161,9 +161,9 @@ def updateProduct(request, pk):
     return Response(serializer.data,status=status.HTTP_200_OK)
 
 
-# Admin DELETE Product
+# Admin/seller DELETE Product
 @api_view(['DELETE'])
-@permission_classes([IsAdminUser])
+# @permission_classes([IsAdminUser])
 def deleteProduct(request, pk):
     product = Product.objects.get(id=pk)
     product.delete()
@@ -247,9 +247,10 @@ def createShopProduct(request,pk):
     user = request.user
     shop = Shop.objects.get(shop_id=pk)
     try:
-        if user.usertype.is_seller or shop.user == user:
+        if user.usertype.is_seller and shop.user == user:
             product = Product.objects.create(
                 user=user,
+                shop = shop,
                 name='Sample Name',
                 price=0,
                 brand='Sample Brand',
@@ -260,5 +261,32 @@ def createShopProduct(request,pk):
 
             serializer = ProductSerializer(instance=product, many=False)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+    except:
+        return Response({'detail': 'You do not own this Shop'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# Seller EDIT product
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated])
+def updateShopProduct(request, pk):
+    data = request.data
+    user = request.user
+    product = Product.objects.get(id=pk)
+    try:
+        if user.usertype.is_seller:
+            product.name = data['name']
+            product.price = data['price']
+            product.brand = data['brand']
+            product.stockCount = data['stockCount']
+            product.color = data['color']
+            product.category = data['category']
+            product.gender = data['gender']
+            product.size = data['size']
+            product.description = data['description']
+
+            product.save()
+
+            serializer = ProductSerializer(product, many=False)
+            return Response(serializer.data,status=status.HTTP_200_OK)
     except:
         return Response({'detail': 'You do not own this Shop'}, status=status.HTTP_400_BAD_REQUEST)

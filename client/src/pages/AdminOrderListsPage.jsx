@@ -37,7 +37,7 @@ const AdminOrderListsPage = () => {
       <NavBar />
       <Container style={{ margin: "auto" }} className="mt-4 mb-4">
         <div>
-          <h2 className="mb-4">All Orders by Me</h2>
+          <h2 className="mb-4">All Orders on Database</h2>
           {status === "loading" ? (
             <Loader />
           ) : error ? (
@@ -55,8 +55,8 @@ const AdminOrderListsPage = () => {
                     <th>Delivery Status</th>
                   </tr>
                 </thead>
-                {/* 
-                {orderList.map((order) => (
+
+                {/* {orderList.map((order) => (
                   <p>{order}</p>
                 ))} */}
 

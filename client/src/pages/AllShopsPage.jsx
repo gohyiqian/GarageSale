@@ -44,6 +44,7 @@ const AllShopsPage = () => {
         Garage Seller Shops
         <i className="fas fa-store px-2" />
       </Title>
+
       {status === "loading" ? (
         <Loader />
       ) : (

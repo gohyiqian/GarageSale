@@ -14,4 +14,6 @@ urlpatterns = [
     path('<str:pk>/reviews/', views.createProductReview, name="create_product_review"),
     path('distinct/colors/', views.getDistinctColor, name="get_distinct_color"),
     path('distinct/category/', views.getDistinctCat, name="get_distinct_cat"),
+    path('shop/create/<str:pk>/', views.createShopProduct, name="create_shop_product"),
+    path('shop/update/<str:pk>/', views.updateShopProduct, name="update_shop_product"),
 ]

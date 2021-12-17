@@ -163,3 +163,53 @@ export const createProductReview =
       dispatch(actions.createReviewFailure(err.message));
     }
   };
+
+// SELLER - CREATE PRODUCT
+export const createShopProduct = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(actions.productCreateStart());
+    const {
+      user: { userInfo },
+    } = getState();
+
+    const authConfig = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.post(
+      `/api/products/shop/create/${id}/`,
+      {},
+      authConfig
+    );
+    dispatch(actions.productCreateSuccess(data));
+  } catch (err) {
+    dispatch(actions.productCreateFailure(err.message));
+  }
+};
+
+// SELLER - UPDATE PRODUCT
+export const updateShopProduct = (product) => async (dispatch, getState) => {
+  try {
+    dispatch(actions.productUpdateStart());
+    const {
+      user: { userInfo },
+    } = getState();
+
+    const authConfig = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.patch(
+      `/api/products/shop/update/${product.id}/`,
+      product,
+      authConfig
+    );
+    dispatch(actions.productUpdateSuccess(data));
+  } catch (err) {
+    dispatch(actions.productUpdateFailure(err.message));
+  }
+};

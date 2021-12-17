@@ -244,11 +244,11 @@ const NavBar = () => {
                   id="seller"
                   className={styles.nav_dropdown}
                 >
-                  <LinkContainer to="/seller/allbuyers">
+                  {/* <LinkContainer to="/">
                     <NavDropdown.Item>
                       My Buyers <i className="fas fa-money-bill px-2" />
                     </NavDropdown.Item>
-                  </LinkContainer>
+                  </LinkContainer> */}
 
                   <LinkContainer to="/seller/productlist">
                     <NavDropdown.Item>
@@ -276,12 +276,12 @@ const NavBar = () => {
                     </NavDropdown.Item>
                   </LinkContainer>
 
-                  <LinkContainer to="/admin/orderlist">
+                  {/* <LinkContainer to="/admin/orderlist">
                     <NavDropdown.Item>
                       All Orders
                       <i className="fas fa-shopping-basket px-2" />
                     </NavDropdown.Item>
-                  </LinkContainer>
+                  </LinkContainer> */}
                 </NavDropdown>
               )}
             </Right>

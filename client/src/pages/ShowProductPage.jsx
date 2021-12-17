@@ -278,7 +278,7 @@ const ShowProductPage = ({ match }) => {
                         </Form.Control>
                       </Form.Group>
 
-                      <Form.Group controlId="comment">
+                      <Form.Group controlId="comment" className="mb-2">
                         <Form.Label>Your Comments: </Form.Label>
                         <Form.Control
                           as="textarea"

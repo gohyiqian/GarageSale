@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -38,6 +38,7 @@ const OrderPage = () => {
   const { paymentMethod, cartItems, shippingAddress } = useSelector(
     (state) => state.cart
   );
+  const code = useRef("");
 
   const { userInfo } = useSelector((state) => state.user);
 
@@ -71,6 +72,7 @@ const OrderPage = () => {
   if (!paymentMethod) {
     history.push("/payment");
   }
+
   if (!userInfo) {
     history.push("/login");
   }

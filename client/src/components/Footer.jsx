@@ -6,6 +6,7 @@ const Container = styled.div`
   display: flex;
   padding: 20px;
   ${mobile({ flexDirection: "column" })}
+  background-color: #fcf5f5;
 `;
 
 const Left = styled.div`

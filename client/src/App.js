@@ -38,7 +38,7 @@ import ShopShowPage from "./pages/ShopShowPage";
 import ThreeJSProductPage from "./pages/ThreeJSProductPage";
 import ShopNFTCartPage from "./pages/ShopNFTCartPage";
 import SellerProductListPage from "./pages/SellerProductListPage";
-import SellerProductEditPage from "./pages/SellerProductEditPage"
+import SellerProductEditPage from "./pages/SellerProductEditPage";
 
 const App = () => {
   const { userInfo } = useSelector((state) => state.user);
@@ -73,11 +73,17 @@ const App = () => {
           path="/admin/product/:id/edit"
           component={AdminProductEditPage}
         />
+        <Route path="/admin/orderlist" component={AdminOrderListsPage} />
+        <Route path="/seller/productlist" component={SellerProductListPage} />
+        <Route
+          path="/seller/product/:id/edit"
+          component={SellerProductEditPage}
+        />
         <Route path="/seller/shop/:id" component={ShopShowPage} />
         <Route path="/seller/myshop/:id" component={UserShopPage} />
         <Route path="/seller/shop" component={UserShopProfilePage} />
         <Route path="/allshops" component={AllShopsPage} />
-        <Route path="/admin/orderlist" component={AdminOrderListsPage} />
+
         <Route path="/:category" component={CategoryPage} />
 
         {/* <Route path="/nftcart" component={ShopNFTCartPage} /> */}
