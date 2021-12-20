@@ -1,7 +1,6 @@
 # GarageSale
 
-A full-stack responsive ecommerce marketplace built with React and Django. The application allows user to have an option to become seller and create their own shops.
-Users are able to create and add products to shops and is also able to shop for products.
+A full-stack responsive ecommerce marketplace built with React and Django. The application allows user to have an option to become seller and create their own shops. Users are able to create and add products to shops and is also able to shop for products. Django default Auth model are being extended to include the buyer and seller usertypes.
 
 1. Customised caurosel on Homepage
 2. Product Filtering by Color and Sorting by Prices
@@ -10,6 +9,8 @@ Users are able to create and add products to shops and is also able to shop for 
 5. All user has a user profile which allows them to upload profile images
 6. All images are being stored on Amazon S3
 7. Paypal check out payment capability
+
+![Landing Image](client/public/images/garageSale_1.jpg)
 
 ## Main Tech Stack:
 
@@ -35,14 +36,56 @@ Users are able to create and add products to shops and is also able to shop for 
 - JWT Tokens
 - Set Local Storage
 
-## Django Models:
+## Extending Django User Model:
 
-- User: { username, email, password, profilePicture, coverPicture, followers, followings, isAdmin, timestamp}
-- Conversations: {members(which is array of users), timestamp}
-- Messages: {conversationId, sender, text, timestamp}
-- Posts: { userId, desc, img, likes, timestamp}
+```python
+# models.py
+class UserType(models.Model):
+    id = models.AutoField(primary_key=True, editable=False)
+    user = models.OneToOneField(User,on_delete=models.SET_NULL, null=True)
+    is_seller = models.BooleanField(default=False)
+    is_buyer = models.BooleanField(default=False)
+    bio = models.TextField(null=True, blank=True)
+    profile_image = models.ImageField(default='images/noAvatar.png',null=True, blank=True)
+    cover_image = models.ImageField(default='images/userCoverImage.jpg',null=True, blank=True)
 
-## Pending MVP:
+    @receiver(post_save, sender=User)
+    def create_user_type(sender, instance, created, **kwargs):
+        if created:
+            UserType.objects.get_or_create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_type(sender, instance, **kwargs):
+        instance.usertype.save()
+
+    def __str__(self):
+        return str(self.user)
+```
+
+```python
+# serializers.py
+class UserSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField(read_only=True)
+    isAdmin = serializers.SerializerMethodField(read_only=True)
+    usertype = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'date_joined', 'usertype']
+
+    # customised default is_staff to isAdmin
+    def get_isAdmin(self, obj):
+        return obj.is_staff
+
+    #customised usertype to include seller and buyer
+    def get_usertype(self,obj):
+        usertype = obj.usertype
+        serializer = UserTypeSerializer(usertype, many=False)
+        return serializer.data
+
+```
+
+## MVP:
 
 The MVP will have the essential features of an ecommerce applications such as:
 
@@ -53,6 +96,12 @@ The MVP will have the essential features of an ecommerce applications such as:
 5. Add to Cart Feature
 6. Check out Feature
 7. Paypal payment gateway
+
+![Landing Image](client/public/images/GarageSale.jpg)
+
+## User Persona & Onboarding Journey:
+
+![Landing Image](client/public/images/user_journey.jpg)
 
 ### To-do Checklist:
 
@@ -79,6 +128,7 @@ The MVP will have the essential features of an ecommerce applications such as:
 - [ ] Deployment to Heroku
 
 ## Future Development:
+
 - [ ] React3Fiber - 3D features
 - [ ] ThreeJS - 3D features for product viewing
 - [ ] ReactDnD - Drag&Drop features for cart
@@ -92,3 +142,17 @@ The MVP will have the essential features of an ecommerce applications such as:
 - [ ] Map distance to show Product Delivery time upon Order Completion
 - [ ] Add Chat function with socket.io features
 - [ ] Add Chat icon fixed on Bottom right
+
+## Some Learning Points
+
+![aws error](client/public/images/aws_error.jpg)
+
+## Key command for future reference
+
+```python
+# python, django, postgresql
+sudo service postgresql start
+pipenv run python manage.py runserver
+pipenv run python manage.py runmigrations
+pipenv run python manage.py migrate
+```
