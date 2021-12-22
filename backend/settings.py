@@ -93,7 +93,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -197,7 +197,7 @@ STATICFILES_DIRS = [ CLIENT_DIR/ 'build' / 'static'] # let django know of the cl
 # Which will collect all of our static files (JS/CSS/images) into a specific folder,
 # we need to create that specific folder and point our app to that
 STATIC_ROOT = BASE_DIR/ 'staticfiles'
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 MEDIA_ROOT =  'backend/static/images' #set the dir for uploaded images
