@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+// import { useState } from "react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../utilities/itemTypes";
 // import CartTable from "./CartTable";
@@ -55,14 +55,14 @@ const CartAddBox = styled.div`
 const CartDndSection = () => {
   // const dispatch = useDispatch();
   // const cartItems = useSelector(cartSelectors.selectAll);
-  const [basket, setBasket] = useState([]);
+  // const [basket, setBasket] = useState([]);
   // Drag&Drop Feature
   const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.CARD,
-    drop: (item) =>
-      setBasket((basket) =>
-        !basket.includes(item) ? [...basket, item] : basket
-      ),
+    // drop: (item) =>
+    //   setBasket((basket) =>
+    //     !basket.includes(item) ? [...basket, item] : basket
+    //   ),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),

@@ -56,7 +56,6 @@ const UserProfilePage = () => {
     status: userStatus,
     userInfo,
     profileDetails,
-    error,
   } = useSelector((state) => state.user);
 
   const isBuyer = userInfo.usertype.is_buyer;
@@ -72,7 +71,7 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     dispatch(getMyOrders());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!userInfo) {
@@ -198,7 +197,7 @@ const UserProfilePage = () => {
       <Row style={{ margin: "40px" }}>
         <Col
           md={3}
-          className="p-4"
+          // className="p-4"
           style={{ backgroundColor: "#fcf5f5" }}
           className={styles.scrollbar_v2}
         >

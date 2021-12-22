@@ -1,4 +1,4 @@
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 import styles from "../App.module.css";
 import { useEffect, useState } from "react";
 import { Form, Row, Col, Modal } from "react-bootstrap";
@@ -29,7 +29,6 @@ const RegisterPage = () => {
   const [isSeller, setIsSeller] = useState(false);
   const [isBuyer, setIsBuyer] = useState(true);
   const [popOut, setPopOut] = useState(false);
-  const [bio, setBio] = useState("Hello Everyone!");
   const [message, setMessage] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
@@ -42,7 +41,7 @@ const RegisterPage = () => {
     if (error) {
       setMessage(error);
     }
-  }, [userInfo]);
+  }, [userInfo, error]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,7 +83,7 @@ const RegisterPage = () => {
         password: password,
         is_buyer: isBuyer,
         is_seller: isSeller,
-        bio: bio,
+        bio: "Hello Everyone!",
       })
     );
     setPopOut(false);

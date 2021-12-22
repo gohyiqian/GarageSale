@@ -54,7 +54,6 @@ const UserShopPage = () => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [desc, setDesc] = useState("");
-  const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -73,14 +72,14 @@ const UserShopPage = () => {
     setName(shop.name);
     setContact(shop.contact);
     setDesc(shop.description);
-  }, [userInfo]);
+  }, [userInfo, shop.name, shop.contact, shop.description, dispatch]);
 
   useEffect(() => {
     // console.log("userEffect: 02");
     if (shop.shop_id) {
       dispatch(getProductsByShop(shop.shop_id));
     }
-  }, [shop.shop_id]);
+  }, [shop.shop_id, dispatch]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -113,7 +112,7 @@ const UserShopPage = () => {
       <NavBar />
       {status === "loading" && shopStatus === "loading" && <Loader />}
       {error && shopError && <Message variant="danger">{error}</Message>}
-      {message && <Message variant="danger">{message}</Message>}
+
       <ProfileContainer>
         <UserCoverImg src="../images/coverImage.jpg" alt="" />
         <UserProfileImg src="../images/shopAvatar.jpg" alt="" />
@@ -122,7 +121,7 @@ const UserShopPage = () => {
       <Row style={{ margin: "40px" }}>
         <Col
           md={3}
-          className="p-4"
+          // className="p-4"
           style={{ backgroundColor: "#fcf5f5" }}
           className={styles.scrollbar_v2}
         >
@@ -186,7 +185,6 @@ const UserShopPage = () => {
               ></Form.Control>
             </Form.Group>
 
-            {message && <Message variant="danger">{message}</Message>}
             <button type="submit" className={styles.loginBtn}>
               Update
             </button>

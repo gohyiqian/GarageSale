@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Container,
@@ -38,7 +38,7 @@ const OrderPage = () => {
   const { paymentMethod, cartItems, shippingAddress } = useSelector(
     (state) => state.cart
   );
-  const code = useRef("");
+  // const code = useRef("");
 
   const { userInfo } = useSelector((state) => state.user);
 
@@ -96,7 +96,7 @@ const OrderPage = () => {
       history.push(`/order/${orders.id}`);
       dispatch(actions.createOrderReset());
     }
-  }, [status, history, orders.id]);
+  }, [status, history, orders.id, dispatch]);
 
   return (
     <>

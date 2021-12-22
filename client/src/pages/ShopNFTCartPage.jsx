@@ -24,7 +24,7 @@ const ShopNFTCartPage = () => {
 
   useEffect(() => {
     dispatch(getNFTs());
-  }, []);
+  }, [dispatch]);
 
   if (status === "loading") {
     return (

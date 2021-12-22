@@ -44,7 +44,7 @@ const CoverImg = styled.img`
 const ShopPage = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
-  const { shop, status, error } = useSelector((state) => state.shop);
+  const { shop, status } = useSelector((state) => state.shop);
   const { products } = useSelector((state) => state.products);
   const [coverImg, setCoverImg] = useState("");
 
@@ -57,13 +57,13 @@ const ShopPage = () => {
 
   useEffect(() => {
     dispatch(getShopByUserId(userInfo.id));
-  }, [userInfo.id]);
+  }, [userInfo.id, dispatch]);
 
   useEffect(() => {
     if (shop.shop_id) {
       dispatch(getProductsByShop(shop.shop_id));
     }
-  }, [shop.shop_id]);
+  }, [shop.shop_id, dispatch]);
 
   return (
     <>

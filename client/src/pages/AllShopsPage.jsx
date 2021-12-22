@@ -35,7 +35,7 @@ const AllShopsPage = () => {
 
   useEffect(() => {
     dispatch(getAllShops());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

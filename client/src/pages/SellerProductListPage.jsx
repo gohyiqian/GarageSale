@@ -26,18 +26,14 @@ const SellerProductListPage = () => {
     pages,
   } = useSelector((state) => state.products);
 
-  const {
-    shop,
-    status: shopStatus,
-    error: shopError,
-  } = useSelector((state) => state.shop);
+  const { shop } = useSelector((state) => state.shop);
 
   let keyword = history.location.search;
   console.log(keyword);
 
   useEffect(() => {
     dispatch(getShopByUserId(userInfo.id));
-  }, [userInfo]);
+  }, [userInfo, dispatch]);
 
   useEffect(() => {
     dispatch(actions.productCreateReset());
@@ -47,7 +43,7 @@ const SellerProductListPage = () => {
     if (shop.shop_id) {
       dispatch(getProductsByShop(shop.shop_id));
     }
-  }, [dispatch, keyword, history, userInfo, shop.shop_id]);
+  }, [dispatch, keyword, history, userInfo, shop.shop_id, shop]);
 
   const handleCreate = () => {
     dispatch(createShopProduct(shop.shop_id));

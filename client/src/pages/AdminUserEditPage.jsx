@@ -14,7 +14,7 @@ const AdminUserEditPage = ({ match }) => {
   // console.log(userId);
   const dispatch = useDispatch();
   // const history = useHistory();
-  const { status, updateStatus, userInfo, error, profileDetails } = useSelector(
+  const { status, updateStatus, error, profileDetails } = useSelector(
     (state) => state.user
   );
 
@@ -36,7 +36,7 @@ const AdminUserEditPage = ({ match }) => {
       setIsBuyer(profileDetails.usertype.is_buyer);
       setIsSeller(profileDetails.usertype.is_seller);
     }
-  }, [profileDetails]);
+  }, [profileDetails, dispatch, userId]);
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -49,7 +49,7 @@ const AdminProductEditPage = ({ match }) => {
       setStockCount(product.stockCount);
       setDescription(product.description);
     }
-  }, [product]);
+  }, [product, dispatch, productId]);
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];

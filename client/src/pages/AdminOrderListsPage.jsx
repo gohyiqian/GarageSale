@@ -1,20 +1,20 @@
 import { useEffect } from "react";
-import { LinkContainer } from "react-router-bootstrap";
+// import { LinkContainer } from "react-router-bootstrap";
 import { useHistory } from "react-router";
-import { Container, Table, Button } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-import { getAllUsers, deleteUser } from "../redux/apiUser";
+// import { deleteUser } from "../redux/apiUser";
 import NavBar from "../components/NavBar";
-import { actions as userActions } from "../redux/userSlice";
+// import { actions as userActions } from "../redux/userSlice";
 import { getAllOrders } from "../redux/apiOrder";
 import styles from "../App.module.css";
 
 const AdminOrderListsPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { status, userInfo, error, users } = useSelector((state) => state.user);
+  const { status, userInfo, error } = useSelector((state) => state.user);
   const { orderList } = useSelector((state) => state.order);
 
   useEffect(() => {
@@ -25,12 +25,12 @@ const AdminOrderListsPage = () => {
     }
   }, [dispatch, history, userInfo]);
 
-  const handleDelete = (id) => {
-    if (window.confirm("Confirm to delete this user?")) {
-      dispatch(deleteUser(id));
-    }
-    window.location.reload();
-  };
+  // const handleDelete = (id) => {
+  //   if (window.confirm("Confirm to delete this user?")) {
+  //     dispatch(deleteUser(id));
+  //   }
+  //   window.location.reload();
+  // };
   console.log(orderList);
   return (
     <>

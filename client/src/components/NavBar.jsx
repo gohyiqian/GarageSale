@@ -119,7 +119,7 @@ const NavBar = () => {
     if (userInfo) {
       dispatch(getShop());
     }
-  }, [userInfo]);
+  }, [userInfo, dispatch]);
 
   return (
     <Navbar style={NavBarStyle} variant="light" expand="lg" collapseOnSelect>

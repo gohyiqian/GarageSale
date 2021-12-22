@@ -31,10 +31,11 @@ CLIENT_DIR = BASE_DIR/'client'
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# set DEBUG to false before deployment
+DEBUG = False
 
 ALLOWED_HOSTS =['*']
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://my-garage-sale.herokuapp.com/']
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://mygaragesale.herokuapp.com/']
 
 
 # Application definition
@@ -191,6 +192,10 @@ MEDIA_URL = '/images/' #point to the media folder within the static folder
 
 STATICFILES_DIRS = [BASE_DIR/ 'backend/static'] #let django know of this folder
 STATICFILES_DIRS = [ CLIENT_DIR/ 'build' / 'static'] # let django know of the client side static folder
+
+# When heroku build our django app, they will run a command called python manage.py collectstatic
+# Which will collect all of our static files (JS/CSS/images) into a specific folder,
+# we need to create that specific folder and point our app to that
 STATIC_ROOT = BASE_DIR/ 'staticfiles'
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

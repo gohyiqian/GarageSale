@@ -43,7 +43,7 @@ const CoverImg = styled.img`
 
 const ShopPage = ({ match }) => {
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.user);
+  // const { userInfo } = useSelector((state) => state.user);
   const { shop, status } = useSelector((state) => state.shop);
   const { products } = useSelector((state) => state.products);
   const [coverImg, setCoverImg] = useState("");
@@ -51,7 +51,7 @@ const ShopPage = ({ match }) => {
   // console.log(match.params.id);
   useEffect(() => {
     dispatch(getShopByShopId(match.params.id));
-  }, [match.params.id]);
+  }, [dispatch,match.params.id]);
 
   useEffect(() => {
     if (shop.shop_id) {
@@ -59,7 +59,7 @@ const ShopPage = ({ match }) => {
       dispatch(getProductsByShop(shop.shop_id));
       setCoverImg(shop.image);
     }
-  }, [shop.shop_id, match.params.id]);
+  }, [dispatch,shop.shop_id, match.params.id, shop.image]);
 
   return (
     <>

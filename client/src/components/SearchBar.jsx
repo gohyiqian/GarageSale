@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import styles from "../App.module.css";
 
 const SearchBar = () => {
   const [keyword, setKeyword] = useState("");
