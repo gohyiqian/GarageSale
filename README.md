@@ -147,7 +147,16 @@ The MVP will have the essential features of an ecommerce applications such as:
 
 ![aws error](client/public/images/aws_error.jpg)
 
-## Key command for future reference
+## Key commands for future reference
+
+### To launch frontend
+
+```
+cd client
+npm start
+```
+
+### For backend
 
 ```python
 # python, django, postgresql

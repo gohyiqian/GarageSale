@@ -46,22 +46,29 @@ const RegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setMessage("");
 
     if (error) {
-      setMessage(error);
+      return setMessage(error);
+    }
+    if (!username && !email && !password && !confirmPassword) {
+      return setMessage("Form is empty!");
     }
     if (!username || !email || !password || !confirmPassword) {
-      setMessage("Please fill in form");
+      return setMessage("Please complete your fill in!");
     }
-
-    if (password.length > 0 && password.length < 6) {
-      setMessage("Password is too short");
+    if (username === email) {
+      return setMessage("Username same as email!");
+    }
+    if (email.includes("@") && email.includes(".com") === false) {
+      return setMessage("Email format is wrong!");
+    }
+    if (password.length < 6) {
+      return setMessage("Password to be > 6 char!");
     }
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
-      setMessage("");
-    }
-    if (username && email && password && confirmPassword) {
+      return setMessage("Passwords do not match!");
+    } else {
       dispatch(register(username, email, password));
       console.log("pop");
       setPopOut(true);
