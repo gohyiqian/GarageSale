@@ -114,8 +114,8 @@ const UserShopPage = () => {
       {error && shopError && <Message variant="danger">{error}</Message>}
 
       <ProfileContainer>
-        <UserCoverImg src="../images/coverImage.jpg" alt="" />
-        <UserProfileImg src="../images/shopAvatar.jpg" alt="" />
+        <UserCoverImg src={shop.image} alt="" />
+        <UserProfileImg src={shop.image} alt="" />
       </ProfileContainer>
 
       <Row style={{ margin: "40px" }}>

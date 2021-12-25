@@ -218,7 +218,7 @@ const NavBar = () => {
                     </Nav.Link>
                   </LinkContainer>
 
-                  <LinkContainer to="/threejs" className={styles.nav_dropdown}>
+                  {/* <LinkContainer to="/threejs" className={styles.nav_dropdown}>
                     <Nav.Link>
                       <span>3JS</span>
                     </Nav.Link>
@@ -228,7 +228,7 @@ const NavBar = () => {
                     <Nav.Link>
                       <span>NFTs</span>
                     </Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer> */}
 
                   <LinkContainer to="/shop/nft">
                     <Nav.Link>

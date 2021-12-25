@@ -1,14 +1,7 @@
-// import {
-//   HashRouter as Router,
-//   Switch,
-//   Route,
-//   Redirect,
-// } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
+// import { HTML5Backend } from "react-dnd-html5-backend";
+// import { DndProvider } from "react-dnd";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
@@ -29,8 +22,8 @@ import UserShopProfilePage from "./pages/UserShopProfilePage";
 import UserShopPage from "./pages/UserShopPage";
 import AllShopsPage from "./pages/AllShopsPage";
 import ShopShowPage from "./pages/ShopShowPage";
-import ThreeJSProductPage from "./pages/ThreeJSProductPage";
-import ShopNFTCartPage from "./pages/ShopNFTCartPage";
+// import ThreeJSProductPage from "./pages/ThreeJSProductPage";
+// import ShopNFTCartPage from "./pages/ShopNFTCartPage";
 import SellerProductListPage from "./pages/SellerProductListPage";
 import SellerProductEditPage from "./pages/SellerProductEditPage";
 
@@ -47,7 +40,7 @@ const App = () => {
         <Route path="/order/:id" component={OrderCompletePage} />
         <Route path="/order" component={OrderPage} />
         <Route path="/payment" component={PaymentPage} />
-        <Route path="/threejs" exact component={ThreeJSProductPage} />
+        {/* <Route path="/threejs" exact component={ThreeJSProductPage} /> */}
         <Route path="/cart" component={CartPage} />
 
         <Route path="/admin/allusers" component={AdminUsersListPage} />
@@ -74,9 +67,9 @@ const App = () => {
         <Route path="/:category" component={CategoryPage} />
 
         {/* <Route path="/nftcart" component={ShopNFTCartPage} /> */}
-        <DndProvider backend={HTML5Backend}>
+        {/* <DndProvider backend={HTML5Backend}>
           <Route exact path="/shop/nft" component={ShopNFTCartPage} />
-        </DndProvider>
+        </DndProvider> */}
       </Switch>
     </Router>
   );

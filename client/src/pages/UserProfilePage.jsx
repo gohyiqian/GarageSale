@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Loader from "../components/Loader";
@@ -304,7 +303,7 @@ const UserProfilePage = () => {
         </Col>
 
         <Col md={9} className="px-4">
-          <Form.Group className="mb-4">
+          {/* <Form.Group className="mb-4">
             <Form.Control
               type="file"
               id="image-file"
@@ -312,7 +311,7 @@ const UserProfilePage = () => {
               onChange={handleCoverImgUpload}
             />
             {upload && <Loader />}
-          </Form.Group>
+          </Form.Group> */}
           <h2
             style={{ color: "#945047", backgroundColor: "#fcf5f5" }}
             className="mb-3 py-1"

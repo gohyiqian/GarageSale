@@ -35,7 +35,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS =['*']
-# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://mygaragesale.herokuapp.com/']
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mygaragesale.herokuapp.com/']
 
 
 # Application definition
@@ -87,13 +87,14 @@ SIMPLE_JWT = {
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -126,7 +127,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "base",
-        # "HOST":os.environ.get('DATABASE_URL')
+        # "HOST":"https://ufysrqzzfrcccnperzqc.supabase.co"
     }
 }
 
@@ -190,8 +191,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/' #point to the media folder within the static folder
 
-STATICFILES_DIRS = [BASE_DIR/ 'backend/static'] #let django know of this folder
-STATICFILES_DIRS = [ CLIENT_DIR/ 'build' / 'static'] # let django know of the client side static folder
+
+# BASE_DIR is '/home/kenji/GAprojects/GarageSale/'
+
+# STATICFILES_DIRS = [BASE_DIR/ 'backend/static'] #let django know of this folder
+STATICFILES_DIRS = [ 
+    # BASE_DIR / 'static', 
+    CLIENT_DIR/ 'build' / 'static'
+] # let django know of the client side static folder
 
 # When heroku build our django app, they will run a command called python manage.py collectstatic
 # Which will collect all of our static files (JS/CSS/images) into a specific folder,
@@ -212,10 +219,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'mygaragesale'
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_URL = env('AWS_URL')
 AWS_S3_SIGNATURE_VERSION = 's3v4'
-AWS_S3_REGION_NAME = 'ap-southeast-1'
+AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME')
 AWS_S3_FILE_OVERWRITE = True
 AWS_DEFAULT_ACL = None
 AWS_S3_VERIFY = True
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Set DEBUG to false if in Heroku
+if os.getcwd()=='/app':
+    DEBUG =False
